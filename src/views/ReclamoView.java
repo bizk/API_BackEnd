@@ -12,7 +12,7 @@ public class ReclamoView {
 	private int numero;
 	private PersonaView usuario;
 	private EdificioView edificio;
-	private String ubicación;
+	private String ubicacion;
 	private String descripcion;
 	private UnidadView unidad;
 	private Estado estado;

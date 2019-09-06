@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
 import exceptions.EdificioException;
 import exceptions.PersonaException;
 import exceptions.ReclamoException;
@@ -23,6 +26,15 @@ public class Controlador {
 	private static Controlador instancia;
 	
 	private Controlador() { }
+	
+	public void setupConnection() {
+		Configuration cfg = new Configuration()
+			    .setProperty("hibernate.dialect", "net.sourceforge.jtds.jdbc.Driver")
+			    .setProperty("hibernate.order_updates", "true");
+		SessionFactory sessions = cfg.buildSessionFactory();
+		sessions.openSession();
+		System.out.println("eureka!");
+	}
 	
 	public static Controlador getInstancia() {
 		if(instancia == null)
@@ -152,11 +164,11 @@ public class Controlador {
 		return resultado;
 	}
  
-	public int agregarReclamo(int codigo, String piso, String numero, String documento, String ubicación, String descripcion) throws EdificioException, UnidadException, PersonaException {
+	public int agregarReclamo(int codigo, String piso, String numero, String documento, String ubicacion, String descripcion) throws EdificioException, UnidadException, PersonaException {
 		Edificio edificio = buscarEdificio(codigo);
 		Unidad unidad = buscarUnidad(codigo, piso, numero);
 		Persona persona = buscarPersona(documento);
-		Reclamo reclamo = new Reclamo(persona, edificio, ubicación, descripcion, unidad);
+		Reclamo reclamo = new Reclamo(persona, edificio, ubicacion, descripcion, unidad);
 		reclamo.save();
 		return reclamo.getNumero();
 	}

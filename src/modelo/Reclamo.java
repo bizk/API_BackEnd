@@ -10,16 +10,16 @@ public class Reclamo {
 	private int numero;
 	private Persona usuario;
 	private Edificio edificio;
-	private String ubicación;
+	private String ubicacion;
 	private String descripcion;
 	private Unidad unidad;
 	private Estado estado;
 	private List<Imagen> imagenes;
 	
-	public Reclamo(Persona usuario, Edificio edificio, String ubicación, String descripcion, Unidad unidad) {
+	public Reclamo(Persona usuario, Edificio edificio, String ubicacion, String descripcion, Unidad unidad) {
 		this.usuario = usuario;
 		this.edificio = edificio;
-		this.ubicación = ubicación;
+		this.ubicacion = ubicacion;
 		this.descripcion = descripcion;
 		this.unidad = unidad;
 		this.estado = Estado.nuevo;
@@ -48,8 +48,8 @@ public class Reclamo {
 		return edificio;
 	}
 
-	public String getUbicación() {
-		return ubicación;
+	public String getUbicacion() {
+		return ubicacion;
 	}
 
 	public String getDescripcion() {
