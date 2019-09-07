@@ -4,13 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.classic.Session;
+
+import entitys.EdificioEntity;
+import entitys.PersonaEntity;
 import exceptions.EdificioException;
 import exceptions.PersonaException;
 import exceptions.ReclamoException;
 import exceptions.UnidadException;
+import utils.HibernateUtils;
 import modelo.Edificio;
 import modelo.Persona;
 import modelo.Reclamo;
@@ -28,11 +37,14 @@ public class Controlador {
 	private Controlador() { }
 	
 	public void setupConnection() {
-		Configuration cfg = new Configuration()
-			    .setProperty("hibernate.dialect", "net.sourceforge.jtds.jdbc.Driver")
-			    .setProperty("hibernate.order_updates", "true");
-		SessionFactory sessions = cfg.buildSessionFactory();
-		sessions.openSession();
+		SessionFactory sessionFactory = utils.HibernateUtils.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		Transaction	ts = session.beginTransaction();
+
+		PersonaEntity ee = (PersonaEntity) session.get(PersonaEntity.class, "DNI30600888");
+		System.out.println(ee.toString());
+		session.close();
+		
 		System.out.println("eureka!");
 	}
 	

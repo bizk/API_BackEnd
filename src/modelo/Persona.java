@@ -1,9 +1,13 @@
 package modelo;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import views.PersonaView;
 
-public class Persona {
 
+public class Persona {
 	private String documento;
 	private String nombre;
 	
