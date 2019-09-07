@@ -13,6 +13,8 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.classic.Session;
 
+import DAO.EdificioDAO;
+import DAO.PersonaDAO;
 import entitys.EdificioEntity;
 import entitys.PersonaEntity;
 import exceptions.EdificioException;
@@ -33,19 +35,27 @@ import views.UnidadView;
 public class Controlador {
 
 	private static Controlador instancia;
+	private static EdificioDAO edificioDAO;
+	private static PersonaDAO personaDAO;
 	
-	private Controlador() { }
+	private Controlador() {
+		this.edificioDAO = new EdificioDAO();
+		this.personaDAO = new  PersonaDAO();
+	}
 	
-	public void setupConnection() {
-		SessionFactory sessionFactory = utils.HibernateUtils.getSessionFactory();
-		Session session = sessionFactory.openSession();
-		Transaction	ts = session.beginTransaction();
-
-		PersonaEntity ee = (PersonaEntity) session.get(PersonaEntity.class, "DNI30600888");
-		System.out.println(ee.toString());
-		session.close();
-		
-		System.out.println("eureka!");
+	//FOR QUICK TEST ONLY
+	public void tryConnection() {
+		//PersonaDAO personaDAO = new PersonaDAO();
+		//personaDAO.getAll();
+		try {
+			Persona pr = buscarPersona("DNI30852718");
+			System.out.println(pr.toView());
+		} catch (PersonaException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//edificioDAO.getAll();
+		//System.out.println(edificioDAO.getEdificio(7));
 	}
 	
 	public static Controlador getInstancia() {
@@ -55,7 +65,7 @@ public class Controlador {
 	}
 	
 	public List<EdificioView> getEdificios(){
-		return null;
+		return edificioDAO.getAllViews();
 	}
 	
 	public List<UnidadView> getUnidadesPorEdificio(int codigo) throws EdificioException{
@@ -205,7 +215,7 @@ public class Controlador {
 	}	
 	
 	private Persona buscarPersona(String documento) throws PersonaException {
-		return null;
+		return personaDAO.getPersona(documento);
 	}
 	
 	private Reclamo buscarReclamo(int numero) throws ReclamoException {

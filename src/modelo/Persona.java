@@ -34,5 +34,9 @@ public class Persona {
 
 	public void delete() {
 		
-	}	
+	}
+	
+	public String toString() {
+		return new String(this.documento + ": " + this.nombre);
+	}
 }

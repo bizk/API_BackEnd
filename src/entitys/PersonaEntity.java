@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import modelo.Persona;
+
 @Entity
 @Table(name="personas")
 public class PersonaEntity {
@@ -11,8 +13,8 @@ public class PersonaEntity {
 	private String documento;
 	private String nombre;
 	
-	
-	public String toString() {
-		return new String(this.documento + " " + this.nombre);
+	public Persona toPersona() {
+		return new Persona(this.documento,this.nombre);
 	}
+	
 }
