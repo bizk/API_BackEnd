@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/bizk/git/API/lib/antlr-2.7.6.jar"/>
+	<classpathentry kind="lib" path="/home/bizk/git/API/lib/commons-collections-3.1.jar"/>
+	<classpathentry kind="lib" path="/home/bizk/git/API/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="/home/bizk/git/API/lib/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="/home/bizk/git/API/lib/ejb3-persistence.jar"/>
+	<classpathentry kind="lib" path="/home/bizk/git/API/lib/hibernate3.jar"/>
+	<classpathentry kind="lib" path="/home/bizk/git/API/lib/hibernate-annotations.jar"/>
+	<classpathentry kind="lib" path="/home/bizk/git/API/lib/hibernate-commons-annotations.jar"/>
+	<classpathentry kind="lib" path="/home/bizk/git/API/lib/javassist-3.4.GA.jar"/>
+	<classpathentry kind="lib" path="/home/bizk/git/API/lib/jta-1.1.jar"/>
+	<classpathentry kind="lib" path="/home/bizk/git/API/lib/jtds-1.2.5.jar"/>
+	<classpathentry kind="lib" path="/home/bizk/git/API/lib/slf4j-api-1.5.6.jar"/>
+	<classpathentry kind="lib" path="/home/bizk/git/API/lib/slf4j-simple-1.5.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
