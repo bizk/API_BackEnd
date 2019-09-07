@@ -8,7 +8,9 @@ import javax.persistence.OneToMany;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import modelo.Edificio;
 import modelo.Unidad;
 
 @Entity
@@ -19,9 +21,12 @@ public class EdificioEntity {
 	private String nombre;
 	private String direccion;
 	
+	//TODO falta esta parte...
 	//@OneToMany
+	@Transient
 	private List<Unidad> unidades;
-	public String getNombre() {
-		return this.nombre;
+	
+	public Edificio toEdificio() {
+		return new Edificio(this.codigo, this.nombre, this.direccion);
 	}
 }

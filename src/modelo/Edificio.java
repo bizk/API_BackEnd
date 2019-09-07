@@ -85,4 +85,8 @@ public class Edificio {
 	public EdificioView toView() {
 		return new EdificioView(codigo, nombre, direccion);
 	}
+	
+	public String toString() {
+		return new String(this.codigo + ": " + this.nombre + " " + this.direccion);
+	}
 }

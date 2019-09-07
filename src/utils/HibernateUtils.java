@@ -15,7 +15,7 @@ public class HibernateUtils
         try
         {
         	 AnnotationConfiguration config = new AnnotationConfiguration();
-             //config.addAnnotatedClass(EdificioEntity.class);
+             config.addAnnotatedClass(EdificioEntity.class);
         	 // config.addAnnotatedClass(Imagen.class);
              config.addAnnotatedClass(PersonaEntity.class);
              //config.addAnnotatedClass(Reclamo.class);
