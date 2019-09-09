@@ -15,6 +15,7 @@ import org.hibernate.classic.Session;
 
 import DAO.EdificioDAO;
 import DAO.PersonaDAO;
+import DAO.UnidadDAO;
 import entitys.EdificioEntity;
 import entitys.PersonaEntity;
 import exceptions.EdificioException;
@@ -37,20 +38,19 @@ public class Controlador {
 	private static Controlador instancia;
 	private static EdificioDAO edificioDAO;
 	private static PersonaDAO personaDAO;
+	private static UnidadDAO unidadDAO;
 	
 	private Controlador() {
 		this.edificioDAO = new EdificioDAO();
 		this.personaDAO = new  PersonaDAO();
+		this.unidadDAO = new UnidadDAO();
 	}
 	
 	//FOR QUICK TEST ONLY
 	public void tryConnection() {
-		//PersonaDAO personaDAO = new PersonaDAO();
-		//personaDAO.getAll();
 		try {
-			Persona pr = buscarPersona("DNI30852718");
-			System.out.println(pr.toView());
-		} catch (PersonaException e) {
+			System.out.println(buscarEdificio(2).toString());
+		} catch (EdificioException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -207,11 +207,12 @@ public class Controlador {
 	}
 	
 	private Edificio buscarEdificio(int codigo) throws EdificioException {
-		return null;
+		return edificioDAO.getEdificio(codigo);
 	}
 
+	//TODO
 	private Unidad buscarUnidad(int codigo, String piso, String numero) throws UnidadException{
-		return null;
+		return unidadDAO.getUnidad(codigo);
 	}	
 	
 	private Persona buscarPersona(String documento) throws PersonaException {
