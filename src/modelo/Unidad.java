@@ -26,7 +26,7 @@ public class Unidad {
 		this.duenios = new ArrayList<Persona>();
 		this.inquilinos = new ArrayList<Persona>();
 	}
-
+ 
 	public void transferir(Persona nuevoDuenio) {
 		duenios = new ArrayList<Persona>();
 		duenios.add(nuevoDuenio);
@@ -52,7 +52,7 @@ public class Unidad {
 	
 	public boolean estaHabitado() {
 		return habitado;
-	}
+	} 
 	
 	public void liberar() {
 		this.inquilinos = new ArrayList<Persona>();

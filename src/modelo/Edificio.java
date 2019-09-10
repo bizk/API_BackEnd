@@ -81,6 +81,10 @@ public class Edificio {
 		}
 		return resultado;
 	}
+	
+	public void setUnidades(List<Unidad> listaUnidades) {
+		this.unidades.addAll(listaUnidades);
+	}
 
 	public EdificioView toView() {
 		return new EdificioView(codigo, nombre, direccion);

@@ -46,16 +46,12 @@ public class Controlador {
 		this.unidadDAO = new UnidadDAO();
 	}
 	
-	//FOR QUICK TEST ONLY
+	//FOR QUICK TEST ONLY 
 	public void tryConnection() {
-		try {
-			System.out.println(buscarEdificio(2).toString());
-		} catch (EdificioException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		//edificioDAO.getAll();
-		//System.out.println(edificioDAO.getEdificio(7));
+		edificioDAO.getAll();
+		unidadDAO.getAll();
+		System.out.println(unidadDAO.getUnidad(190).getEdificio().toView());;
+		edificioDAO.getEdificio(2);
 	}
 	
 	public static Controlador getInstancia() {
@@ -72,7 +68,7 @@ public class Controlador {
 		List<UnidadView> resultado = new ArrayList<UnidadView>();
 		Edificio edificio = buscarEdificio(codigo);
 		List<Unidad> unidades = edificio.getUnidades();
-		for(Unidad unidad : unidades)
+		for(Unidad unidad : unidades) 
 			resultado.add(unidad.toView());
 		return resultado;
 	}
