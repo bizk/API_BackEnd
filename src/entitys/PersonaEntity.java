@@ -2,6 +2,7 @@ package entitys;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import modelo.Persona;
@@ -10,6 +11,7 @@ import modelo.Persona;
 @Table(name="personas")
 public class PersonaEntity {
 	@Id
+	@OneToOne
 	private String documento;
 	private String nombre;
 	

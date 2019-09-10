@@ -48,10 +48,6 @@ public class Controlador {
 	
 	//FOR QUICK TEST ONLY 
 	public void tryConnection() {
-		//edificioDAO.getAll();
-		//unidadDAO.getAll();
-		//System.out.println(unidadDAO.getUnidad(190).getEdificio().toView());;
-		//edificioDAO.getEdificio(2);
 		try {
 			System.out.println(buscarPersona("DNI666").getNombre());;
 		} catch (PersonaException e) {

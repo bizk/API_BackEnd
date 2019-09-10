@@ -32,4 +32,9 @@ public class UnidadDAO {
 	    	UnidadEntity unidad  = (UnidadEntity) session.load(UnidadEntity.class, codigo);
 	    	return unidad.toUnidad();
 	    }
+	    
+	    private Unidad entity2unidad(UnidadEntity entity) {
+	    	Unidad unidad = entity.toUnidad();
+	    	
+	    }
 }

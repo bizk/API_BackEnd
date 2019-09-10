@@ -29,6 +29,7 @@ public class Edificio {
 		Set<Persona> habilitados = new HashSet<Persona>();
 		for(Unidad unidad : unidades) {
 			List<Persona> duenios = unidad.getDuenios();
+			System.out.println(duenios.size());
 			for(Persona p : duenios)
 				habilitados.add(p);
 			List<Persona> inquilinos = unidad.getInquilinos();

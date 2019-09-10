@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -27,8 +28,9 @@ public class UnidadEntity {
 	@ManyToOne
 	@JoinColumn(name="codigoEdificio")
 	private EdificioEntity edificio;
-	@Transient
-	private List<Persona> duenios;
+	@OneToMany
+	@JoinColumn(name="identificador")
+	private List<DuenioEntity> duenios;
 	@Transient
 	private List<Persona> inquilinos;
 

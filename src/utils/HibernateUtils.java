@@ -3,6 +3,7 @@ package utils;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 
+import entitys.DuenioEntity;
 import entitys.EdificioEntity;
 import entitys.PersonaEntity;
 import entitys.UnidadEntity;
@@ -20,6 +21,7 @@ public class HibernateUtils
         	 // config.addAnnotatedClass(Imagen.class);
              config.addAnnotatedClass(PersonaEntity.class);
              //config.addAnnotatedClass(Reclamo.class); 
+             config.addAnnotatedClass(DuenioEntity.class);
              config.addAnnotatedClass(UnidadEntity.class);
              sessionFactory = config.buildSessionFactory();
         }
