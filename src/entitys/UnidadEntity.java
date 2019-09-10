@@ -18,9 +18,9 @@ import modelo.Unidad;
 
 @Entity
 @Table(name="unidades")
-public class UnidadEntity {
+public class UnidadEntity { 
 	@Id
-	private int id;
+	private int identificador;
 	private String piso;
 	private String numero;
 	private boolean habitado;
@@ -33,7 +33,7 @@ public class UnidadEntity {
 	private List<Persona> inquilinos;
 
 	public Unidad toUnidad() {
-		//return new Unidad(this.id, this.piso, this.numero, this.edificio);
-		return null;
+		return new Unidad(this.identificador, this.piso, this.numero, this.edificio.toEdificio());
+		//return null;
 	}
 }

@@ -2,6 +2,7 @@ package DAO;
 
 import modelo.Edificio;
 import modelo.Persona;
+import modelo.Unidad;
 import utils.ConnectionUtils;
 import views.EdificioView;
 
@@ -14,6 +15,7 @@ import org.hibernate.Session;
 
 import entitys.EdificioEntity;
 import entitys.PersonaEntity;
+import entitys.UnidadEntity;
 
 public class EdificioDAO {
     private List<Edificio> edificios;
@@ -30,7 +32,6 @@ public class EdificioDAO {
 		//This function converts the results from entitys into a list
 		this.edificios = results.stream().map(x -> x.toEdificio())
 				.collect(Collectors.toCollection(ArrayList<Edificio>::new));
-		
         return this.edificios;
     }
 
@@ -39,15 +40,19 @@ public class EdificioDAO {
 		//This function converts the results from entitys into a list
 		List<EdificioView> edificiosView = edificios.stream().map(x -> x.toView())
 				.collect(Collectors.toCollection(ArrayList<EdificioView>::new));
-		
         return edificiosView;
     }
     
     public Edificio getEdificio(int codigo) {
 		session.beginTransaction();
 		try {
-			EdificioEntity edificioEntity = (EdificioEntity)session.get(EdificioEntity.class, codigo);
-			return edificioEntity.toEdificio();
+			EdificioEntity edificioEntity = (EdificioEntity) session.get(EdificioEntity.class, codigo);
+			List<UnidadEntity> unidadesEntity = edificioEntity.getUnidades();
+			Edificio edificio = edificioEntity.toEdificio();
+			edificio.setUnidades(
+					unidadesEntity.stream().map(x->x.toUnidad()).collect(Collectors.toCollection(ArrayList<Unidad>::new))
+			);
+			return edificio;
 		} catch (Exception np) {
 			System.out.println("No existe un edificio para dicho codigo");
 		}
