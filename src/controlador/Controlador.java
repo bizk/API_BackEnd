@@ -48,10 +48,16 @@ public class Controlador {
 	
 	//FOR QUICK TEST ONLY 
 	public void tryConnection() {
-		edificioDAO.getAll();
-		unidadDAO.getAll();
-		System.out.println(unidadDAO.getUnidad(190).getEdificio().toView());;
-		edificioDAO.getEdificio(2);
+		//edificioDAO.getAll();
+		//unidadDAO.getAll();
+		//System.out.println(unidadDAO.getUnidad(190).getEdificio().toView());;
+		//edificioDAO.getEdificio(2);
+		try {
+			System.out.println(buscarPersona("DNI666").getNombre());;
+		} catch (PersonaException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static Controlador getInstancia() {
@@ -154,12 +160,14 @@ public class Controlador {
 	
 	public void agregarPersona(String documento, String nombre) {
 		Persona persona = new Persona(documento, nombre);
-		persona.save();
+		personaDAO.save(persona);
+		//persona.save();
 	}
 	
 	public void eliminarPersona(String documento) throws PersonaException {
 		Persona persona = buscarPersona(documento);
-		persona.delete();
+		personaDAO.delete(persona);
+		//persona.delete();
 	}
 	
 	public List<ReclamoView> reclamosPorEdificio(int codigo){

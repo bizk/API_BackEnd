@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 import javax.persistence.EntityManager;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import entitys.PersonaEntity;
 import modelo.Persona;
@@ -16,7 +17,7 @@ import utils.ConnectionUtils;
 public class PersonaDAO {
 	private List<Persona> personas;
 	private Session session;
-	
+	 
     public PersonaDAO() {
     	if (session == null) this.session = ConnectionUtils.getSession();
     }
@@ -41,5 +42,37 @@ public class PersonaDAO {
 			System.out.println("No existe ninguna persona con el dni: " + documento);
 		}
 		return null;
+	}
+	
+	public void save(Persona persona) {
+		Transaction transaction = null; 
+		try {
+			transaction = session.beginTransaction();
+			transaction.begin();
+			PersonaEntity personaEntity = new PersonaEntity(persona.getDocumento(),persona.getNombre());
+			session.saveOrUpdate(personaEntity);
+			transaction.commit();
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			e.printStackTrace();
+		}
+	}
+	
+	public void delete(Persona persona) {
+		Transaction transaction = null; 
+		try {
+			transaction = session.beginTransaction();
+			transaction.begin();
+			PersonaEntity personaEntity = new PersonaEntity(persona.getDocumento(),persona.getNombre());
+			session.delete(personaEntity);
+			transaction.commit();
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			e.printStackTrace();
+		}
 	}
 }

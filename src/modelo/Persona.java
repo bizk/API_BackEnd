@@ -26,7 +26,7 @@ public class Persona {
 
 	public PersonaView toView() {
 		return new PersonaView(documento, nombre);
-	}
+	} 
 
 	public void save() {
 		
