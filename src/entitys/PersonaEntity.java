@@ -13,6 +13,11 @@ public class PersonaEntity {
 	private String documento;
 	private String nombre;
 	
+	public PersonaEntity(String documento, String nombre) {
+		this.documento = documento;
+		this.nombre = nombre;
+	}
+	
 	public Persona toPersona() {
 		return new Persona(this.documento,this.nombre);
 	}
