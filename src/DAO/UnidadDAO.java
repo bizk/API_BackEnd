@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.hibernate.Session;
 
+import entitys.DuenioEntity;
 import entitys.EdificioEntity;
 import entitys.UnidadEntity;
 import modelo.Edificio;
@@ -25,16 +26,18 @@ public class UnidadDAO {
 	    	List<UnidadEntity> unidadesEntities = session.createCriteria(UnidadEntity.class).list();
 	    	this.unidades = unidadesEntities.stream().map(x -> x.toUnidad())
 					.collect(Collectors.toCollection(ArrayList<Unidad>::new));
+	    	session.close();
 			return unidades;
 	    }
 	    
 	    public Unidad getUnidad(int codigo) {
-	    	UnidadEntity unidad  = (UnidadEntity) session.load(UnidadEntity.class, codigo);
-	    	return unidad.toUnidad();
+	    	UnidadEntity unidadEntity = (UnidadEntity) session.load(UnidadEntity.class, codigo);
+	    	return entity2unidad(unidadEntity);
 	    }
 	    
 	    private Unidad entity2unidad(UnidadEntity entity) {
 	    	Unidad unidad = entity.toUnidad();
-	    	
+	    	//unidad.setDuenios(entity.getDuenios());
+	    	return unidad;
 	    }
 }

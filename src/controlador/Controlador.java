@@ -16,12 +16,15 @@ import org.hibernate.classic.Session;
 import DAO.EdificioDAO;
 import DAO.PersonaDAO;
 import DAO.UnidadDAO;
+import entitys.DuenioEntity;
 import entitys.EdificioEntity;
 import entitys.PersonaEntity;
+import entitys.UnidadEntity;
 import exceptions.EdificioException;
 import exceptions.PersonaException;
 import exceptions.ReclamoException;
 import exceptions.UnidadException;
+import utils.ConnectionUtils;
 import utils.HibernateUtils;
 import modelo.Edificio;
 import modelo.Persona;
@@ -48,12 +51,10 @@ public class Controlador {
 	
 	//FOR QUICK TEST ONLY 
 	public void tryConnection() {
-		try {
-			System.out.println(buscarPersona("DNI666").getNombre());;
-		} catch (PersonaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Session session = ConnectionUtils.getSession();
+		session.beginTransaction();
+		System.out.println(unidadDAO.getUnidad(2));
+		session.close();
 	}
 	
 	public static Controlador getInstancia() {
@@ -75,10 +76,12 @@ public class Controlador {
 		return resultado;
 	}
 	
+	//hASTA ACA ANDA
 	public List<PersonaView> habilitadosPorEdificio(int codigo) throws EdificioException{
 		List<PersonaView> resultado = new ArrayList<PersonaView>();
 		Edificio edificio = buscarEdificio(codigo);
 		Set<Persona> habilitados = edificio.habilitados();
+		System.out.println(habilitados.size());
 		for(Persona persona : habilitados)
 			resultado.add(persona.toView());
 		return resultado;

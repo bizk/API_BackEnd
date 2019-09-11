@@ -52,10 +52,12 @@ public class EdificioDAO {
 			edificio.setUnidades(
 					unidadesEntity.stream().map(x->x.toUnidad()).collect(Collectors.toCollection(ArrayList<Unidad>::new))
 			);
+			session.close();
 			return edificio;
 		} catch (Exception np) {
 			System.out.println("No existe un edificio para dicho codigo");
 		}
+		session.close();
 		return null;
     }
 
