@@ -1,3 +1,8 @@
-/entitys/
-/modelo/
 /DAO/
+/controlador/
+/entitys/
+/exceptions/
+/modelo/
+/test/
+/utils/
+/views/

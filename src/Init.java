@@ -1,6 +1,9 @@
+import java.util.List;
+
 import controlador.Controlador;
 import exceptions.EdificioException;
 import exceptions.PersonaException;
+import views.UnidadView;
 
 public class Init {
 
@@ -8,21 +11,13 @@ public class Init {
 		// TODO Auto-generated method stub
 		Controlador controlador = Controlador.getInstancia();
 		try {
-			controlador.getUnidadesPorEdificio(1);
+			List<UnidadView> unidad = controlador.getUnidadesPorEdificio(1);
+			for (UnidadView uv : unidad)
+				System.out.println(uv);
 		} catch (EdificioException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		controlador.agregarPersona("DNI666", "MAD MAX");
-		controlador.tryConnection();
-		try {
-			controlador.eliminarPersona("DNI666");
-		} catch (PersonaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		controlador.tryConnection();
 	}	
 }
 

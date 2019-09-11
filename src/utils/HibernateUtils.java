@@ -7,7 +7,6 @@ import entitys.DuenioEntity;
 import entitys.EdificioEntity;
 import entitys.PersonaEntity;
 import entitys.UnidadEntity;
-import modelo.*;
 
 public class HibernateUtils
 {

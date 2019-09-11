@@ -9,7 +9,7 @@ import views.PersonaView;
 public class TestEdificios {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+/*		// TODO Auto-generated method stub
 		Controlador ctrl = Controlador.getInstancia();
 		
 		System.out.println("### Todos los edificios:");
@@ -31,7 +31,7 @@ public class TestEdificios {
 		} catch (EdificioException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		
 	}
-}
+}s
