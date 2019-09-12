@@ -33,13 +33,14 @@ public class UnidadDAO {
 	    public Unidad getUnidad(int codigo) {
 			session.beginTransaction();
 	    	UnidadEntity unidadEntity = (UnidadEntity) session.load(UnidadEntity.class, codigo);
+	    	
 	    	return entity2unidad(unidadEntity);
 	    }
 	    
 	    private Unidad entity2unidad(UnidadEntity entity) {
 	    	Unidad unidad = entity.toUnidad();
-	    	//unidad.setDuenios(entity.getDuenios());
-	    	
+	    	unidad.setDuenios(entity.getDuenios());
+	    	System.out.println(unidad.getDuenios().size());;
 	    	return unidad;
 	    	
 	    }
