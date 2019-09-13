@@ -13,8 +13,10 @@ public class Init {
 		// TODO Auto-generated method stub
 		Controlador controlador = Controlador.getInstancia();
 		try {
-			List<PersonaView> unidad = controlador.dueniosPorUnidad(120, "", "");
-			System.out.println(unidad.size());
+			List<PersonaView> r = controlador.dueniosPorUnidad(120, "", "");
+			for (PersonaView ar : r)
+				System.out.println(ar);
+			List<PersonaView> unidad = controlador.inquilinosPorUnidad(120, "", "");
 			for (PersonaView uv : unidad)
 				System.out.println(uv);
 		} catch (UnidadException e) {

@@ -95,6 +95,10 @@ public class Unidad {
 		this.duenios.addAll(duenios);
 	}
 
+	public void setInquilinos(List<Persona> inquilinos){
+		this.inquilinos.addAll(inquilinos);
+	}
+	
 	public UnidadView toView() {
 		EdificioView auxEdificio = edificio.toView();
 		return new UnidadView(id, piso, numero, habitado, auxEdificio);

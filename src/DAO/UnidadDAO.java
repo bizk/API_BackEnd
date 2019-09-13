@@ -40,6 +40,7 @@ public class UnidadDAO {
 	    private Unidad entity2unidad(UnidadEntity entity) {
 	    	Unidad unidad = entity.toUnidad();
 	    	unidad.setDuenios(entity.getDuenios());
+	    	unidad.setInquilinos(entity.getInquilinos());
 	    	System.out.println(unidad.getDuenios().size());;
 	    	return unidad;
 	    	

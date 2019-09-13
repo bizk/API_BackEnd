@@ -70,14 +70,12 @@ public class Controlador {
 	public List<UnidadView> getUnidadesPorEdificio(int codigo) throws EdificioException{
 		List<UnidadView> resultado = new ArrayList<UnidadView>();
 		Edificio edificio = buscarEdificio(codigo);
-		System.out.println(edificio.toView());
 		List<Unidad> unidades = edificio.getUnidades();
 		for(Unidad unidad : unidades) 
 			resultado.add(unidad.toView());
 		return resultado;
 	}
 	
-	//hASTA ACA ANDA
 	public List<PersonaView> habilitadosPorEdificio(int codigo) throws EdificioException{
 		List<PersonaView> resultado = new ArrayList<PersonaView>();
 		Edificio edificio = buscarEdificio(codigo);
@@ -90,7 +88,7 @@ public class Controlador {
 
 	public List<PersonaView> dueniosPorEdificio(int codigo) throws EdificioException{
 		List<PersonaView> resultado = new ArrayList<PersonaView>();
-		Edificio edificio = buscarEdificio(codigo);
+		Edificio edificio = buscarEdificio(codigo);		
 		Set<Persona> duenios = edificio.duenios();
 		for(Persona persona : duenios)
 			resultado.add(persona.toView());
@@ -100,7 +98,7 @@ public class Controlador {
 	public List<PersonaView> habitantesPorEdificio(int codigo) throws EdificioException{
 		List<PersonaView> resultado = new ArrayList<PersonaView>();
 		Edificio edificio = buscarEdificio(codigo);
-		Set<Persona> habitantes = edificio.duenios();
+		Set<Persona> habitantes = edificio.habitantes();
 		for(Persona persona : habitantes)
 			resultado.add(persona.toView());
 		return resultado;
@@ -124,6 +122,7 @@ public class Controlador {
 		return resultado;
 	}
 	
+	//TODO guardar el objeto una vez agregado desde aca
 	public void transferirUnidad(int codigo, String piso, String numero, String documento) throws UnidadException, PersonaException {
 		Unidad unidad = buscarUnidad(codigo, piso, numero);
 		Persona persona = buscarPersona(documento);
@@ -157,18 +156,26 @@ public class Controlador {
 		Unidad unidad = buscarUnidad(codigo, piso, numero);
 		unidad.habitar();;
 	}
+	//TODO Hasta aca
 	
+	//TODO Ver de guardar a la persona.
 	public void agregarPersona(String documento, String nombre) {
 		Persona persona = new Persona(documento, nombre);
 		personaDAO.save(persona);
-		//persona.save();
+		persona.save();
 	}
 	
+	
+	//TODO Hacer delete
 	public void eliminarPersona(String documento) throws PersonaException {
 		Persona persona = buscarPersona(documento);
 		personaDAO.delete(persona);
 		//persona.delete();
 	}
+	
+	//TODO DE ACA PARA ABAJO FEDE
+	//			F - E - D - E
+	//
 	
 	public List<ReclamoView> reclamosPorEdificio(int codigo){
 		List<ReclamoView> resultado = new ArrayList<ReclamoView>();
@@ -214,7 +221,6 @@ public class Controlador {
 		return edificioDAO.getEdificio(codigo);
 	}
 
-	//TODO
 	private Unidad buscarUnidad(int codigo, String piso, String numero) throws UnidadException{
 		return unidadDAO.getUnidad(codigo);
 	}	

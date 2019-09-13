@@ -49,17 +49,24 @@ public class UnidadEntity {
 	@JoinColumn(name="identificador")
 	private List<DuenioEntity> duenios;
 	
-	@Transient
-	private List<PersonaEntity> inquilinos;
+	@OneToMany
+	@JoinColumn(name="identificador")
+	private List<InquilinoEntity> inquilinos;
 
 	public Unidad toUnidad() {
 		Unidad unidad = new Unidad(this.identificador, this.piso, this.numero, this.edificio.toEdificio());
 		unidad.setDuenios(this.duenios.stream().map(x->x.getDuenio())
+				.collect(Collectors.toCollection(ArrayList<Persona>::new)));
+		unidad.setInquilinos(this.inquilinos.stream().map(x->x.getInquilino())
 				.collect(Collectors.toCollection(ArrayList<Persona>::new)));
 		return unidad;
 	}
 	
 	public List<Persona> getDuenios(){
 		return this.duenios.stream().map(x -> x.getDuenio()).collect(Collectors.toCollection(ArrayList<Persona>::new));
+	}
+	
+	public List<Persona> getInquilinos() {
+		return this.inquilinos.stream().map(x -> x.getInquilino()).collect(Collectors.toCollection(ArrayList<Persona>::new));
 	}
 }

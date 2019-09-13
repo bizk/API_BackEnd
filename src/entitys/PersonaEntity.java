@@ -13,8 +13,8 @@ import modelo.Persona;
 @Table(name="personas")
 public class PersonaEntity {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="documento")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String documento;
 	@Column(name="nombre")
 	private String nombre;
