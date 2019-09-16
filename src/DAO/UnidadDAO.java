@@ -13,6 +13,7 @@ import modelo.Edificio;
 import modelo.Unidad;
 
 import utils.ConnectionUtils;
+import views.Estado;
 
 public class UnidadDAO {
 	 private Session session;
@@ -40,4 +41,12 @@ public class UnidadDAO {
 	    	//unidad.setDuenios(entity.getDuenios());
 	    	return unidad;
 	    }
+		static UnidadEntity toEntity(Unidad unidad) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		static Unidad toNegocio(UnidadEntity unidad) {
+			// TODO Auto-generated method stub
+			return null;
+		}
 }

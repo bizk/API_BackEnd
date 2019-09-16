@@ -24,13 +24,13 @@ public class EdificioDAO {
     public EdificioDAO() {
     	if (session == null) this.session = ConnectionUtils.getSession();
     }
-    
+  
     public List<Edificio> getAll(){
 		session.beginTransaction();
 
 		List<EdificioEntity> results = session.createCriteria(EdificioEntity.class).list();
 		//This function converts the results from entitys into a list
-		this.edificios = results.stream().map(x -> x.toEdificio())
+		this.edificios = results.stream().map(x -> toNegocio(x))
 				.collect(Collectors.toCollection(ArrayList<Edificio>::new));
         return this.edificios;
     }
@@ -48,7 +48,7 @@ public class EdificioDAO {
 		try {
 			EdificioEntity edificioEntity = (EdificioEntity) session.get(EdificioEntity.class, codigo);
 			List<UnidadEntity> unidadesEntity = edificioEntity.getUnidades();
-			Edificio edificio = edificioEntity.toEdificio();
+			Edificio edificio = toNegocio(edificioEntity);
 			edificio.setUnidades(
 					unidadesEntity.stream().map(x->x.toUnidad()).collect(Collectors.toCollection(ArrayList<Unidad>::new))
 			);
@@ -74,4 +74,16 @@ public class EdificioDAO {
             edificios.remove(edificio);
         }
     }
+
+    static EdificioEntity toEntity(Edificio edificio) {
+		return new EdificioEntity(edificio.getCodigo(),
+									edificio.getNombre(),
+									edificio.getDireccion());
+	}
+
+    static Edificio toNegocio(EdificioEntity edificio) {
+		return new Edificio(edificio.getCodigo(),
+							edificio.getNombre(),
+							edificio.getDireccion());
+	}
 }
