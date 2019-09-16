@@ -1,13 +1,20 @@
 package entitys;
 /*** @author fedejp***/
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
+
+import views.Estado;
 
 @Entity
 @Table(name = "reclamos")
 public class ReclamoEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@OneToMany
+	@JoinColumn(name="idReclamo") //TODO chequear
 	@Column(name="idReclamo")
 	private Integer numero;
 	@OneToOne
@@ -27,12 +34,16 @@ public class ReclamoEntity {
 	@Column(name="identificador")
 	private UnidadEntity unidad;
 	@Column(name="Estado")
-	private String estado;
+	private Estado estado;
+	@OneToMany
+	@JoinColumn(name="numero")
+	private List<ImagenEntity> imagenes; 
+	 // TODO Verificar que esto funcione
 	
 	public ReclamoEntity() {	
 	}
 	public ReclamoEntity(Integer numero, PersonaEntity usuario, EdificioEntity edificio, String ubicacion,
-			String descripcion, UnidadEntity unidad, String estado) {
+			String descripcion, UnidadEntity unidad, Estado estado) {
 		super();
 		this.numero = numero;
 		this.usuario = usuario;
@@ -41,6 +52,7 @@ public class ReclamoEntity {
 		this.descripcion = descripcion;
 		this.unidad = unidad;
 		this.estado = estado;
+		this.imagenes = new ArrayList<ImagenEntity>();
 	}
 
 	public String getDescripcion() {
@@ -49,7 +61,7 @@ public class ReclamoEntity {
 	public EdificioEntity getEdificio() {
 		return edificio;
 	}
-	public String getEstado() {
+	public Estado getEstado() {
 		return estado;
 	}
 	public Integer getNumero() {
@@ -82,8 +94,14 @@ public class ReclamoEntity {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	public void setEstado(String estado) {
+	public void setEstado(Estado estado) {
 		this.estado = estado;
+	}
+	public List<ImagenEntity> getImagenes() {
+		return this.imagenes;
+	}
+	public void setImagenes(List<ImagenEntity> imagenes) {
+		this.imagenes= imagenes;
 	}
 	
 }

@@ -2,30 +2,35 @@ package entitys;
 
 import javax.persistence.*;
 
+import modelo.Reclamo;
+
 @Entity
 @Table(name="imagenes")
 public class ImagenEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="numero")
-	int numero;
+	private int numero;
 	@Column(name="path")
-	String Dirección;
+	private String Dirección;
 	@Column(name="tipo")
-	String tipo;
+	private String tipo;
 	@ManyToOne
 	@JoinColumn(name="idReclamo")
-	int idReclamo;
+	private ReclamoEntity reclamo;
 	
 	public ImagenEntity() {
 	}
-
-	public ImagenEntity(int numero, String dirección, String tipo, int idReclamo) {
-		super();
-		this.numero = numero;
+	
+	public ImagenEntity(String dirección, String tipo) {
 		Dirección = dirección;
 		this.tipo = tipo;
-		this.idReclamo = idReclamo;
+	}
+
+	public ImagenEntity(String dirección, String tipo, ReclamoEntity reclamo) {
+		this.Dirección = dirección;
+		this.tipo = tipo;
+		this.reclamo = reclamo;
 	}
 
 	public int getNumero() {
@@ -52,12 +57,12 @@ public class ImagenEntity {
 		this.tipo = tipo;
 	}
 
-	public int getIdReclamo() {
-		return idReclamo;
+	public ReclamoEntity getReclamo() {
+		return reclamo;
 	}
 
-	public void setIdReclamo(int idReclamo) {
-		this.idReclamo = idReclamo;
+	public void setReclamo(ReclamoEntity reclamo) {
+		this.reclamo = reclamo;
 	}
 	
 	

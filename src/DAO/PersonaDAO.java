@@ -11,10 +11,11 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import entitys.PersonaEntity;
+import modelo.Edificio;
 import modelo.Persona;
 import utils.ConnectionUtils;
 
-public class PersonaDAO {
+class PersonaDAO {
 	private List<Persona> personas;
 	private Session session;
 	 
@@ -27,17 +28,17 @@ public class PersonaDAO {
 
 		List<PersonaEntity> results = session.createCriteria(PersonaEntity.class).list();
 		//This function converts the results from entitys into a list
-		this.personas = results.stream().map(x -> x.toPersona())
+		this.personas = results.stream().map(x -> toNegocio(x))
 				.collect(Collectors.toCollection(ArrayList<Persona>::new));
 
 		return this.personas;
 	}
 	
-	public Persona getPersona(String documento) {
+	public Persona getById(String documento) {
 		session.beginTransaction();
 		try {
 			PersonaEntity personaEntity = (PersonaEntity) session.get(PersonaEntity.class, documento);
-			return personaEntity.toPersona();
+			return toNegocio(personaEntity);
 		} catch (Exception exception) {
 			System.out.println("No existe ninguna persona con el dni: " + documento);
 		}
@@ -74,5 +75,15 @@ public class PersonaDAO {
 			}
 			e.printStackTrace();
 		}
+	}
+
+	static PersonaEntity toEntity(Persona usuario) {
+		return new PersonaEntity(usuario.getDocumento(),
+									usuario.getNombre());
+	}
+
+	static Persona toNegocio(PersonaEntity usuario) {
+		return new Persona(usuario.getDocumento(),
+							usuario.getNombre());
 	}
 }

@@ -16,7 +16,7 @@ public class Reclamo {
 	private Estado estado;
 	private List<Imagen> imagenes;
 	
-	public Reclamo(Persona usuario, Edificio edificio, String ubicacion, String descripcion, Unidad unidad) {
+	public Reclamo(Persona usuario, Edificio edificio, String ubicacion, String descripcion, Unidad unidad)  { // es para reclamos nuevos
 		this.usuario = usuario;
 		this.edificio = edificio;
 		this.ubicacion = ubicacion;
@@ -25,6 +25,19 @@ public class Reclamo {
 		this.estado = Estado.nuevo;
 		imagenes = new ArrayList<Imagen>();
 	}
+
+	public Reclamo(Integer numero2, Persona usr, Edificio edificio, String ubicacion2, String descripcion2,
+			Unidad unidad, Estado estado2) { //Es para reclamos recuperados del DAO
+		this.numero=numero2;
+		this.usuario=usr;
+		this.edificio=edificio;
+		this.ubicacion=ubicacion2;
+		this.descripcion=descripcion2;
+		this.unidad=unidad;
+		this.estado=estado2;
+		this.imagenes=new ArrayList<Imagen>();
+	}
+
 
 	public void agregarImagen(String direccion, String tipo) {
 		Imagen imagen = new Imagen(direccion, tipo);
@@ -64,7 +77,7 @@ public class Reclamo {
 		return estado;
 	}
 	
-	public List<Imagen> getImagenes(){
+	public List<Imagen> getImagenes(){ //Esto hay que verificar que el DAO los tenga
 		return this.imagenes;
 	}
 	

@@ -19,13 +19,27 @@ public class PersonaEntity {
 	@Column(name="nombre")
 	private String nombre;
 	
+	public PersonaEntity() {}
+	
 	public PersonaEntity(String documento, String nombre) {
 		this.documento = documento;
 		this.nombre = nombre;
 	}
-	
-	public Persona toPersona() {
-		return new Persona(this.documento,this.nombre);
+
+	public String getDocumento() {
+		return documento;
+	}
+
+	public void setDocumento(String documento) {
+		this.documento = documento;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 	
 }
