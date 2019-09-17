@@ -48,21 +48,78 @@ public class UnidadEntity {
 	@JoinColumn(name="identificador")
 	private List<DuenioEntity> duenios;
 	
-	@Transient
-	private List<PersonaEntity> inquilinos;
+	@OneToMany
+	@JoinColumn(name="identificador")
+	private List<InquilinoEntity> inquilinos;
 
-	public Unidad toUnidad() {
-		Unidad unidad = new Unidad(this.identificador, this.piso, this.numero, this.edificio.toEdificio());
-		System.out.println(this.duenios.size());
-		System.out.println("aaa");
-		System.out.println(this.duenios.size());
-		//unidad.setDuenios(this.duenios.stream().map(x->x.getDuenio().toPersona())
-		//		.collect(Collectors.toCollection(ArrayList<Persona>::new)));
-		return unidad;
+	public UnidadEntity() {
 	}
 	
+	public UnidadEntity(int identificador, String piso, String numero, boolean habitado, EdificioEntity edificio,
+			List<DuenioEntity> duenios, List<InquilinoEntity> inquilinos) {
+		super();
+		this.identificador = identificador;
+		this.piso = piso;
+		this.numero = numero;
+		this.habitado = habitado;
+		this.edificio = edificio;
+		this.duenios = duenios;
+		this.inquilinos = inquilinos;
+	}
+
 	public List<DuenioEntity> getDuenios(){
-	//	return this.duenios.stream().map(x -> x.getDuenio().toPersona()).collect(Collectors.);
-		return null;
+		return this.duenios;
+	}
+	public List<InquilinoEntity> getInquilinos() {
+		return this.inquilinos;
+	}
+	
+	public int getIdentificador() {
+		return identificador;
+	}
+
+	public void setIdentificador(int identificador) {
+		this.identificador = identificador;
+	}
+
+	public String getPiso() {
+		return piso;
+	}
+
+	public void setPiso(String piso) {
+		this.piso = piso;
+	}
+
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+
+	public boolean isHabitado() {
+		return habitado;
+	}
+
+	public void setHabitado(boolean habitado) {
+		this.habitado = habitado;
+	}
+
+	public EdificioEntity getEdificio() {
+		return edificio;
+	}
+
+	public void setEdificio(EdificioEntity edificio) {
+		this.edificio = edificio;
+	}
+
+	public void setDuenios(List<DuenioEntity> duenios) {
+		this.duenios = duenios;
+	}
+
+	public void setInquilinos(List<InquilinoEntity> inquilinos) {
+		this.inquilinos = inquilinos;
+
 	}
 }

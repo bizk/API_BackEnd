@@ -4,32 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.classic.Session;
 
 import DAO.EdificioDAO;
 import DAO.PersonaDAO;
 import DAO.UnidadDAO;
-import entitys.DuenioEntity;
-import entitys.EdificioEntity;
-import entitys.PersonaEntity;
-import entitys.UnidadEntity;
 import exceptions.EdificioException;
 import exceptions.PersonaException;
 import exceptions.ReclamoException;
 import exceptions.UnidadException;
-import utils.ConnectionUtils;
-import utils.HibernateUtils;
 import modelo.Edificio;
 import modelo.Persona;
 import modelo.Reclamo;
 import modelo.Unidad;
+import utils.ConnectionUtils;
 import views.EdificioView;
 import views.Estado;
 import views.PersonaView;
@@ -89,7 +77,7 @@ public class Controlador {
 
 	public List<PersonaView> dueniosPorEdificio(int codigo) throws EdificioException{
 		List<PersonaView> resultado = new ArrayList<PersonaView>();
-		Edificio edificio = buscarEdificio(codigo);
+		Edificio edificio = buscarEdificio(codigo);		
 		Set<Persona> duenios = edificio.duenios();
 		for(Persona persona : duenios)
 			resultado.add(persona.toView());
@@ -99,7 +87,7 @@ public class Controlador {
 	public List<PersonaView> habitantesPorEdificio(int codigo) throws EdificioException{
 		List<PersonaView> resultado = new ArrayList<PersonaView>();
 		Edificio edificio = buscarEdificio(codigo);
-		Set<Persona> habitantes = edificio.duenios();
+		Set<Persona> habitantes = edificio.habitantes();
 		for(Persona persona : habitantes)
 			resultado.add(persona.toView());
 		return resultado;
@@ -123,10 +111,12 @@ public class Controlador {
 		return resultado;
 	}
 	
+	//TODO guardar el objeto una vez agregado desde aca
 	public void transferirUnidad(int codigo, String piso, String numero, String documento) throws UnidadException, PersonaException {
 		Unidad unidad = buscarUnidad(codigo, piso, numero);
 		Persona persona = buscarPersona(documento);
 		unidad.transferir(persona);
+		unidadDAO.save(unidad);
 	}
 
 	public void agregarDuenioUnidad(int codigo, String piso, String numero, String documento) throws UnidadException, PersonaException {
@@ -156,18 +146,24 @@ public class Controlador {
 		Unidad unidad = buscarUnidad(codigo, piso, numero);
 		unidad.habitar();;
 	}
+	//TODO Hasta aca
 	
 	public void agregarPersona(String documento, String nombre) {
 		Persona persona = new Persona(documento, nombre);
 		personaDAO.save(persona);
-		//persona.save();
+		persona.save();
 	}
-	
+		
+	//TODO Hacer delete
 	public void eliminarPersona(String documento) throws PersonaException {
 		Persona persona = buscarPersona(documento);
 		personaDAO.delete(persona);
-		//persona.delete();
+		persona.delete();
 	}
+	
+	//TODO DE ACA PARA ABAJO FEDE
+	//			F - E - D - E
+	//
 	
 	public List<ReclamoView> reclamosPorEdificio(int codigo){
 		List<ReclamoView> resultado = new ArrayList<ReclamoView>();

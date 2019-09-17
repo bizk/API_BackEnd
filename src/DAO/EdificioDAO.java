@@ -16,6 +16,8 @@ import org.hibernate.Session;
 import entitys.EdificioEntity;
 import entitys.PersonaEntity;
 import entitys.UnidadEntity;
+import org.hibernate.Transaction;
+
 
 public class EdificioDAO {
     private List<Edificio> edificios;
@@ -24,7 +26,7 @@ public class EdificioDAO {
     public EdificioDAO() {
     	if (session == null) this.session = ConnectionUtils.getSession();
     }
-  
+    
     public List<Edificio> getAll(){
 		session.beginTransaction();
 
@@ -44,18 +46,21 @@ public class EdificioDAO {
     }
     
     public Edificio getEdificio(int codigo) {
-		session.beginTransaction();
+    	Transaction ts = null;
 		try {
+			ts = session.beginTransaction();
 			EdificioEntity edificioEntity = (EdificioEntity) session.get(EdificioEntity.class, codigo);
 			List<UnidadEntity> unidadesEntity = edificioEntity.getUnidades();
 			Edificio edificio = toNegocio(edificioEntity);
 			edificio.setUnidades(
-					unidadesEntity.stream().map(x->x.toUnidad()).collect(Collectors.toCollection(ArrayList<Unidad>::new))
+					unidadesEntity.stream().map(x->UnidadDAO.toNegocio(x)).collect(Collectors.toCollection(ArrayList<Unidad>::new))
 			);
 			session.close();
 			return edificio;
 		} catch (Exception np) {
 			System.out.println("No existe un edificio para dicho codigo");
+		} finally {
+			session.close();
 		}
 		session.close();
 		return null;

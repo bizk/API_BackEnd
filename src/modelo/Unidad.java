@@ -27,6 +27,20 @@ public class Unidad {
 		this.inquilinos = new ArrayList<Persona>();
 	}
  
+	public Unidad(int id, String piso, String numero, boolean habitado, Edificio edificio, List<Persona> duenios,
+			List<Persona> inquilinos) {
+		super();
+		this.id = id;
+		this.piso = piso;
+		this.numero = numero;
+		this.habitado = habitado;
+		this.edificio = edificio;
+		this.duenios = duenios;
+		this.inquilinos = inquilinos;
+	}
+
+
+
 	public void transferir(Persona nuevoDuenio) {
 		duenios = new ArrayList<Persona>();
 		duenios.add(nuevoDuenio);
@@ -95,6 +109,10 @@ public class Unidad {
 		this.duenios.addAll(duenios);
 	}
 
+	public void setInquilinos(List<Persona> inquilinos){
+		this.inquilinos.addAll(inquilinos);
+	}
+	
 	public UnidadView toView() {
 		EdificioView auxEdificio = edificio.toView();
 		return new UnidadView(id, piso, numero, habitado, auxEdificio);
