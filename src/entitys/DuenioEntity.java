@@ -20,7 +20,7 @@ import javax.persistence.Transient;
 @Table(name="duenios")
 public class DuenioEntity {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="id")
 	private int id;
 	
@@ -28,8 +28,9 @@ public class DuenioEntity {
 	@JoinColumn(name="identificador")
 	private UnidadEntity unidad;
 
-	@ManyToOne
+	@ManyToMany
 	@JoinColumn(name="documento")
+	@Transient
 	private PersonaEntity duenio;
 	
 	public DuenioEntity() {

@@ -57,8 +57,8 @@ public class UnidadEntity {
 		Unidad unidad = new Unidad(this.identificador, this.piso, this.numero, this.edificio.toEdificio());
 		unidad.setDuenios(this.duenios.stream().map(x->x.getDuenio())
 				.collect(Collectors.toCollection(ArrayList<Persona>::new)));
-		unidad.setInquilinos(this.inquilinos.stream().map(x->x.getInquilino())
-				.collect(Collectors.toCollection(ArrayList<Persona>::new)));
+		//unidad.setInquilinos(this.inquilinos.stream().map(x->x.getInquilino())
+		//		.collect(Collectors.toCollection(ArrayList<Persona>::new)));
 		return unidad;
 	}
 	
@@ -67,7 +67,8 @@ public class UnidadEntity {
 	}
 	
 	public List<Persona> getInquilinos() {
-		return this.inquilinos.stream().map(x -> x.getInquilino()).collect(Collectors.toCollection(ArrayList<Persona>::new));
+		return null;
+		//return this.inquilinos.stream().map(x -> x.getInquilino()).collect(Collectors.toCollection(ArrayList<Persona>::new));
 	}
 	
 	public int getIdentificador() {
@@ -116,5 +117,6 @@ public class UnidadEntity {
 
 	public void setInquilinos(List<InquilinoEntity> inquilinos) {
 		this.inquilinos = inquilinos;
+
 	}
 }

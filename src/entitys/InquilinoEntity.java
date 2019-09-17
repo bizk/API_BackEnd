@@ -1,34 +1,57 @@
+
 package entitys;
 
-import entitys.UnidadEntity;
-import modelo.Persona;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="inquilinos")
 public class InquilinoEntity {
 	@Id
 	@Column(name="id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
 	@ManyToOne
 	@JoinColumn(name="identificador")
 	private UnidadEntity unidad;
-	
-	@ManyToOne
+
+	@ManyToMany
 	@JoinColumn(name="documento")
+	@Transient
 	private PersonaEntity inquilino;
-	
-	public Persona getInquilino() {
-		return inquilino.toPersona();
+
+	public InquilinoEntity() {
 	}
+
+	public InquilinoEntity(int id, UnidadEntity unidad, PersonaEntity inquilino) {
+		super();
+		this.id = id;
+		this.unidad = unidad;
+		this.inquilino = inquilino;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public UnidadEntity getUnidad() {
+		return unidad;
+	}
+
+	public void setUnidad(UnidadEntity unidad) {
+		this.unidad = unidad;
+	}
+
+	public PersonaEntity getInquilino() {
+		return inquilino;
+	}
+
+	public void setInquilino(PersonaEntity inquilino) {
+		this.inquilino = inquilino;
+	}
+	
+	
 }

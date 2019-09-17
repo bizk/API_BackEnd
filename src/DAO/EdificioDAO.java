@@ -62,6 +62,7 @@ public class EdificioDAO {
 		} finally {
 			session.close();
 		}
+		session.close();
 		return null;
     }
 

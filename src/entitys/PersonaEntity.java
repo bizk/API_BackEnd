@@ -13,9 +13,9 @@ import modelo.Persona;
 @Table(name="personas")
 public class PersonaEntity {
 	@Id
+
 	@Column(name="documento")
 	private String documento;
-
 	@Column(name="nombre")
 	private String nombre;
 	

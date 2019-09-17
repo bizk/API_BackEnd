@@ -52,9 +52,8 @@ public class Controlador {
 	//FOR QUICK TEST ONLY 
 	public void tryConnection() {
 		Session session = ConnectionUtils.getSession();
-//		System.out.println(unidadDAO.getUnidad(2));
-		Persona pe = personaDAO.getPersona("DNI11");
-		System.out.println("PE: " + pe.toString());
+		session.beginTransaction();
+		System.out.println(unidadDAO.getUnidad(2));
 		session.close();
 	}
 	
@@ -77,6 +76,7 @@ public class Controlador {
 		return resultado;
 	}
 	
+	//hASTA ACA ANDA
 	public List<PersonaView> habilitadosPorEdificio(int codigo) throws EdificioException{
 		List<PersonaView> resultado = new ArrayList<PersonaView>();
 		Edificio edificio = buscarEdificio(codigo);
