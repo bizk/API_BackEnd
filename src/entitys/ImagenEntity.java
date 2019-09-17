@@ -12,7 +12,7 @@ public class ImagenEntity {
 	@Column(name="numero")
 	private int numero;
 	@Column(name="path")
-	private String Dirección;
+	private String Direccion;
 	@Column(name="tipo")
 	private String tipo;
 	@ManyToOne
@@ -22,13 +22,8 @@ public class ImagenEntity {
 	public ImagenEntity() {
 	}
 	
-	public ImagenEntity(String dirección, String tipo) {
-		Dirección = dirección;
-		this.tipo = tipo;
-	}
-
-	public ImagenEntity(String dirección, String tipo, ReclamoEntity reclamo) {
-		this.Dirección = dirección;
+	public ImagenEntity(String direccion, String tipo, ReclamoEntity reclamo) {
+		this.Direccion = direccion;
 		this.tipo = tipo;
 		this.reclamo = reclamo;
 	}
@@ -41,12 +36,12 @@ public class ImagenEntity {
 		this.numero = numero;
 	}
 
-	public String getDirección() {
-		return Dirección;
+	public String getDireccion() {
+		return Direccion;
 	}
 
-	public void setDirección(String dirección) {
-		Dirección = dirección;
+	public void setDireccion(String direccion) {
+		Direccion= direccion;
 	}
 
 	public String getTipo() {
