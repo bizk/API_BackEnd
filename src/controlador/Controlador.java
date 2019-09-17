@@ -52,9 +52,10 @@ public class Controlador {
 	//FOR QUICK TEST ONLY 
 	public void tryConnection() {
 		Session session = ConnectionUtils.getSession();
-		//session.beginTransaction();
-		System.out.println(unidadDAO.getUnidad(2));
-		//session.close();
+//		System.out.println(unidadDAO.getUnidad(2));
+		Persona pe = personaDAO.getPersona("DNI11");
+		System.out.println("PE: " + pe.toString());
+		session.close();
 	}
 	
 	public static Controlador getInstancia() {
@@ -127,6 +128,7 @@ public class Controlador {
 		Unidad unidad = buscarUnidad(codigo, piso, numero);
 		Persona persona = buscarPersona(documento);
 		unidad.transferir(persona);
+		unidadDAO.save(unidad);
 	}
 
 	public void agregarDuenioUnidad(int codigo, String piso, String numero, String documento) throws UnidadException, PersonaException {
@@ -158,19 +160,17 @@ public class Controlador {
 	}
 	//TODO Hasta aca
 	
-	//TODO Ver de guardar a la persona.
 	public void agregarPersona(String documento, String nombre) {
 		Persona persona = new Persona(documento, nombre);
 		personaDAO.save(persona);
 		persona.save();
 	}
-	
-	
+		
 	//TODO Hacer delete
 	public void eliminarPersona(String documento) throws PersonaException {
 		Persona persona = buscarPersona(documento);
 		personaDAO.delete(persona);
-		//persona.delete();
+		persona.delete();
 	}
 	
 	//TODO DE ACA PARA ABAJO FEDE

@@ -14,10 +14,18 @@ import modelo.Persona;
 public class PersonaEntity {
 	@Id
 	@Column(name="documento")
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String documento;
+
 	@Column(name="nombre")
 	private String nombre;
+	
+	public void setDocumento(String documento) {
+		this.documento = documento;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 	
 	public String toString() {
 		return new String(this.documento + " " + this.nombre);

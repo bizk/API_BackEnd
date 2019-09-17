@@ -34,12 +34,21 @@ public class PersonaDAO {
 	}
 	
 	public Persona getPersona(String documento) {
-		session.beginTransaction();
+		session = ConnectionUtils.getSession();
+    	Transaction transaction = null; 
 		try {
+			transaction = session.beginTransaction();
 			PersonaEntity personaEntity = (PersonaEntity) session.get(PersonaEntity.class, documento);
+			transaction.commit();
 			return personaEntity.toPersona();
 		} catch (Exception exception) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
 			System.out.println("No existe ninguna persona con el dni: " + documento);
+		} finally {
+			if (session != null && !session.isOpen()) System.out.println("xd");
+			session.close();
 		}
 		return null;
 	}
@@ -49,13 +58,16 @@ public class PersonaDAO {
 		try {
 			transaction = session.beginTransaction();
 			transaction.begin();
-			PersonaEntity personaEntity = new PersonaEntity(persona.getDocumento(),persona.getNombre());
+			PersonaEntity personaEntity = persona.toEntity();
+			personaEntity.setDocumento(persona.getDocumento());
+			personaEntity.setNombre(persona.getNombre());
 			session.saveOrUpdate(personaEntity);
 			transaction.commit();
 		} catch (Exception e) {
 			if (transaction != null) {
 				transaction.rollback();
 			}
+			System.out.println("No se pudo guardar a la persona");
 			e.printStackTrace();
 		}
 	}
@@ -65,7 +77,7 @@ public class PersonaDAO {
 		try {
 			transaction = session.beginTransaction();
 			transaction.begin();
-			PersonaEntity personaEntity = new PersonaEntity(persona.getDocumento(),persona.getNombre());
+			PersonaEntity personaEntity = new PersonaEntity();
 			session.delete(personaEntity);
 			transaction.commit();
 		} catch (Exception e) {

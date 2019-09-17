@@ -13,13 +13,11 @@ public class Init {
 		// TODO Auto-generated method stub
 		Controlador controlador = Controlador.getInstancia();
 		try {
-			List<PersonaView> r = controlador.dueniosPorUnidad(120, "", "");
-			for (PersonaView ar : r)
-				System.out.println(ar);
-			List<PersonaView> unidad = controlador.inquilinosPorUnidad(120, "", "");
-			for (PersonaView uv : unidad)
-				System.out.println(uv);
+			controlador.transferirUnidad(10, null, null, "DNI11");
 		} catch (UnidadException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PersonaException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

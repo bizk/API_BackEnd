@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import entitys.DuenioEntity;
 import entitys.EdificioEntity;
+import entitys.PersonaEntity;
 import entitys.UnidadEntity;
 import modelo.Edificio;
 import modelo.Unidad;
@@ -31,18 +33,46 @@ public class UnidadDAO {
 	    }
 	    
 	    public Unidad getUnidad(int codigo) {
-			session.beginTransaction();
-	    	UnidadEntity unidadEntity = (UnidadEntity) session.load(UnidadEntity.class, codigo);
-	    	
-	    	return entity2unidad(unidadEntity);
+	    	session = ConnectionUtils.getSession();
+	    	Transaction transaction = null; 
+			try {
+				transaction = session.beginTransaction();
+				UnidadEntity unidadEntity = (UnidadEntity) session.load(UnidadEntity.class, codigo);
+				Unidad unidad = unidadEntity.toUnidad();
+		    	unidad.setDuenios(unidadEntity.getDuenios());
+		    	unidad.setInquilinos(unidadEntity.getInquilinos());
+		    	transaction.commit();
+
+		    	return unidad;
+			} catch (Exception e) {
+				if (transaction != null) {
+					transaction.rollback();
+				}
+				System.out.println("Error al buscar la unidad");
+				e.printStackTrace();
+			} finally {
+				session.close();
+			}
+			return null;
 	    }
-	    
-	    private Unidad entity2unidad(UnidadEntity entity) {
-	    	Unidad unidad = entity.toUnidad();
-	    	unidad.setDuenios(entity.getDuenios());
-	    	unidad.setInquilinos(entity.getInquilinos());
-	    	System.out.println(unidad.getDuenios().size());;
-	    	return unidad;
-	    	
+	        
+	    public void save(Unidad unidad) {
+	    	session = ConnectionUtils.getSession();
+			Transaction transaction = null; 
+			try {
+				transaction = session.beginTransaction();
+				transaction.begin();
+				UnidadEntity unidadEntity = unidad.toEntity();
+				session.saveOrUpdate(unidadEntity);
+				transaction.commit();
+			} catch (Exception e) {
+				if (transaction != null) {
+					transaction.rollback();
+				}
+				System.out.println("No se pudo guardar la unidad");
+				//e.printStackTrace();
+			} finally {
+				session.close();
+			}
 	    }
 }

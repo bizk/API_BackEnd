@@ -9,12 +9,11 @@ public class ConnectionUtils {
 	
 	public static void SetupConnection() {
 		sessionFactory = utils.HibernateUtils.getSessionFactory();
-		session = sessionFactory.openSession();
 	}
 	
 	public static Session getSession() {
-		if (sessionFactory == null || session == null) SetupConnection();
-		return session;
+		if (sessionFactory == null) SetupConnection();
+		return sessionFactory.openSession();
 	}
 	
 	public void close() {

@@ -69,4 +69,52 @@ public class UnidadEntity {
 	public List<Persona> getInquilinos() {
 		return this.inquilinos.stream().map(x -> x.getInquilino()).collect(Collectors.toCollection(ArrayList<Persona>::new));
 	}
+	
+	public int getIdentificador() {
+		return identificador;
+	}
+
+	public void setIdentificador(int identificador) {
+		this.identificador = identificador;
+	}
+
+	public String getPiso() {
+		return piso;
+	}
+
+	public void setPiso(String piso) {
+		this.piso = piso;
+	}
+
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+
+	public boolean isHabitado() {
+		return habitado;
+	}
+
+	public void setHabitado(boolean habitado) {
+		this.habitado = habitado;
+	}
+
+	public EdificioEntity getEdificio() {
+		return edificio;
+	}
+
+	public void setEdificio(EdificioEntity edificio) {
+		this.edificio = edificio;
+	}
+
+	public void setDuenios(List<DuenioEntity> duenios) {
+		this.duenios = duenios;
+	}
+
+	public void setInquilinos(List<InquilinoEntity> inquilinos) {
+		this.inquilinos = inquilinos;
+	}
 }
