@@ -59,8 +59,6 @@ public class EdificioDAO {
 			return edificio;
 		} catch (Exception np) {
 			System.out.println("No existe un edificio para dicho codigo");
-		} finally {
-			session.close();
 		}
 		session.close();
 		return null;

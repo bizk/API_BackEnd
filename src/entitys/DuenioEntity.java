@@ -34,10 +34,14 @@ public class DuenioEntity {
 		
 	}
 	
+	public DuenioEntity(UnidadEntity unidad, PersonaEntity duenio) {
+		this.unidad = unidad;
+		this.duenio = duenio;
+	}
+
 	public PersonaEntity getDuenio() {
 		return duenio;
 	}
-
 
 	public int getId() {
 		return id;

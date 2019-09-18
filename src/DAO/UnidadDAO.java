@@ -94,8 +94,8 @@ public class UnidadDAO {
 								unidad.getNumero(),
 								unidad.isHabitado(),
 								EdificioDAO.toNegocio(unidad.getEdificio()),
-								DuenioDAO.toNegocio(unidad.getDuenios()),
-								InquilinoDAO.toNegocio(unidad.getInquilinos())); //TODO evaluar si esto es muy lento. Sino, cambiar a inicio diferido
+								DuenioDAO.toNegocioPersona(unidad.getDuenios()),
+								InquilinoDAO.toNegocioPersona(unidad.getInquilinos())); //TODO evaluar si esto es muy lento. Sino, cambiar a inicio diferido
 																				// cabe observación anterior.
 		}
 }
