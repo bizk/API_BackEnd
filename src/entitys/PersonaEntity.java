@@ -12,25 +12,16 @@ import javax.persistence.Table;
 @Table(name="personas")
 public class PersonaEntity {
 	@Id
-<<<<<<< HEAD
-	@GeneratedValue(strategy = GenerationType.AUTO)
-=======
->>>>>>> 45a91589ca0ff9a59ff2500e7f420e8f9d1f4a97
 	@Column(name="documento")
 	private String documento;
 	@Column(name="nombre")
 	private String nombre;
-	
-<<<<<<< HEAD
-	public String toString() {
-		return new String(this.documento + " " + this.nombre);
-=======
 	public PersonaEntity() {}
 	
 	public PersonaEntity(String documento, String nombre) {
+		super();
 		this.documento = documento;
 		this.nombre = nombre;
->>>>>>> 45a91589ca0ff9a59ff2500e7f420e8f9d1f4a97
 	}
 
 	public String getDocumento() {

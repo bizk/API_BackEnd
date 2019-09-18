@@ -2,9 +2,13 @@ package entitys;
 
 import entitys.UnidadEntity;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import modelo.Persona;
 =======
 >>>>>>> 45a91589ca0ff9a59ff2500e7f420e8f9d1f4a97
+=======
+import modelo.Persona;
+>>>>>>> 57b475a6c836925ed90f7e192def2b4d9ac71bff
 import entitys.PersonaEntity;
 
 import javax.persistence.Column;
@@ -26,6 +30,7 @@ import javax.persistence.Transient;
 @Table(name="duenios")
 public class DuenioEntity {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="id")
 	private int id;
 	
@@ -33,28 +38,18 @@ public class DuenioEntity {
 	@JoinColumn(name="identificador")
 	private UnidadEntity unidad;
 
-<<<<<<< HEAD
-	@ManyToOne
-=======
 	@ManyToMany
->>>>>>> 45a91589ca0ff9a59ff2500e7f420e8f9d1f4a97
 	@JoinColumn(name="documento")
 	@Transient
 	private PersonaEntity duenio;
 	
-<<<<<<< HEAD
-	
-	public Persona getDuenio() {
-		return duenio.toPersona();
-=======
 	public DuenioEntity() {
 		
 	}
 	
-	public PersonaEntity getDuenio() {
-		return duenio;
+	public Persona getDuenio() {
+		return duenio.toPersona();
 	}
-
 
 	public int getId() {
 		return id;
@@ -82,6 +77,6 @@ public class DuenioEntity {
 	
 	public String toString() {
 		return new String(id + " " + unidad.toString() + " " + duenio.toString());
->>>>>>> 45a91589ca0ff9a59ff2500e7f420e8f9d1f4a97
+
 	}
 }

@@ -1,5 +1,6 @@
 package entitys;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import entitys.UnidadEntity;
@@ -76,6 +77,4 @@ public class EdificioEntity {
 	public void setUnidades(List<UnidadEntity> unidades) {
 		this.unidades = unidades;
 	}
-
-
 }

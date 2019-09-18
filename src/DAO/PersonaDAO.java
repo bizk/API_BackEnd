@@ -37,7 +37,7 @@ public class PersonaDAO {
 			transaction = session.beginTransaction();
 			PersonaEntity personaEntity = (PersonaEntity) session.get(PersonaEntity.class, documento);
 			transaction.commit();
-			return toNegocio(personaEntity);
+			return personaEntity.toPersona();
 		} catch (Exception exception) {
 			if (transaction != null) {
 				transaction.rollback();
@@ -55,7 +55,9 @@ public class PersonaDAO {
 		try {
 			transaction = session.beginTransaction();
 			transaction.begin();
-			PersonaEntity personaEntity = toEntity(persona);
+			PersonaEntity personaEntity = persona.toEntity();
+			personaEntity.setDocumento(persona.getDocumento());
+			personaEntity.setNombre(persona.getNombre());
 			session.saveOrUpdate(personaEntity);
 			transaction.commit();
 		} catch (Exception e) {
@@ -72,7 +74,8 @@ public class PersonaDAO {
 		try {
 			transaction = session.beginTransaction();
 			transaction.begin();
-			PersonaEntity personaEntity = toEntity(persona);
+
+			PersonaEntity personaEntity = new PersonaEntity();
 			session.delete(personaEntity);
 			transaction.commit();
 		} catch (Exception e) {

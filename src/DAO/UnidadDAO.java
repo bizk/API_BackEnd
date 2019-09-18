@@ -18,6 +18,8 @@ import modelo.Unidad;
 import utils.ConnectionUtils;
 import views.Estado;
 
+
+
 public class UnidadDAO {
 	 private Session session;
 	 private List<Unidad> unidades;
@@ -35,27 +37,19 @@ public class UnidadDAO {
 	    }
 	    
 	    public Unidad getUnidad(int codigo) {
-<<<<<<< HEAD
 			session.beginTransaction();
 	    	UnidadEntity unidadEntity = (UnidadEntity) session.load(UnidadEntity.class, codigo);
 	    	return entity2unidad(unidadEntity);
 	    }
 	    
 	    private Unidad entity2unidad(UnidadEntity entity) {
-	    	Unidad unidad = entity.toUnidad();
-	    	//unidad.setDuenios(entity.getDuenios());
-	    	
-	    	return unidad;
-	    	
-=======
 	    	session = ConnectionUtils.getSession();
 	    	Transaction transaction = null; 
 			try {
 				transaction = session.beginTransaction();
-				UnidadEntity unidadEntity = (UnidadEntity) session.load(UnidadEntity.class, codigo);
-				Unidad unidad = toNegocio(unidadEntity);
-		    	/*unidad.setDuenios(unidadEntity.getDuenios());
-		    	unidad.setInquilinos(unidadEntity.getInquilinos());*/
+				Unidad unidad = entity.toUnidad();
+		    	unidad.setDuenios(entity.getDuenios());
+		    	unidad.setInquilinos(entity.getInquilinos());
 		    	transaction.commit();
 
 		    	return unidad;
@@ -77,7 +71,7 @@ public class UnidadDAO {
 			try {
 				transaction = session.beginTransaction();
 				transaction.begin();
-				UnidadEntity unidadEntity = toEntity(unidad);
+				UnidadEntity unidadEntity = unidad.toEntity();
 				session.saveOrUpdate(unidadEntity);
 				transaction.commit();
 			} catch (Exception e) {
@@ -89,8 +83,7 @@ public class UnidadDAO {
 			} finally {
 				session.close();
 			}
->>>>>>> 45a91589ca0ff9a59ff2500e7f420e8f9d1f4a97
-	    }
+		}
 		static UnidadEntity toEntity(Unidad unidad) {
 			return new UnidadEntity(unidad.getId(),
 									unidad.getPiso(),
@@ -98,10 +91,11 @@ public class UnidadDAO {
 									unidad.estaHabitado(),
 									EdificioDAO.toEntity(unidad.getEdificio()),
 									DuenioDAO.toEntity(unidad.getDuenios(), unidad),
-									InquilinoDAO.toEntity(unidad.getInquilinos(), unidad)); //TODO Como implementar ésto? 
+									InquilinoDAO.toEntity(unidad.getInquilinos(), unidad)); //TODO Como implementar ï¿½sto? 
 																							//un duenioEntity solo tiene una persona y una unidad
-																							//y no hay duenio en el negocio, porque en el negocio son personas nomás
+																							//y no hay duenio en el negocio, porque en el negocio son personas nomï¿½s
 		}
+		
 		static Unidad toNegocio(UnidadEntity unidad) {
 			return new Unidad(unidad.getIdentificador(),
 								unidad.getPiso(),
@@ -110,6 +104,6 @@ public class UnidadDAO {
 								EdificioDAO.toNegocio(unidad.getEdificio()),
 								DuenioDAO.toNegocio(unidad.getDuenios()),
 								InquilinoDAO.toNegocio(unidad.getInquilinos())); //TODO evaluar si esto es muy lento. Sino, cambiar a inicio diferido
-																				// cabe observación anterior.
+																				// cabe observaciï¿½n anterior.
 		}
 }

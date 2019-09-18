@@ -13,10 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-<<<<<<< HEAD
-import javax.persistence.JoinTable;
-=======
->>>>>>> 45a91589ca0ff9a59ff2500e7f420e8f9d1f4a97
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -52,23 +48,18 @@ public class UnidadEntity {
 	@JoinColumn(name="identificador")
 	private List<DuenioEntity> duenios;
 	
-<<<<<<< HEAD
-	@Transient
-	private List<PersonaEntity> inquilinos;
+	@OneToMany
+	@JoinColumn(name="identificador")
+	private List<InquilinoEntity> inquilinos;
 
 	public Unidad toUnidad() {
 		Unidad unidad = new Unidad(this.identificador, this.piso, this.numero, this.edificio.toEdificio());
 		unidad.setDuenios(this.duenios.stream().map(x->x.getDuenio())
 				.collect(Collectors.toCollection(ArrayList<Persona>::new)));
+		//unidad.setInquilinos(this.inquilinos.stream().map(x->x.getInquilino())
+		//		.collect(Collectors.toCollection(ArrayList<Persona>::new)));
 		return unidad;
 	}
-	
-	public List<Persona> getDuenios(){
-		return this.duenios.stream().map(x -> x.getDuenio()).collect(Collectors.toCollection(ArrayList<Persona>::new));
-=======
-	@OneToMany
-	@JoinColumn(name="identificador")
-	private List<InquilinoEntity> inquilinos;
 
 	public UnidadEntity() {
 	}
@@ -85,11 +76,20 @@ public class UnidadEntity {
 		this.inquilinos = inquilinos;
 	}
 
-	public List<DuenioEntity> getDuenios(){
+	public List<Persona> getDuenios(){
+		return this.duenios.stream().map(x -> x.getDuenio()).collect(Collectors.toCollection(ArrayList<Persona>::new));
+	}
+	
+	public List<DuenioEntity> getDueniosEntity(){
 		return this.duenios;
 	}
-	public List<InquilinoEntity> getInquilinos() {
+	public List<InquilinoEntity> getInquilinosEntity() {
 		return this.inquilinos;
+	}
+	
+	public List<Persona> getInquilinos() {
+		return null;
+		//return this.inquilinos.stream().map(x -> x.getInquilino()).collect(Collectors.toCollection(ArrayList<Persona>::new));
 	}
 	
 	public int getIdentificador() {
@@ -138,7 +138,5 @@ public class UnidadEntity {
 
 	public void setInquilinos(List<InquilinoEntity> inquilinos) {
 		this.inquilinos = inquilinos;
-
->>>>>>> 45a91589ca0ff9a59ff2500e7f420e8f9d1f4a97
 	}
 }

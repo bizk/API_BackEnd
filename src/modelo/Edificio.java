@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+import entitys.EdificioEntity;
+import entitys.UnidadEntity;
 import views.EdificioView;
 
 public class Edificio {
@@ -92,5 +95,14 @@ public class Edificio {
 	
 	public String toString() {
 		return new String(this.codigo + ": " + this.nombre + " " + this.direccion);
+	}
+	
+	public EdificioEntity toEntity() {
+		EdificioEntity edificioEntity = new EdificioEntity();
+		edificioEntity.setCodigo(this.codigo);
+		edificioEntity.setDireccion(this.direccion);
+		edificioEntity.setNombre(this.nombre);
+		edificioEntity.setUnidades(this.unidades.stream().map(x->x.toEntity()).collect(Collectors.toCollection(ArrayList<UnidadEntity>::new)));
+		return edificioEntity;
 	}
 }

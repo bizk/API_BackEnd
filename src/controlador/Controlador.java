@@ -9,22 +9,16 @@ import org.hibernate.classic.Session;
 import DAO.EdificioDAO;
 import DAO.PersonaDAO;
 import DAO.UnidadDAO;
-<<<<<<< HEAD
 import entitys.DuenioEntity;
 import entitys.EdificioEntity;
 import entitys.PersonaEntity;
 import entitys.UnidadEntity;
-=======
->>>>>>> 45a91589ca0ff9a59ff2500e7f420e8f9d1f4a97
 import exceptions.EdificioException;
 import exceptions.PersonaException;
 import exceptions.ReclamoException;
 import exceptions.UnidadException;
-<<<<<<< HEAD
 import utils.ConnectionUtils;
 import utils.HibernateUtils;
-=======
->>>>>>> 45a91589ca0ff9a59ff2500e7f420e8f9d1f4a97
 import modelo.Edificio;
 import modelo.Persona;
 import modelo.Reclamo;
@@ -52,15 +46,8 @@ public class Controlador {
 	//FOR QUICK TEST ONLY 
 	public void tryConnection() {
 		Session session = ConnectionUtils.getSession();
-<<<<<<< HEAD
 		//session.beginTransaction();
 		System.out.println(unidadDAO.getUnidad(2));
-		//session.close();
-=======
-		session.beginTransaction();
-		System.out.println(unidadDAO.getUnidad(2));
-		session.close();
->>>>>>> 45a91589ca0ff9a59ff2500e7f420e8f9d1f4a97
 	}
 	
 	public static Controlador getInstancia() {
@@ -76,7 +63,6 @@ public class Controlador {
 	public List<UnidadView> getUnidadesPorEdificio(int codigo) throws EdificioException{
 		List<UnidadView> resultado = new ArrayList<UnidadView>();
 		Edificio edificio = buscarEdificio(codigo);
-		System.out.println(edificio.toView());
 		List<Unidad> unidades = edificio.getUnidades();
 		for(Unidad unidad : unidades) 
 			resultado.add(unidad.toView());
@@ -228,7 +214,6 @@ public class Controlador {
 		return edificioDAO.getEdificio(codigo);
 	}
 
-	//TODO
 	private Unidad buscarUnidad(int codigo, String piso, String numero) throws UnidadException{
 		return unidadDAO.getUnidad(codigo);
 	}	
