@@ -13,7 +13,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+<<<<<<< HEAD
 import javax.persistence.JoinTable;
+=======
+>>>>>>> 45a91589ca0ff9a59ff2500e7f420e8f9d1f4a97
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -49,6 +52,7 @@ public class UnidadEntity {
 	@JoinColumn(name="identificador")
 	private List<DuenioEntity> duenios;
 	
+<<<<<<< HEAD
 	@Transient
 	private List<PersonaEntity> inquilinos;
 
@@ -61,5 +65,80 @@ public class UnidadEntity {
 	
 	public List<Persona> getDuenios(){
 		return this.duenios.stream().map(x -> x.getDuenio()).collect(Collectors.toCollection(ArrayList<Persona>::new));
+=======
+	@OneToMany
+	@JoinColumn(name="identificador")
+	private List<InquilinoEntity> inquilinos;
+
+	public UnidadEntity() {
+	}
+	
+	public UnidadEntity(int identificador, String piso, String numero, boolean habitado, EdificioEntity edificio,
+			List<DuenioEntity> duenios, List<InquilinoEntity> inquilinos) {
+		super();
+		this.identificador = identificador;
+		this.piso = piso;
+		this.numero = numero;
+		this.habitado = habitado;
+		this.edificio = edificio;
+		this.duenios = duenios;
+		this.inquilinos = inquilinos;
+	}
+
+	public List<DuenioEntity> getDuenios(){
+		return this.duenios;
+	}
+	public List<InquilinoEntity> getInquilinos() {
+		return this.inquilinos;
+	}
+	
+	public int getIdentificador() {
+		return identificador;
+	}
+
+	public void setIdentificador(int identificador) {
+		this.identificador = identificador;
+	}
+
+	public String getPiso() {
+		return piso;
+	}
+
+	public void setPiso(String piso) {
+		this.piso = piso;
+	}
+
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+
+	public boolean isHabitado() {
+		return habitado;
+	}
+
+	public void setHabitado(boolean habitado) {
+		this.habitado = habitado;
+	}
+
+	public EdificioEntity getEdificio() {
+		return edificio;
+	}
+
+	public void setEdificio(EdificioEntity edificio) {
+		this.edificio = edificio;
+	}
+
+	public void setDuenios(List<DuenioEntity> duenios) {
+		this.duenios = duenios;
+	}
+
+	public void setInquilinos(List<InquilinoEntity> inquilinos) {
+		this.inquilinos = inquilinos;
+
+>>>>>>> 45a91589ca0ff9a59ff2500e7f420e8f9d1f4a97
 	}
 }
