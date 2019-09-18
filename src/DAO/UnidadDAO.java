@@ -98,14 +98,25 @@ public class UnidadDAO {
 																							//y no hay duenio en el negocio, porque en el negocio son personas nom�s
 		}
 		
-		static Unidad toNegocio(UnidadEntity unidad) {
-			return new Unidad(unidad.getIdentificador(),
-								unidad.getPiso(),
-								unidad.getNumero(),
-								unidad.isHabitado(),
-								EdificioDAO.toNegocio(unidad.getEdificio()), null,null);
+		static Unidad toNegocio(UnidadEntity unidadEntity) {
+			return new Unidad(unidadEntity.getIdentificador(),
+								unidadEntity.getPiso(),
+								unidadEntity.getNumero(),
+								unidadEntity.isHabitado(),
+								EdificioDAO.toNegocio(unidadEntity.getEdificio()), null,null);
 								//DuenioDAO.toNegocio(unidad.getDuenios()),
 								//InquilinoDAO.toNegocio(unidad.getInquilinos())); //TODO evaluar si esto es muy lento. Sino, cambiar a inicio diferido
 																				// cabe observaci�n anterior.
+		}
+		
+		static Unidad toNegocioEdificio(UnidadEntity unidadEntity, Edificio edificio) {
+			return new Unidad(unidadEntity.getIdentificador(),
+					unidadEntity.getPiso(),
+					unidadEntity.getNumero(),
+					unidadEntity.isHabitado(),
+					edificio, null,null);
+					//DuenioDAO.toNegocio(unidad.getDuenios()),
+					//InquilinoDAO.toNegocio(unidad.getInquilinos())); //TODO evaluar si esto es muy lento. Sino, cambiar a inicio diferido
+																	// cabe observaci�n anterior.
 		}
 }

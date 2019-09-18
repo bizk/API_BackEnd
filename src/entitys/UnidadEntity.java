@@ -52,32 +52,26 @@ public class UnidadEntity {
 	@JoinColumn(name="identificador")
 	private List<InquilinoEntity> inquilinos;
 
-	public Unidad toUnidad() {
-		Unidad unidad = new Unidad(this.identificador, this.piso, this.numero, this.edificio.toEdificio());
-		unidad.setDuenios(this.duenios.stream().map(x->x.getDuenio())
-				.collect(Collectors.toCollection(ArrayList<Persona>::new)));
-		//unidad.setInquilinos(this.inquilinos.stream().map(x->x.getInquilino())
-		//		.collect(Collectors.toCollection(ArrayList<Persona>::new)));
-		return unidad;
-	}
+//	}
 
 	public UnidadEntity() {
 	}
 	
-	public UnidadEntity(int identificador, String piso, String numero, boolean habitado, EdificioEntity edificio,
-			List<DuenioEntity> duenios, List<InquilinoEntity> inquilinos) {
-		super();
-		this.identificador = identificador;
-		this.piso = piso;
-		this.numero = numero;
-		this.habitado = habitado;
-		this.edificio = edificio;
-		this.duenios = duenios;
-		this.inquilinos = inquilinos;
-	}
+//	public UnidadEntity(int identificador, String piso, String numero, boolean habitado, EdificioEntity edificio,
+//			List<DuenioEntity> duenios, List<InquilinoEntity> inquilinos) {
+//		super();
+//		this.identificador = identificador;
+//		this.piso = piso;
+//		this.numero = numero;
+//		this.habitado = habitado;
+//		this.edificio = edificio;
+//		this.duenios = duenios;
+//		this.inquilinos = inquilinos;
+//	}
 
 	public List<Persona> getDuenios(){
-		return this.duenios.stream().map(x -> x.getDuenio()).collect(Collectors.toCollection(ArrayList<Persona>::new));
+		return null;
+		//return this.duenios.stream().map(x -> x.getDuenio()).collect(Collectors.toCollection(ArrayList<Persona>::new));
 	}
 	
 	public List<DuenioEntity> getDueniosEntity(){
