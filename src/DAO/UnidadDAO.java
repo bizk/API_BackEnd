@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import controlador.Controlador;
 import entitys.DuenioEntity;
 import entitys.EdificioEntity;
 import entitys.PersonaEntity;
@@ -19,9 +20,9 @@ import utils.ConnectionUtils;
 import views.Estado;
 
 
-
 public class UnidadDAO {
 	 private Session session;
+	 
 	 private List<Unidad> unidades;
 	    public UnidadDAO() {
 	    	if (session == null) this.session = ConnectionUtils.getSession();
@@ -84,14 +85,15 @@ public class UnidadDAO {
 				session.close();
 			}
 		}
+	    //TODO
 		static UnidadEntity toEntity(Unidad unidad) {
 			return new UnidadEntity(unidad.getId(),
 									unidad.getPiso(),
 									unidad.getNumero(),
 									unidad.estaHabitado(),
-									EdificioDAO.toEntity(unidad.getEdificio()),
-									DuenioDAO.toEntity(unidad.getDuenios(), unidad),
-									InquilinoDAO.toEntity(unidad.getInquilinos(), unidad)); //TODO Como implementar �sto? 
+									EdificioDAO.toEntity(unidad.getEdificio()), null,null);
+									//DuenioDAO.toEntity(unidad.getDuenios(), unidad),
+									//InquilinoDAO.toEntity(unidad.getInquilinos(), unidad)); //TODO Como implementar �sto? 
 																							//un duenioEntity solo tiene una persona y una unidad
 																							//y no hay duenio en el negocio, porque en el negocio son personas nom�s
 		}
@@ -101,9 +103,9 @@ public class UnidadDAO {
 								unidad.getPiso(),
 								unidad.getNumero(),
 								unidad.isHabitado(),
-								EdificioDAO.toNegocio(unidad.getEdificio()),
-								DuenioDAO.toNegocio(unidad.getDuenios()),
-								InquilinoDAO.toNegocio(unidad.getInquilinos())); //TODO evaluar si esto es muy lento. Sino, cambiar a inicio diferido
+								EdificioDAO.toNegocio(unidad.getEdificio()), null,null);
+								//DuenioDAO.toNegocio(unidad.getDuenios()),
+								//InquilinoDAO.toNegocio(unidad.getInquilinos())); //TODO evaluar si esto es muy lento. Sino, cambiar a inicio diferido
 																				// cabe observaci�n anterior.
 		}
 }

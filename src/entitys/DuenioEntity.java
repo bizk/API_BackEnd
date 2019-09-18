@@ -1,14 +1,8 @@
 package entitys;
 
 import entitys.UnidadEntity;
-<<<<<<< HEAD
-<<<<<<< HEAD
 import modelo.Persona;
-=======
->>>>>>> 45a91589ca0ff9a59ff2500e7f420e8f9d1f4a97
-=======
 import modelo.Persona;
->>>>>>> 57b475a6c836925ed90f7e192def2b4d9ac71bff
 import entitys.PersonaEntity;
 
 import javax.persistence.Column;
@@ -19,10 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-<<<<<<< HEAD
 import javax.persistence.OneToMany;
-=======
->>>>>>> 45a91589ca0ff9a59ff2500e7f420e8f9d1f4a97
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -47,8 +38,8 @@ public class DuenioEntity {
 		
 	}
 	
-	public Persona getDuenio() {
-		return duenio.toPersona();
+	public PersonaEntity getDuenio() {
+		return duenio;
 	}
 
 	public int getId() {
@@ -64,7 +55,6 @@ public class DuenioEntity {
 	public UnidadEntity getUnidad() {
 		return unidad;
 	}
-
 
 	public void setUnidad(UnidadEntity unidad) {
 		this.unidad = unidad;

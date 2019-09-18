@@ -69,7 +69,6 @@ public class Controlador {
 		return resultado;
 	}
 	
-	//hASTA ACA ANDA
 	public List<PersonaView> habilitadosPorEdificio(int codigo) throws EdificioException{
 		List<PersonaView> resultado = new ArrayList<PersonaView>();
 		Edificio edificio = buscarEdificio(codigo);
