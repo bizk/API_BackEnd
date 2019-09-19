@@ -99,12 +99,15 @@ public class UnidadDAO {
 		}
 		
 		static Unidad toNegocio(UnidadEntity unidadEntity) {
+			System.out.println("are" + unidadEntity.getDuenios().size());
 			return new Unidad(unidadEntity.getIdentificador(),
 								unidadEntity.getPiso(),
 								unidadEntity.getNumero(),
 								unidadEntity.isHabitado(),
-								EdificioDAO.toNegocio(unidadEntity.getEdificio()), null,null);
-								//DuenioDAO.toNegocio(unidad.getDuenios()),
+								EdificioDAO.toNegocio(unidadEntity.getEdificio()), 
+								PersonaDAO.toNegocio(unidadEntity.getDuenios()),
+								new ArrayList<Persona>());
+								//,
 								//InquilinoDAO.toNegocio(unidad.getInquilinos())); //TODO evaluar si esto es muy lento. Sino, cambiar a inicio diferido
 																				// cabe observaci�n anterior.
 		}
@@ -114,7 +117,9 @@ public class UnidadDAO {
 					unidadEntity.getPiso(),
 					unidadEntity.getNumero(),
 					unidadEntity.isHabitado(),
-					edificio, null,null);
+					edificio, 
+					PersonaDAO.toNegocio(unidadEntity.getDuenios()),
+					new ArrayList<Persona>());
 					//DuenioDAO.toNegocio(unidad.getDuenios()),
 					//InquilinoDAO.toNegocio(unidad.getInquilinos())); //TODO evaluar si esto es muy lento. Sino, cambiar a inicio diferido
 																	// cabe observaci�n anterior.

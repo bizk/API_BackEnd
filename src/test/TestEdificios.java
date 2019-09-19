@@ -22,17 +22,29 @@ public class TestEdificios {
 			e.printStackTrace();
 		}
 		
-//		try {
-//			List<PersonaView> resultado = ctrl.habilitadosPorEdificio(1);
-//			System.out.println(resultado.size());
-//			for(PersonaView ps:resultado) {
-//				System.out.println(ps.toString());
-//			}
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			System.out.println("No anda habilitados por edificio");
-//			e.printStackTrace();
-//		}
+		System.out.println("### Obtener habilitados por edificio");
+		try {
+			List<PersonaView> resultado = ctrl.habilitadosPorEdificio(1);
+			for(PersonaView ps:resultado) {
+				System.out.println(ps);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("No anda habilitados por edificio");
+			e.printStackTrace();
+		}
+		
+		System.out.println("### Obtener duenios por edificio");
+		try {
+			List<PersonaView> resultado = ctrl.dueniosPorEdificio(1);
+			for(PersonaView ps:resultado) {
+				System.out.println(ps);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("No anda duenios por edificio");
+			e.printStackTrace();
+		}
 		
 	}
 }

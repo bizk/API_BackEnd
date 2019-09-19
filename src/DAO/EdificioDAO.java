@@ -62,10 +62,9 @@ public class EdificioDAO {
 			EdificioEntity edificioEntity = (EdificioEntity)session.createSQLQuery("SELECT * FROM edificios WHERE codigo = :edificio_id")
 						.addEntity(EdificioEntity.class).setParameter("edificio_id", codigo).uniqueResult();
 			List<UnidadEntity> unidadesEntity = edificioEntity.getUnidades();
-			System.out.println(unidadesEntity.size());
 			Edificio edificio = toNegocio(edificioEntity);
 			edificio.setUnidades(
-					unidadesEntity.stream().map(x->UnidadDAO.toNegocio(x)).collect(Collectors.toCollection(ArrayList<Unidad>::new))
+					unidadesEntity.stream().map(x->UnidadDAO.toNegocioEdificio(x, edificio)).collect(Collectors.toCollection(ArrayList<Unidad>::new))
 			);
 			session.close();
 			return edificio;
