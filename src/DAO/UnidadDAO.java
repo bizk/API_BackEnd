@@ -98,14 +98,30 @@ public class UnidadDAO {
 																							//y no hay duenio en el negocio, porque en el negocio son personas nom�s
 		}
 		
-		static Unidad toNegocio(UnidadEntity unidad) {
-			return new Unidad(unidad.getIdentificador(),
-								unidad.getPiso(),
-								unidad.getNumero(),
-								unidad.isHabitado(),
-								EdificioDAO.toNegocio(unidad.getEdificio()), null,null);
-								//DuenioDAO.toNegocio(unidad.getDuenios()),
+		static Unidad toNegocio(UnidadEntity unidadEntity) {
+			System.out.println("are" + unidadEntity.getDuenios().size());
+			return new Unidad(unidadEntity.getIdentificador(),
+								unidadEntity.getPiso(),
+								unidadEntity.getNumero(),
+								unidadEntity.isHabitado(),
+								EdificioDAO.toNegocio(unidadEntity.getEdificio()), 
+								PersonaDAO.toNegocio(unidadEntity.getDuenios()),
+								new ArrayList<Persona>());
+								//,
 								//InquilinoDAO.toNegocio(unidad.getInquilinos())); //TODO evaluar si esto es muy lento. Sino, cambiar a inicio diferido
 																				// cabe observaci�n anterior.
+		}
+		
+		static Unidad toNegocioEdificio(UnidadEntity unidadEntity, Edificio edificio) {
+			return new Unidad(unidadEntity.getIdentificador(),
+					unidadEntity.getPiso(),
+					unidadEntity.getNumero(),
+					unidadEntity.isHabitado(),
+					edificio, 
+					PersonaDAO.toNegocio(unidadEntity.getDuenios()),
+					new ArrayList<Persona>());
+					//DuenioDAO.toNegocio(unidad.getDuenios()),
+					//InquilinoDAO.toNegocio(unidad.getInquilinos())); //TODO evaluar si esto es muy lento. Sino, cambiar a inicio diferido
+																	// cabe observaci�n anterior.
 		}
 }

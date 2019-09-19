@@ -21,7 +21,7 @@ public class HibernateUtils
         	 // config.addAnnotatedClass(Imagen.class);
              config.addAnnotatedClass(PersonaEntity.class);
              //config.addAnnotatedClass(Reclamo.class); 
-             config.addAnnotatedClass(DuenioEntity.class);
+             //config.addAnnotatedClass(DuenioEntity.class);
              config.addAnnotatedClass(UnidadEntity.class);
              config.addAnnotatedClass(InquilinoEntity.class);
              sessionFactory = config.buildSessionFactory();

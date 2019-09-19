@@ -59,11 +59,12 @@ public class EdificioDAO {
 		try {
     		Session session = ConnectionUtils.getSession();
 			ts = session.beginTransaction();
-			EdificioEntity edificioEntity = (EdificioEntity) session.get(EdificioEntity.class, codigo);
+			EdificioEntity edificioEntity = (EdificioEntity)session.createSQLQuery("SELECT * FROM edificios WHERE codigo = :edificio_id")
+						.addEntity(EdificioEntity.class).setParameter("edificio_id", codigo).uniqueResult();
 			List<UnidadEntity> unidadesEntity = edificioEntity.getUnidades();
 			Edificio edificio = toNegocio(edificioEntity);
 			edificio.setUnidades(
-					unidadesEntity.stream().map(x->UnidadDAO.toNegocio(x)).collect(Collectors.toCollection(ArrayList<Unidad>::new))
+					unidadesEntity.stream().map(x->UnidadDAO.toNegocioEdificio(x, edificio)).collect(Collectors.toCollection(ArrayList<Unidad>::new))
 			);
 			session.close();
 			return edificio;
@@ -93,9 +94,12 @@ public class EdificioDAO {
 									edificio.getDireccion());
 	}
 
-    static Edificio toNegocio(EdificioEntity edificio) {
-		return new Edificio(edificio.getCodigo(),
-							edificio.getNombre(),
-							edificio.getDireccion());
-	}
+    static Edificio toNegocio(EdificioEntity edificioEntity) {
+		Edificio edificio = new Edificio(edificioEntity.getCodigo(),
+									edificioEntity.getNombre(),
+									edificioEntity.getDireccion());
+		edificio.setUnidades(edificioEntity.getUnidades().stream().map(x -> UnidadDAO.toNegocioEdificio(x, edificio))
+									.collect(Collectors.toCollection(ArrayList<Unidad>::new)));
+		return edificio;
+    }
 }

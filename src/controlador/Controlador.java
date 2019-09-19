@@ -44,7 +44,7 @@ public class Controlador {
 	}
 	
 	//FOR QUICK TEST ONLY 
-	public void tryConnection() {
+	public void tryConnection() { 
 		Session session = ConnectionUtils.getSession();
 		//session.beginTransaction();
 		System.out.println(unidadDAO.getUnidad(2));

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import entitys.EdificioEntity;
+import entitys.DuenioEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -44,28 +46,20 @@ public class UnidadEntity {
 	@JoinColumn(name="codigoEdificio")
 	private EdificioEntity edificio;
 	
-	@OneToMany
-	@JoinColumn(name="identificador")
-	private List<DuenioEntity> duenios;
+	@ManyToMany
+    @JoinTable(name="duenios", joinColumns=@JoinColumn(name="identificador"), inverseJoinColumns=@JoinColumn(name="documento"))  
+	private List<PersonaEntity> duenios = new ArrayList<PersonaEntity>();
 	
 	@OneToMany
 	@JoinColumn(name="identificador")
 	private List<InquilinoEntity> inquilinos;
 
-	public Unidad toUnidad() {
-		Unidad unidad = new Unidad(this.identificador, this.piso, this.numero, this.edificio.toEdificio());
-		unidad.setDuenios(this.duenios.stream().map(x->x.getDuenio())
-				.collect(Collectors.toCollection(ArrayList<Persona>::new)));
-		//unidad.setInquilinos(this.inquilinos.stream().map(x->x.getInquilino())
-		//		.collect(Collectors.toCollection(ArrayList<Persona>::new)));
-		return unidad;
-	}
 
 	public UnidadEntity() {
 	}
 	
 	public UnidadEntity(int identificador, String piso, String numero, boolean habitado, EdificioEntity edificio,
-			List<DuenioEntity> duenios, List<InquilinoEntity> inquilinos) {
+			List<PersonaEntity> duenios, List<InquilinoEntity> inquilinos) {
 		super();
 		this.identificador = identificador;
 		this.piso = piso;
@@ -76,11 +70,8 @@ public class UnidadEntity {
 		this.inquilinos = inquilinos;
 	}
 
-	public List<Persona> getDuenios(){
-		return this.duenios.stream().map(x -> x.getDuenio()).collect(Collectors.toCollection(ArrayList<Persona>::new));
-	}
 	
-	public List<DuenioEntity> getDueniosEntity(){
+	public List<PersonaEntity> getDuenios(){
 		return this.duenios;
 	}
 	public List<InquilinoEntity> getInquilinosEntity() {
@@ -132,7 +123,7 @@ public class UnidadEntity {
 		this.edificio = edificio;
 	}
 
-	public void setDuenios(List<DuenioEntity> duenios) {
+	public void setDuenios(List<PersonaEntity> duenios) {
 		this.duenios = duenios;
 	}
 

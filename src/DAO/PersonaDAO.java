@@ -95,4 +95,8 @@ public class PersonaDAO {
 		return new Persona(usuario.getDocumento(),
 							usuario.getNombre());
 	}
+
+	static List<Persona> toNegocio(List<PersonaEntity> usuariosEntity) {
+		return usuariosEntity.stream().map(x->toNegocio(x)).collect(Collectors.toCollection(ArrayList<Persona>::new));
+	}
 }

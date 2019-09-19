@@ -1,8 +1,6 @@
 package entitys;
 
 import entitys.UnidadEntity;
-import modelo.Persona;
-import modelo.Persona;
 import entitys.PersonaEntity;
 
 import javax.persistence.Column;
@@ -25,13 +23,11 @@ public class DuenioEntity {
 	@Column(name="id")
 	private int id;
 	
-	@ManyToOne
-	@JoinColumn(name="identificador")
+	@ManyToMany
 	private UnidadEntity unidad;
 
 	@ManyToMany
-	@JoinColumn(name="documento")
-	@Transient
+	@Column(name="documento")
 	private PersonaEntity duenio;
 	
 	public DuenioEntity() {
@@ -39,7 +35,7 @@ public class DuenioEntity {
 	}
 	
 	public PersonaEntity getDuenio() {
-		return duenio;
+		return this.duenio;
 	}
 
 	public int getId() {

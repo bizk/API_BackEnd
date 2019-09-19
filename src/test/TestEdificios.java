@@ -16,21 +16,33 @@ public class TestEdificios {
 		
 		System.out.println("### Obtener unidades por edificio");
 		try {
-			System.out.println(ctrl.getUnidadesPorEdificio(9)+ "\n");
+			System.out.println(ctrl.getUnidadesPorEdificio(1)+ "\n");
 		} catch (Exception e) {
 			System.out.println("No anda getUnidades por edificio");
 			e.printStackTrace();
 		}
 		
+		System.out.println("### Obtener habilitados por edificio");
 		try {
 			List<PersonaView> resultado = ctrl.habilitadosPorEdificio(1);
-			System.out.println(resultado.size());
 			for(PersonaView ps:resultado) {
-				System.out.println(ps.toString());
+				System.out.println(ps);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println("No anda habilitados por edificio");
+			e.printStackTrace();
+		}
+		
+		System.out.println("### Obtener duenios por edificio");
+		try {
+			List<PersonaView> resultado = ctrl.dueniosPorEdificio(1);
+			for(PersonaView ps:resultado) {
+				System.out.println(ps);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("No anda duenios por edificio");
 			e.printStackTrace();
 		}
 		
