@@ -9,7 +9,7 @@ import views.PersonaView;
 
 public class TestEdificios {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		Controlador ctrl = Controlador.getInstancia();
 		
 		boolean getEdificios = false;
@@ -65,17 +65,28 @@ public class TestEdificios {
 		
 		// -> System.out.println("- habitantesPorEdificioFunc: " + habitantesPorEdificioFunc(ctrl));
 		
-		System.out.println("- dueniosPorUnidadFunc: " + dueniosPorUnidad(ctrl));
-		//System.out.println("- InquilinosPorUNidad: " + inquilinosPorUnidad(ctrl));
+//		System.out.println("- dueniosPorUnidadFunc: " + dueniosPorUnidad(ctrl));
 //		try {
-//			ctrl.transferirUnidad(100, "N'10'", "N'5'", "DNI30012288");
+//			ctrl.transferirUnidad(100, "N'10'", "N'5'", "DNI30161468");
 //		} catch (UnidadException e) {
 //			// TODO Auto-generated catch block
-//			e.printStackTrace();
+//			e.printStackTrace(); 
 //		} catch (PersonaException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
+//		System.out.println("- dueniosPorUnidadFunc: " + dueniosPorUnidad(ctrl));
+	
+		//ctrl.liberarUnidad(28, null, null);
+		//ctrl.habitarUnidad(28, null, null);
+		//ctrl.habitarUnidad(28, null, null);		
+		//ctrl.agregarPersona("DNI1", "Mirtha legrand");
+		//System.out.println(ctrl.dueniosPorUnidad(9, null, null));
+		//ctrl.agregarDuenioUnidad(9, null, null, "DNI1");
+		System.out.println(ctrl.dueniosPorUnidad(9, null, null));
+		ctrl.eliminarPersona("DNI1");
+		System.out.println(ctrl.dueniosPorUnidad(9, null, null));
+
 	}
 	
 	private static boolean habitantesPorEdificioFunc(Controlador ctrl) {
@@ -92,7 +103,7 @@ public class TestEdificios {
 	private static boolean dueniosPorUnidad(Controlador ctrl) {
 		boolean bandera = false;
 		try {
-			ctrl.dueniosPorUnidad(100,"1","13");
+			System.out.println(ctrl.dueniosPorUnidad(100,"1","13"));;
 			bandera = true;
 		} catch (Exception e) {
 

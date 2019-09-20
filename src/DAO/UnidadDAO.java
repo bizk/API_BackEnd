@@ -7,11 +7,8 @@ import java.util.stream.Collectors;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import entitys.EdificioEntity;
-import entitys.PersonaEntity;
 import entitys.UnidadEntity;
 import modelo.Edificio;
-import modelo.Persona;
 import modelo.Unidad;
 import utils.ConnectionUtils;
 
@@ -50,8 +47,8 @@ public class UnidadDAO {
 			}
 	    }
 	    
-	    public void save(Unidad unidad) {
-	    	session = ConnectionUtils.getSession();
+	    public static void save(Unidad unidad) {
+	    	Session session = ConnectionUtils.getSession();
 			Transaction transaction = null; 
 			try {
 				transaction = session.beginTransaction();
@@ -80,7 +77,7 @@ public class UnidadDAO {
 									PersonaDAO.toEntity(unidad.getInquilinos()));
 		}
 		
-		static Unidad toNegocio(UnidadEntity unidadEntity) {
+	static Unidad toNegocio(UnidadEntity unidadEntity) {
 			System.out.println("are" + unidadEntity.getDuenios().size());
 			return new Unidad(unidadEntity.getIdentificador(),
 								unidadEntity.getPiso(),

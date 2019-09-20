@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import DAO.UnidadDAO;
 import entitys.EdificioEntity;
 import entitys.PersonaEntity;
 import entitys.UnidadEntity;
@@ -48,10 +49,12 @@ public class Unidad {
 	public void transferir(Persona nuevoDuenio) {
 		duenios = new ArrayList<Persona>();
 		duenios.add(nuevoDuenio);
+		this.save();
 	}
 	
 	public void agregarDuenio(Persona duenio) {
 		duenios.add(duenio);
+		this.save();
 	}
 	
 	public void alquilar(Persona inquilino) throws UnidadException {
@@ -59,6 +62,7 @@ public class Unidad {
 			this.habitado = true;
 			inquilinos = new ArrayList<Persona>();
 			inquilinos.add(inquilino);
+			this.save();
 		}
 		else
 			throw new UnidadException("La unidad esta ocupada");
@@ -66,6 +70,7 @@ public class Unidad {
 
 	public void agregarInquilino(Persona inquilino) {
 		inquilinos.add(inquilino);
+		this.save();
 	}
 	
 	public boolean estaHabitado() {
@@ -75,13 +80,16 @@ public class Unidad {
 	public void liberar() {
 		this.inquilinos = new ArrayList<Persona>();
 		this.habitado = false;
+		this.save();
 	}
 	
 	public void habitar() throws UnidadException {
 		if(this.habitado)
 			throw new UnidadException("La unidad ya esta habitada");
-		else
+		else {
 			this.habitado = true;
+			this.save();
+		}
 	}
 	
 	public int getId() {
@@ -130,13 +138,17 @@ public class Unidad {
 		edificioEntity.setNombre(this.edificio.getNombre());
 		unidadEntity.setEdificio(edificioEntity);
 		
-		System.out.println("aaa");
 		unidadEntity.setDuenios(this.duenios.stream().map(x->x.toEntity()).collect(Collectors.toCollection(ArrayList<PersonaEntity>::new)));
+		unidadEntity.setInquilinos(this.inquilinos.stream().map(x->x.toEntity()).collect(Collectors.toCollection(ArrayList<PersonaEntity>::new)));
 		return unidadEntity;
 	}
 	
 	public UnidadView toView() {
 		EdificioView auxEdificio = edificio.toView();
 		return new UnidadView(id, piso, numero, habitado, auxEdificio);
+	}
+	
+	public void save() {
+		UnidadDAO.save(this);
 	}
 }
