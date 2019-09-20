@@ -21,8 +21,10 @@ public class ImagenEntity {
 	
 	public ImagenEntity() {
 	}
-	
-	public ImagenEntity(String direccion, String tipo, ReclamoEntity reclamo) {
+
+	public ImagenEntity(int numero, String direccion, String tipo, int idReclamo) {
+		super();
+		this.numero = numero;
 		this.Direccion = direccion;
 		this.tipo = tipo;
 		this.reclamo = reclamo;

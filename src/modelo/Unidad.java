@@ -2,7 +2,11 @@ package modelo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import entitys.EdificioEntity;
+import entitys.PersonaEntity;
+import entitys.UnidadEntity;
 import exceptions.UnidadException;
 import views.EdificioView;
 import views.UnidadView;
@@ -111,6 +115,24 @@ public class Unidad {
 
 	public void setInquilinos(List<Persona> inquilinos){
 		this.inquilinos.addAll(inquilinos);
+	}
+	
+	public UnidadEntity toEntity() {
+		UnidadEntity unidadEntity = new UnidadEntity();
+		unidadEntity.setIdentificador(this.id);
+		unidadEntity.setNumero(this.numero);
+		unidadEntity.setPiso(this.piso);
+		unidadEntity.setHabitado(this.habitado);
+		
+		EdificioEntity edificioEntity = new EdificioEntity();
+		edificioEntity.setCodigo(this.edificio.getCodigo());
+		edificioEntity.setDireccion(this.edificio.getDireccion());
+		edificioEntity.setNombre(this.edificio.getNombre());
+		unidadEntity.setEdificio(edificioEntity);
+		
+		System.out.println("aaa");
+		unidadEntity.setDuenios(this.duenios.stream().map(x->x.toEntity()).collect(Collectors.toCollection(ArrayList<PersonaEntity>::new)));
+		return unidadEntity;
 	}
 	
 	public UnidadView toView() {

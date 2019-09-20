@@ -2,39 +2,18 @@ package DAO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import entitys.DuenioEntity;
-import entitys.InquilinoEntity;
-import entitys.UnidadEntity;
 import modelo.Persona;
-import modelo.Unidad;
 
-class DuenioDAO {
+public class DuenioDAO {
 
-	public static List<DuenioEntity> toEntity(List<Persona> duenios, Unidad unidad) {
-		List<DuenioEntity> du = new ArrayList<DuenioEntity>();
-		UnidadEntity unent = UnidadDAO.toEntity(unidad);
-		for (Persona p:duenios) {
-			du.add(new DuenioEntity(unent,PersonaDAO.toEntity(p)));
-		}
-		return du;
+	static Persona toNegocio(DuenioEntity duenioEntity) {
+		return new Persona(duenioEntity.getDuenio().getDocumento(), duenioEntity.getDuenio().getNombre());
 	}
 
-	public static List<Persona> toNegocioPersona(List<DuenioEntity> duenios) {
-		List<Persona> per =new ArrayList<Persona>();
-		for (DuenioEntity i: duenios) {
-			per.add(PersonaDAO.toNegocio(i.getDuenio()));
-		}
-		return per;
+	static List<Persona> toNegocio(List<DuenioEntity> dueniosEntity) {
+		return dueniosEntity.stream().map(x -> toNegocio(x)).collect(Collectors.toCollection(ArrayList<Persona>::new));
 	}
-	
-	public static List<Unidad> toNegocioUnidad(List<DuenioEntity> duenios){
-		List<Unidad> un = new ArrayList<Unidad>();
-		for (DuenioEntity i:duenios) {
-			un.add(UnidadDAO.toNegocio(i.getUnidad()));
-		}
-		return un;
-	}
-
-
 }

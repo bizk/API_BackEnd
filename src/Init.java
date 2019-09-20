@@ -1,7 +1,11 @@
+import java.util.List;
+
 import controlador.Controlador;
 import exceptions.EdificioException;
 import exceptions.PersonaException;
 import exceptions.UnidadException;
+import views.PersonaView;
+import views.UnidadView;
 
 public class Init {
 
@@ -17,6 +21,7 @@ public class Init {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
 }	
-}
+
 

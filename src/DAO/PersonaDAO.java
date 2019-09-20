@@ -13,14 +13,12 @@ import utils.ConnectionUtils;
 
 public class PersonaDAO {
 	private List<Persona> personas;
-	private Session session;
 	 
     public PersonaDAO() {
-    	if (session == null) this.session = ConnectionUtils.getSession();
     }
 	
 	public List<Persona> getAll(){
-		session.beginTransaction();
+		Session session = ConnectionUtils.getSession();
 
 		List<PersonaEntity> results = session.createCriteria(PersonaEntity.class).list();
 		//This function converts the results from entitys into a list
@@ -31,9 +29,10 @@ public class PersonaDAO {
 	}
 	
 	public Persona getPersona(String documento) {
-		session = ConnectionUtils.getSession();
     	Transaction transaction = null; 
 		try {
+			Session session = ConnectionUtils.getSession();
+
 			transaction = session.beginTransaction();
 			PersonaEntity personaEntity = (PersonaEntity) session.get(PersonaEntity.class, documento);
 			transaction.commit();
@@ -43,9 +42,6 @@ public class PersonaDAO {
 				transaction.rollback();
 			}
 			System.out.println("No existe ninguna persona con el dni: " + documento);
-		} finally {
-			if (session != null && !session.isOpen()) System.out.println("xd");
-			session.close();
 		}
 		return null;
 	}
@@ -53,9 +49,12 @@ public class PersonaDAO {
 	public void save(Persona persona) {
 		Transaction transaction = null; 
 		try {
+			Session session = ConnectionUtils.getSession();
 			transaction = session.beginTransaction();
 			transaction.begin();
-			PersonaEntity personaEntity = toEntity(persona);
+			PersonaEntity personaEntity = persona.toEntity();
+			personaEntity.setDocumento(persona.getDocumento());
+			personaEntity.setNombre(persona.getNombre());
 			session.saveOrUpdate(personaEntity);
 			transaction.commit();
 		} catch (Exception e) {
@@ -70,9 +69,11 @@ public class PersonaDAO {
 	public void delete(Persona persona) {
 		Transaction transaction = null; 
 		try {
+			Session session = ConnectionUtils.getSession();
 			transaction = session.beginTransaction();
 			transaction.begin();
-			PersonaEntity personaEntity = toEntity(persona);
+
+			PersonaEntity personaEntity = new PersonaEntity();
 			session.delete(personaEntity);
 			transaction.commit();
 		} catch (Exception e) {
@@ -87,9 +88,17 @@ public class PersonaDAO {
 		return new PersonaEntity(usuario.getDocumento(),
 									usuario.getNombre());
 	}
+	
+	static List<PersonaEntity> toEntity(List<Persona> personasEntity) {
+		return personasEntity.stream().map(x->toEntity(x)).collect(Collectors.toCollection(ArrayList<PersonaEntity>::new));
+	}
 
-	static Persona toNegocio(PersonaEntity usuario) {
-		return new Persona(usuario.getDocumento(),
-							usuario.getNombre());
+	static Persona toNegocio(PersonaEntity usuariosEntity) {
+		return new Persona(usuariosEntity.getDocumento(),
+					usuariosEntity.getNombre());
+	}
+
+	static List<Persona> toNegocio(List<PersonaEntity> usuariosEntity) {
+		return usuariosEntity.stream().map(x->toNegocio(x)).collect(Collectors.toCollection(ArrayList<Persona>::new));
 	}
 }

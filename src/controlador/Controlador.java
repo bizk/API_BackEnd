@@ -41,11 +41,10 @@ public class Controlador {
 	}
 	
 	//FOR QUICK TEST ONLY 
-	public void tryConnection() {
+	public void tryConnection() { 
 		Session session = ConnectionUtils.getSession();
-		session.beginTransaction();
+		//session.beginTransaction();
 		System.out.println(unidadDAO.getUnidad(2));
-		session.close();
 	}
 	
 	public static Controlador getInstancia() {
@@ -67,7 +66,6 @@ public class Controlador {
 		return resultado;
 	}
 	
-	//hASTA ACA ANDA
 	public List<PersonaView> habilitadosPorEdificio(int codigo) throws EdificioException{
 		List<PersonaView> resultado = new ArrayList<PersonaView>();
 		Edificio edificio = buscarEdificio(codigo);
@@ -91,8 +89,14 @@ public class Controlador {
 		List<PersonaView> resultado = new ArrayList<PersonaView>();
 		Edificio edificio = buscarEdificio(codigo);
 		Set<Persona> habitantes = edificio.habitantes();
-		for(Persona persona : habitantes)
+		
+		System.out.println(habitantes.size());
+		
+		for(Persona persona : habitantes) {
 			resultado.add(persona.toView());
+			System.out.println(persona.toView());
+		
+		}
 		return resultado;
 	}
 
@@ -100,7 +104,7 @@ public class Controlador {
 		List<PersonaView> resultado = new ArrayList<PersonaView>();
 		Unidad unidad = buscarUnidad(codigo, piso, numero);
 		List<Persona> duenios = unidad.getDuenios();
-		for(Persona persona : duenios)
+		for(Persona persona : duenios) 
 			resultado.add(persona.toView());
 		return resultado;
 	}
@@ -109,7 +113,7 @@ public class Controlador {
 		List<PersonaView> resultado = new ArrayList<PersonaView>();
 		Unidad unidad = buscarUnidad(codigo, piso, numero);
 		List<Persona> inquilinos = unidad.getInquilinos();
-		for(Persona persona : inquilinos)
+		for(Persona persona : inquilinos) 
 			resultado.add(persona.toView());
 		return resultado;
 	}
@@ -150,7 +154,6 @@ public class Controlador {
 		unidad.habitar();;
 	}
 	//TODO Hasta aca
-	
 	public void agregarPersona(String documento, String nombre) {
 		Persona persona = new Persona(documento, nombre);
 		personaDAO.save(persona);
@@ -220,7 +223,6 @@ public class Controlador {
 		return edificioDAO.getEdificio(codigo);
 	}
 
-	//TODO
 	private Unidad buscarUnidad(int codigo, String piso, String numero) throws UnidadException{
 		return unidadDAO.getUnidad(codigo);
 	}	

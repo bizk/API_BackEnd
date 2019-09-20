@@ -31,9 +31,8 @@ public class EdificioEntity {
 	private String direccion;
 	
 	@OneToMany
-	@JoinColumn(name="identificador")
-	private List<UnidadEntity> unidades;
-	
+	@JoinColumn(name="codigoEdificio")
+	private List<UnidadEntity> unidades = new ArrayList<UnidadEntity>();
 	
 	public EdificioEntity() {
 	}
@@ -71,12 +70,10 @@ public class EdificioEntity {
 	}
 
 	public List<UnidadEntity> getUnidades() {
-		return unidades;
+		return this.unidades;
 	}
 
 	public void setUnidades(List<UnidadEntity> unidades) {
 		this.unidades = unidades;
 	}
-
-
 }

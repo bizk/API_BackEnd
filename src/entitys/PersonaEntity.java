@@ -2,7 +2,12 @@ package entitys;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -14,10 +19,10 @@ public class PersonaEntity {
 	private String documento;
 	@Column(name="nombre")
 	private String nombre;
-	
 	public PersonaEntity() {}
 	
 	public PersonaEntity(String documento, String nombre) {
+		super();
 		this.documento = documento;
 		this.nombre = nombre;
 	}

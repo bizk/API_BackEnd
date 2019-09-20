@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -18,16 +19,15 @@ import javax.persistence.Transient;
 @Table(name="duenios")
 public class DuenioEntity {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="id")
 	private int id;
 	
-	@ManyToOne
-	@JoinColumn(name="identificador")
+	@ManyToMany
 	private UnidadEntity unidad;
 
 	@ManyToMany
-	@JoinColumn(name="documento")
-	@Transient
+	@Column(name="documento")
 	private PersonaEntity duenio;
 	
 	public DuenioEntity() {
@@ -40,7 +40,7 @@ public class DuenioEntity {
 	}
 
 	public PersonaEntity getDuenio() {
-		return duenio;
+		return this.duenio;
 	}
 
 	public int getId() {
@@ -57,7 +57,6 @@ public class DuenioEntity {
 		return unidad;
 	}
 
-
 	public void setUnidad(UnidadEntity unidad) {
 		this.unidad = unidad;
 	}
@@ -69,5 +68,6 @@ public class DuenioEntity {
 	
 	public String toString() {
 		return new String(id + " " + unidad.toString() + " " + duenio.toString());
+
 	}
 }
