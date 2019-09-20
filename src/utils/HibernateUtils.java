@@ -5,8 +5,10 @@ import org.hibernate.cfg.AnnotationConfiguration;
 
 import entitys.DuenioEntity;
 import entitys.EdificioEntity;
+import entitys.ImagenEntity;
 import entitys.InquilinoEntity;
 import entitys.PersonaEntity;
+import entitys.ReclamoEntity;
 import entitys.UnidadEntity;
 
 public class HibernateUtils
@@ -18,12 +20,12 @@ public class HibernateUtils
         {
         	 AnnotationConfiguration config = new AnnotationConfiguration();
              config.addAnnotatedClass(EdificioEntity.class);
-        	 // config.addAnnotatedClass(Imagen.class);
+        	  //config.addAnnotatedClass(ImagenEntity.class);
              config.addAnnotatedClass(PersonaEntity.class);
-             //config.addAnnotatedClass(Reclamo.class); 
+             //config.addAnnotatedClass(ReclamoEntity.class); 
              //config.addAnnotatedClass(DuenioEntity.class);
              config.addAnnotatedClass(UnidadEntity.class);
-             config.addAnnotatedClass(InquilinoEntity.class);
+             //config.addAnnotatedClass(InquilinoEntity.class);
              sessionFactory = config.buildSessionFactory();
         }
         catch (Throwable ex)

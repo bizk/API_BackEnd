@@ -16,7 +16,6 @@ public class InquilinoEntity {
 
 	@ManyToMany
 	@JoinColumn(name="documento")
-	@Transient
 	private PersonaEntity inquilino;
 
 	public InquilinoEntity() {

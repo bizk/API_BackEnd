@@ -2,14 +2,9 @@ package entitys;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import entitys.EdificioEntity;
-import entitys.DuenioEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,16 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.SecondaryTable;
-import javax.persistence.SecondaryTables;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
-import modelo.Edificio;
-import modelo.Persona;
-import modelo.Unidad;
 
 @Entity
 @Table(name="unidades")
@@ -41,7 +27,6 @@ public class UnidadEntity {
 	private String numero;
 	@Column(name="habitado")
 	private boolean habitado;
-	
 	@ManyToOne
 	@JoinColumn(name="codigoEdificio")
 	private EdificioEntity edificio;
@@ -50,16 +35,16 @@ public class UnidadEntity {
     @JoinTable(name="duenios", joinColumns=@JoinColumn(name="identificador"), inverseJoinColumns=@JoinColumn(name="documento"))  
 	private List<PersonaEntity> duenios = new ArrayList<PersonaEntity>();
 	
-	@OneToMany
-	@JoinColumn(name="identificador")
-	private List<InquilinoEntity> inquilinos;
+	@ManyToMany
+    @JoinTable(name="inquilinos", joinColumns=@JoinColumn(name="identificador"), inverseJoinColumns=@JoinColumn(name="documento"))  
+	private List<PersonaEntity> inquilinos= new ArrayList<PersonaEntity>();
 
 
 	public UnidadEntity() {
 	}
 	
 	public UnidadEntity(int identificador, String piso, String numero, boolean habitado, EdificioEntity edificio,
-			List<PersonaEntity> duenios, List<InquilinoEntity> inquilinos) {
+			List<PersonaEntity> duenios, List<PersonaEntity> inquilinos) {
 		super();
 		this.identificador = identificador;
 		this.piso = piso;
@@ -74,13 +59,9 @@ public class UnidadEntity {
 	public List<PersonaEntity> getDuenios(){
 		return this.duenios;
 	}
-	public List<InquilinoEntity> getInquilinosEntity() {
-		return this.inquilinos;
-	}
 	
-	public List<Persona> getInquilinos() {
-		return null;
-		//return this.inquilinos.stream().map(x -> x.getInquilino()).collect(Collectors.toCollection(ArrayList<Persona>::new));
+	public List<PersonaEntity> getInquilinos() {
+		return this.inquilinos;
 	}
 	
 	public int getIdentificador() {
@@ -127,7 +108,7 @@ public class UnidadEntity {
 		this.duenios = duenios;
 	}
 
-	public void setInquilinos(List<InquilinoEntity> inquilinos) {
+	public void setInquilinos(List<PersonaEntity> inquilinos) {
 		this.inquilinos = inquilinos;
 	}
 }

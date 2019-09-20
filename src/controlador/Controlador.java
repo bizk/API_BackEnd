@@ -9,16 +9,10 @@ import org.hibernate.classic.Session;
 import DAO.EdificioDAO;
 import DAO.PersonaDAO;
 import DAO.UnidadDAO;
-import entitys.DuenioEntity;
-import entitys.EdificioEntity;
-import entitys.PersonaEntity;
-import entitys.UnidadEntity;
 import exceptions.EdificioException;
 import exceptions.PersonaException;
 import exceptions.ReclamoException;
 import exceptions.UnidadException;
-import utils.ConnectionUtils;
-import utils.HibernateUtils;
 import modelo.Edificio;
 import modelo.Persona;
 import modelo.Reclamo;
@@ -92,8 +86,14 @@ public class Controlador {
 		List<PersonaView> resultado = new ArrayList<PersonaView>();
 		Edificio edificio = buscarEdificio(codigo);
 		Set<Persona> habitantes = edificio.habitantes();
-		for(Persona persona : habitantes)
+		
+		System.out.println(habitantes.size());
+		
+		for(Persona persona : habitantes) {
 			resultado.add(persona.toView());
+			System.out.println(persona.toView());
+		
+		}
 		return resultado;
 	}
 
@@ -101,7 +101,7 @@ public class Controlador {
 		List<PersonaView> resultado = new ArrayList<PersonaView>();
 		Unidad unidad = buscarUnidad(codigo, piso, numero);
 		List<Persona> duenios = unidad.getDuenios();
-		for(Persona persona : duenios)
+		for(Persona persona : duenios) 
 			resultado.add(persona.toView());
 		return resultado;
 	}
@@ -110,7 +110,7 @@ public class Controlador {
 		List<PersonaView> resultado = new ArrayList<PersonaView>();
 		Unidad unidad = buscarUnidad(codigo, piso, numero);
 		List<Persona> inquilinos = unidad.getInquilinos();
-		for(Persona persona : inquilinos)
+		for(Persona persona : inquilinos) 
 			resultado.add(persona.toView());
 		return resultado;
 	}
@@ -151,7 +151,6 @@ public class Controlador {
 		unidad.habitar();;
 	}
 	//TODO Hasta aca
-	
 	public void agregarPersona(String documento, String nombre) {
 		Persona persona = new Persona(documento, nombre);
 		personaDAO.save(persona);
