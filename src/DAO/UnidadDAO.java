@@ -7,17 +7,13 @@ import java.util.stream.Collectors;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import controlador.Controlador;
-import entitys.DuenioEntity;
 import entitys.EdificioEntity;
 import entitys.PersonaEntity;
 import entitys.UnidadEntity;
 import modelo.Edificio;
 import modelo.Persona;
 import modelo.Unidad;
-
 import utils.ConnectionUtils;
-import views.Estado;
 
 
 public class UnidadDAO {
@@ -38,34 +34,22 @@ public class UnidadDAO {
 	    }
 	    
 	    public Unidad getUnidad(int codigo) {
-			session.beginTransaction();
-	    	UnidadEntity unidadEntity = (UnidadEntity) session.load(UnidadEntity.class, codigo);
-	    	return entity2unidad(unidadEntity);
+	    	try {
+	    		Session session = ConnectionUtils.getSession();
+	    		Transaction ts = session.beginTransaction();
+				UnidadEntity unidadEntity = (UnidadEntity) session.createSQLQuery("SELECT * FROM unidades WHERE identificador = :unidad_id")
+								.addEntity(UnidadEntity.class).setParameter("unidad_id", codigo).uniqueResult();
+	    		//UnidadEntity unidadEntity = (UnidadEntity)session.createSQLQuery("SELECT * FROM unidades WHERE identificador = :unidad_id AND piso = :piso_id AND numero = :numero_id")
+				//			.addEntity(EdificioEntity.class).setParameter("edificio_id", codigo).setParameter("piso_id", piso).setParameter("numero_id", numero).uniqueResult();
+				Unidad unidad = toNegocio(unidadEntity);
+				session.close();
+				return unidad;
+			} catch (Exception np) {
+				System.out.println("No existe una unidad para dicho codigo, piso y numero");
+				return null;
+			}
 	    }
 	    
-	    private Unidad entity2unidad(UnidadEntity entity) {
-	    	session = ConnectionUtils.getSession();
-	    	Transaction transaction = null; 
-			try {
-				transaction = session.beginTransaction();
-				Unidad unidad = entity.toUnidad();
-		    	unidad.setDuenios(entity.getDuenios());
-		    	unidad.setInquilinos(entity.getInquilinos());
-		    	transaction.commit();
-
-		    	return unidad;
-			} catch (Exception e) {
-				if (transaction != null) {
-					transaction.rollback();
-				}
-				System.out.println("Error al buscar la unidad");
-				e.printStackTrace();
-			} finally {
-				session.close();
-			}
-			return null;
-	    }
-	        
 	    public void save(Unidad unidad) {
 	    	session = ConnectionUtils.getSession();
 			Transaction transaction = null; 
@@ -91,11 +75,9 @@ public class UnidadDAO {
 									unidad.getPiso(),
 									unidad.getNumero(),
 									unidad.estaHabitado(),
-									EdificioDAO.toEntity(unidad.getEdificio()), null,null);
-									//DuenioDAO.toEntity(unidad.getDuenios(), unidad),
-									//InquilinoDAO.toEntity(unidad.getInquilinos(), unidad)); //TODO Como implementar �sto? 
-																							//un duenioEntity solo tiene una persona y una unidad
-																							//y no hay duenio en el negocio, porque en el negocio son personas nom�s
+									EdificioDAO.toEntity(unidad.getEdificio()), 
+									PersonaDAO.toEntity(unidad.getDuenios()),
+									PersonaDAO.toEntity(unidad.getInquilinos()));
 		}
 		
 		static Unidad toNegocio(UnidadEntity unidadEntity) {
@@ -106,10 +88,7 @@ public class UnidadDAO {
 								unidadEntity.isHabitado(),
 								EdificioDAO.toNegocio(unidadEntity.getEdificio()), 
 								PersonaDAO.toNegocio(unidadEntity.getDuenios()),
-								new ArrayList<Persona>());
-								//,
-								//InquilinoDAO.toNegocio(unidad.getInquilinos())); //TODO evaluar si esto es muy lento. Sino, cambiar a inicio diferido
-																				// cabe observaci�n anterior.
+								PersonaDAO.toNegocio(unidadEntity.getInquilinos()));
 		}
 		
 		static Unidad toNegocioEdificio(UnidadEntity unidadEntity, Edificio edificio) {
@@ -119,9 +98,6 @@ public class UnidadDAO {
 					unidadEntity.isHabitado(),
 					edificio, 
 					PersonaDAO.toNegocio(unidadEntity.getDuenios()),
-					new ArrayList<Persona>());
-					//DuenioDAO.toNegocio(unidad.getDuenios()),
-					//InquilinoDAO.toNegocio(unidad.getInquilinos())); //TODO evaluar si esto es muy lento. Sino, cambiar a inicio diferido
-																	// cabe observaci�n anterior.
+					PersonaDAO.toNegocio(unidadEntity.getInquilinos()));
 		}
 }
