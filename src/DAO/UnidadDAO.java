@@ -7,11 +7,8 @@ import java.util.stream.Collectors;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import entitys.EdificioEntity;
-import entitys.PersonaEntity;
 import entitys.UnidadEntity;
 import modelo.Edificio;
-import modelo.Persona;
 import modelo.Unidad;
 import utils.ConnectionUtils;
 

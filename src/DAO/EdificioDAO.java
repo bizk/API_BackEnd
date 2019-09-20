@@ -64,9 +64,9 @@ public class EdificioDAO {
 			return edificio;
 		} catch (Exception np) {
 			System.out.println("No existe un edificio para dicho codigo");
-		} 
+		}
 		return null;
-    }
+   }
 
 //    public void modificarEdificio(){
 //        Edificio edificio = edificios.stream()
