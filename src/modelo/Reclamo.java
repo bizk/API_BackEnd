@@ -93,7 +93,7 @@ public class Reclamo {
 	}
 	
 	public void update() {
-		
+		ReclamoDAO.update(this);
 	}
 	
 	public ReclamoView toView() {

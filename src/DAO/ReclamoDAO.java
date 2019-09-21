@@ -104,13 +104,6 @@ public class ReclamoDAO {
 //
 //   }
 
-   public void eliminarReclamo(int numero){
-       Reclamo reclamo = reclamos.stream().filter(r -> r.getNumero() == numero).findAny().orElse(null);
-       if (reclamo != null) {
-           reclamos.remove(reclamo);
-       }
-   }
-
 public static List<Reclamo> getReclamosByEdificio(Edificio edificio) {
 	Transaction transaction = null;
 	List<Reclamo> results = null;
@@ -176,7 +169,21 @@ public static List<Reclamo> getReclamosByPersona(Persona per) {
 }
 
 public static void update(Reclamo reclamo) {
-}
+		Transaction transaction = null; 
+		 try {
+			 transaction = session.beginTransaction();
+			 transaction.begin();
+			 ReclamoEntity reclent = toEntity(reclamo);
+			 session.saveOrUpdate(reclent);
+			 transaction.commit();
+		 } catch (Exception e) {
+			 if (transaction != null) {
+				 transaction.rollback();
+			 }
+			 System.out.println("No se pudo actualizar al reclamo");
+			 e.printStackTrace();
+		 }
+	}
 
 }
 

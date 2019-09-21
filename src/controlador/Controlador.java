@@ -31,13 +31,11 @@ public class Controlador {
 	private static EdificioDAO edificioDAO;
 	private static PersonaDAO personaDAO;
 	private static UnidadDAO unidadDAO;
-	private static ReclamoDAO reclamoDAO;
 	
 	private Controlador() {
 		Controlador.edificioDAO = new EdificioDAO();
 		Controlador.personaDAO = new  PersonaDAO();
 		Controlador.unidadDAO = new UnidadDAO();
-		Controlador.reclamoDAO = new ReclamoDAO();
 	}
 	
 	//FOR QUICK TEST ONLY 
