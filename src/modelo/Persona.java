@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import DAO.PersonaDAO;
 import entitys.DuenioEntity;
 import entitys.PersonaEntity;
 import entitys.UnidadEntity;
@@ -32,11 +33,11 @@ public class Persona {
 	} 
 
 	public void save() {
-		
+		PersonaDAO.save(this);
 	}
 
 	public void delete() {
-		
+		PersonaDAO.delete(this);
 	}
 	
 	public PersonaEntity toEntity() {

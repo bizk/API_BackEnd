@@ -21,7 +21,6 @@ public class PersonaDAO {
 		Session session = ConnectionUtils.getSession();
 
 		List<PersonaEntity> results = session.createCriteria(PersonaEntity.class).list();
-		//This function converts the results from entitys into a list
 		this.personas = results.stream().map(x -> toNegocio(x))
 				.collect(Collectors.toCollection(ArrayList<Persona>::new));
 
@@ -32,7 +31,6 @@ public class PersonaDAO {
     	Transaction transaction = null; 
 		try {
 			Session session = ConnectionUtils.getSession();
-
 			transaction = session.beginTransaction();
 			PersonaEntity personaEntity = (PersonaEntity) session.get(PersonaEntity.class, documento);
 			transaction.commit();
@@ -46,7 +44,7 @@ public class PersonaDAO {
 		return null;
 	}
 	
-	public void save(Persona persona) {
+	public static void save(Persona persona) {
 		Transaction transaction = null; 
 		try {
 			Session session = ConnectionUtils.getSession();
@@ -66,14 +64,13 @@ public class PersonaDAO {
 		}
 	}
 	
-	public void delete(Persona persona) {
+	public static void delete(Persona persona) {
 		Transaction transaction = null; 
 		try {
 			Session session = ConnectionUtils.getSession();
 			transaction = session.beginTransaction();
 			transaction.begin();
-
-			PersonaEntity personaEntity = new PersonaEntity();
+			PersonaEntity personaEntity = toEntity(persona);
 			session.delete(personaEntity);
 			transaction.commit();
 		} catch (Exception e) {

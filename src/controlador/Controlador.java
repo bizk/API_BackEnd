@@ -154,14 +154,11 @@ public class Controlador {
 
 	public void agregarPersona(String documento, String nombre) {
 		Persona persona = new Persona(documento, nombre);
-		personaDAO.save(persona);
 		persona.save();
 	}
 		
-	//TODO Hacer delete
 	public void eliminarPersona(String documento) throws PersonaException {
 		Persona persona = buscarPersona(documento);
-		personaDAO.delete(persona);
 		persona.delete();
 	}
 	

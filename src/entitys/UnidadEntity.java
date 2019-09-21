@@ -14,11 +14,14 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 @Entity
 @Table(name="unidades")
 public class UnidadEntity { 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENZ)
 	@Column(name="identificador")
 	private int identificador;
 	@Column(name="piso")
@@ -32,7 +35,7 @@ public class UnidadEntity {
 	private EdificioEntity edificio;
 	
 	@ManyToMany
-    @JoinTable(name="duenios", joinColumns=@JoinColumn(name="identificador"), inverseJoinColumns=@JoinColumn(name="documento"))  
+	@JoinTable(name="duenios", joinColumns=@JoinColumn(name="identificador"), inverseJoinColumns=@JoinColumn(name="documento"))  
 	private List<PersonaEntity> duenios = new ArrayList<PersonaEntity>();
 	
 	@ManyToMany
