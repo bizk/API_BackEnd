@@ -198,6 +198,11 @@ public class Controlador {
 	
 	public List<ReclamoView> reclamosPorPersona(String documento) {
 		List<ReclamoView> resultado = new ArrayList<ReclamoView>();
+		Persona per = PersonaDAO.getPersona(documento);
+		List<Reclamo> reclamos = ReclamoDAO.getReclamosByPersona(per);
+		for (Reclamo r: reclamos){
+			resultado.add(r.toView());
+		}
 		return resultado;
 	}
  

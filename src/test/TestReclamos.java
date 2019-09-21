@@ -11,8 +11,5 @@ public class TestReclamos {
         Controlador ctrl = Controlador.getInstancia();
         
         System.out.println(ctrl.reclamosPorNumero(2).getDescripcion());
-        
-
-
     }
 }

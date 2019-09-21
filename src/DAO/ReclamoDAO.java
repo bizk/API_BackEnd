@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 
 import entitys.ReclamoEntity;
 import modelo.Edificio;
+import modelo.Persona;
 import modelo.Reclamo;
 import modelo.Unidad;
 import utils.ConnectionUtils;
@@ -150,6 +151,28 @@ public static List<Reclamo> getReclamosByUnidad(Unidad unit) {
 		e.printStackTrace();
 	}
 	return results;
+}
+
+public static List<Reclamo> getReclamosByPersona(Persona per) {
+	Transaction transaction = null;
+	List<Reclamo> results = null;
+	try {
+		Session session = ConnectionUtils.getSession();
+		Transaction ts = session.beginTransaction();
+		ts.begin();
+		List<ReclamoEntity> recledif = (List<ReclamoEntity>)session.createSQLQuery("SELECT * FROM reclamos WHERE documento = :dni")
+					.addEntity(ReclamoEntity.class).setParameter("dni", per.getDocumento()).list();
+		ts.commit();
+		session.close();
+		results = recledif.stream().map(x -> toNegocio(x))
+					.collect(Collectors.toCollection(ArrayList<Reclamo>::new));
+	} catch (Exception e) {
+		System.out.println("Problema para acceder a la db");
+		session.close();
+		e.printStackTrace();
+	}
+	return results;
+	
 }
 
 }
