@@ -12,18 +12,14 @@ import views.Estado;
 @Table(name = "reclamos")
 public class ReclamoEntity {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@OneToMany
-	@JoinColumn(name="idReclamo") //TODO chequear
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="idReclamo")
 	private Integer numero;
 	@OneToOne
 	@JoinColumn(name="documento")
-	@Column(name="documento")
 	private PersonaEntity usuario;
 	@OneToOne
-	@JoinColumn(name="codigoEdificio")
-	@Column(name="codigo")
+	@JoinColumn(name="codigo")
 	private EdificioEntity edificio;
 	@Column(name="ubicacion")
 	private String ubicacion;
@@ -31,9 +27,8 @@ public class ReclamoEntity {
 	private String descripcion;
 	@OneToOne
 	@JoinColumn(name="identificador")
-	@Column(name="identificador")
 	private UnidadEntity unidad;
-	@Column(name="Estado")
+	@Transient
 	private Estado estado;
 	@OneToMany
 	@JoinColumn(name="numero")
