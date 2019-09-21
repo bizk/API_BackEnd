@@ -1,9 +1,5 @@
 package modelo;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import entitys.DuenioEntity;
 import entitys.PersonaEntity;
 import entitys.UnidadEntity;

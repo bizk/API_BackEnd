@@ -1,11 +1,6 @@
 package test;
 
-import java.util.List;
-
 import controlador.Controlador;
-import exceptions.PersonaException;
-import exceptions.UnidadException;
-import views.PersonaView;
 
 public class TestEdificios {
 

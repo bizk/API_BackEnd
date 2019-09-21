@@ -1,19 +1,16 @@
 package DAO;
 
-import modelo.Persona;
-import modelo.Reclamo;
-import modelo.Unidad;
-import utils.ConnectionUtils;
-
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import entitys.PersonaEntity;
 import entitys.ReclamoEntity;
-import entitys.UnidadEntity;
-import exceptions.ReclamoException;
+import modelo.Edificio;
+import modelo.Reclamo;
+import utils.ConnectionUtils;
 
 public class ReclamoDAO {
     private List<Reclamo> reclamos;
@@ -111,6 +108,27 @@ public class ReclamoDAO {
            reclamos.remove(reclamo);
        }
    }
+
+public static List<Reclamo> getReclamosByEdificio(Edificio edificio) {
+	Transaction transaction = null;
+	List<Reclamo> results = null;
+	try {
+		Session session = ConnectionUtils.getSession();
+		Transaction ts = session.beginTransaction();
+		ts.begin();
+		List<ReclamoEntity> recledif = (List<ReclamoEntity>)session.createSQLQuery("SELECT * FROM reclamos WHERE codigo = :edif")
+					.addEntity(ReclamoEntity.class).setParameter("edif", edificio.getCodigo()).list();
+		ts.commit();
+		session.close();
+		results = recledif.stream().map(x -> toNegocio(x))
+					.collect(Collectors.toCollection(ArrayList<Reclamo>::new));
+	} catch (Exception e) {
+		System.out.println("Problema para acceder a la db");
+		session.close();
+		e.printStackTrace();
+	}
+	return results;
+}
 
 }
 

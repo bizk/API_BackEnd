@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import entitys.DuenioEntity;
-import entitys.UnidadEntity;
 import modelo.Persona;
 
 public class DuenioDAO {

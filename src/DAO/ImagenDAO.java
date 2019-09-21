@@ -25,8 +25,8 @@ public class ImagenDAO {
 
 	static Imagen toNegocio(ImagenEntity imagenes) {
 		return new Imagen(imagenes.getDireccion(),
-							imagenes.getTipo());  //TODO Acá el problema está en relacionar imagen con reclamo
-												//Godio dice que quizá no sea necesario, pero si lo es, podemos agregarlo al negocio.
+							imagenes.getTipo());  //TODO Acï¿½ el problema estï¿½ en relacionar imagen con reclamo
+												//Godio dice que quizï¿½ no sea necesario, pero si lo es, podemos agregarlo al negocio.
 	}
 
 }
