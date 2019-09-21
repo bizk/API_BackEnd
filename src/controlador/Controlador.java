@@ -192,7 +192,7 @@ public class Controlador {
 	}
 	
 	public ReclamoView reclamosPorNumero(int numero) {
-		ReclamoView resultado = reclamoDAO.getReclamoByNum(numero).toView();
+		ReclamoView resultado = ReclamoDAO.getReclamoByNum(numero).toView();
 		return resultado;
 	}
 	
@@ -243,10 +243,10 @@ public class Controlador {
 	}	
 	
 	private Persona buscarPersona(String documento) throws PersonaException {
-		return personaDAO.getPersona(documento);
+		return PersonaDAO.getPersona(documento);
 	}
 	
 	private Reclamo buscarReclamo(int numero) throws ReclamoException {
-		return null;
+		return ReclamoDAO.getReclamoByNum(numero);
 	}
 }

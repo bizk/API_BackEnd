@@ -77,7 +77,7 @@ public class ReclamoDAO {
 		}
 	}
 
-   public Reclamo getReclamoByNum(int numero) {
+   public static Reclamo getReclamoByNum(int numero) {
 	   session = ConnectionUtils.getSession();
    	Transaction transaction = null; 
 		try {
@@ -173,6 +173,9 @@ public static List<Reclamo> getReclamosByPersona(Persona per) {
 	}
 	return results;
 	
+}
+
+public static void update(Reclamo reclamo) {
 }
 
 }
