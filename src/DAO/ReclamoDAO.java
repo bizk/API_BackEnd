@@ -10,6 +10,7 @@ import org.hibernate.Transaction;
 import entitys.ReclamoEntity;
 import modelo.Edificio;
 import modelo.Reclamo;
+import modelo.Unidad;
 import utils.ConnectionUtils;
 
 public class ReclamoDAO {
@@ -118,6 +119,27 @@ public static List<Reclamo> getReclamosByEdificio(Edificio edificio) {
 		ts.begin();
 		List<ReclamoEntity> recledif = (List<ReclamoEntity>)session.createSQLQuery("SELECT * FROM reclamos WHERE codigo = :edif")
 					.addEntity(ReclamoEntity.class).setParameter("edif", edificio.getCodigo()).list();
+		ts.commit();
+		session.close();
+		results = recledif.stream().map(x -> toNegocio(x))
+					.collect(Collectors.toCollection(ArrayList<Reclamo>::new));
+	} catch (Exception e) {
+		System.out.println("Problema para acceder a la db");
+		session.close();
+		e.printStackTrace();
+	}
+	return results;
+}
+
+public static List<Reclamo> getReclamosByUnidad(Unidad unit) {
+	Transaction transaction = null;
+	List<Reclamo> results = null;
+	try {
+		Session session = ConnectionUtils.getSession();
+		Transaction ts = session.beginTransaction();
+		ts.begin();
+		List<ReclamoEntity> recledif = (List<ReclamoEntity>)session.createSQLQuery("SELECT * FROM reclamos WHERE identificador = :unit")
+					.addEntity(ReclamoEntity.class).setParameter("edif", unit.getId()).list();
 		ts.commit();
 		session.close();
 		results = recledif.stream().map(x -> toNegocio(x))

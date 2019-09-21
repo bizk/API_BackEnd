@@ -183,6 +183,11 @@ public class Controlador {
 	
 	public List<ReclamoView> reclamosPorUnidad(int codigo, String piso, String numero) {
 		List<ReclamoView> resultado = new ArrayList<ReclamoView>();
+		Unidad unit = UnidadDAO.getUnidad(codigo,piso,numero);
+		List<Reclamo> reclamos = ReclamoDAO.getReclamosByUnidad(unit);
+		for (Reclamo r: reclamos){
+			resultado.add(r.toView());
+		}
 		return resultado;
 	}
 	
