@@ -1,13 +1,18 @@
 
 package entitys;
 
+import java.util.List;
+
 import javax.persistence.*;
+
+import modelo.Unidad;
 
 @Entity
 @Table(name="inquilinos")
 public class InquilinoEntity {
 	@Id
 	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	@ManyToOne
@@ -16,15 +21,10 @@ public class InquilinoEntity {
 
 	@ManyToMany
 	@JoinColumn(name="documento")
-	@Transient
 	private PersonaEntity inquilino;
 
-	public InquilinoEntity() {
-	}
-
-	public InquilinoEntity(int id, UnidadEntity unidad, PersonaEntity inquilino) {
+	public InquilinoEntity(UnidadEntity unidad, PersonaEntity inquilino) {
 		super();
-		this.id = id;
 		this.unidad = unidad;
 		this.inquilino = inquilino;
 	}

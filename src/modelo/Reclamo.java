@@ -3,7 +3,10 @@ package modelo;
 import java.util.ArrayList;
 import java.util.List;
 
+import DAO.ReclamoDAO;
 import views.Estado;
+import views.ImagenView;
+import views.ReclamoView;
 
 public class Reclamo {
 
@@ -86,10 +89,20 @@ public class Reclamo {
 	}
 
 	public void save() {
-		
+		ReclamoDAO.save(this);
 	}
 	
 	public void update() {
 		
+	}
+	
+	public ReclamoView toView() {
+		List<ImagenView> imview = new ArrayList<ImagenView>();
+		for (Imagen i: this.getImagenes()){
+			imview.add(i.toView());
+		}
+		return new ReclamoView(this.getNumero(), this.getUsuario().toView(),this.getEdificio().toView(),
+								this.getUbicacion(),this.getDescripcion(),this.getUnidad().toView(),this.getEstado(),
+								imview);
 	}
 }

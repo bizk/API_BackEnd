@@ -1,24 +1,18 @@
 package DAO;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import entitys.EdificioEntity;
+import entitys.UnidadEntity;
 import modelo.Edificio;
-import modelo.Persona;
 import modelo.Unidad;
 import utils.ConnectionUtils;
 import views.EdificioView;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
-//import javax.persistence.Query;
-import org.hibernate.Query;
-import org.hibernate.Session;
-
-import entitys.EdificioEntity;
-import entitys.PersonaEntity;
-import entitys.UnidadEntity;
-import org.hibernate.Transaction;
 
 
 public class EdificioDAO {
@@ -70,9 +64,9 @@ public class EdificioDAO {
 			return edificio;
 		} catch (Exception np) {
 			System.out.println("No existe un edificio para dicho codigo");
-		} 
+		}
 		return null;
-    }
+   }
 
 //    public void modificarEdificio(){
 //        Edificio edificio = edificios.stream()

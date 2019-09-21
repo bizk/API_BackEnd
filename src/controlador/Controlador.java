@@ -8,17 +8,12 @@ import org.hibernate.classic.Session;
 
 import DAO.EdificioDAO;
 import DAO.PersonaDAO;
+import DAO.ReclamoDAO;
 import DAO.UnidadDAO;
-import entitys.DuenioEntity;
-import entitys.EdificioEntity;
-import entitys.PersonaEntity;
-import entitys.UnidadEntity;
 import exceptions.EdificioException;
 import exceptions.PersonaException;
 import exceptions.ReclamoException;
 import exceptions.UnidadException;
-import utils.ConnectionUtils;
-import utils.HibernateUtils;
 import modelo.Edificio;
 import modelo.Persona;
 import modelo.Reclamo;
@@ -36,11 +31,13 @@ public class Controlador {
 	private static EdificioDAO edificioDAO;
 	private static PersonaDAO personaDAO;
 	private static UnidadDAO unidadDAO;
+	private static ReclamoDAO reclamoDAO;
 	
 	private Controlador() {
-		this.edificioDAO = new EdificioDAO();
-		this.personaDAO = new  PersonaDAO();
-		this.unidadDAO = new UnidadDAO();
+		Controlador.edificioDAO = new EdificioDAO();
+		Controlador.personaDAO = new  PersonaDAO();
+		Controlador.unidadDAO = new UnidadDAO();
+		Controlador.reclamoDAO = new ReclamoDAO();
 	}
 	
 	//FOR QUICK TEST ONLY 
@@ -92,8 +89,14 @@ public class Controlador {
 		List<PersonaView> resultado = new ArrayList<PersonaView>();
 		Edificio edificio = buscarEdificio(codigo);
 		Set<Persona> habitantes = edificio.habitantes();
-		for(Persona persona : habitantes)
+		
+		System.out.println(habitantes.size());
+		
+		for(Persona persona : habitantes) {
 			resultado.add(persona.toView());
+			System.out.println(persona.toView());
+		
+		}
 		return resultado;
 	}
 
@@ -101,7 +104,7 @@ public class Controlador {
 		List<PersonaView> resultado = new ArrayList<PersonaView>();
 		Unidad unidad = buscarUnidad(codigo, piso, numero);
 		List<Persona> duenios = unidad.getDuenios();
-		for(Persona persona : duenios)
+		for(Persona persona : duenios) 
 			resultado.add(persona.toView());
 		return resultado;
 	}
@@ -110,7 +113,7 @@ public class Controlador {
 		List<PersonaView> resultado = new ArrayList<PersonaView>();
 		Unidad unidad = buscarUnidad(codigo, piso, numero);
 		List<Persona> inquilinos = unidad.getInquilinos();
-		for(Persona persona : inquilinos)
+		for(Persona persona : inquilinos) 
 			resultado.add(persona.toView());
 		return resultado;
 	}
@@ -151,7 +154,6 @@ public class Controlador {
 		unidad.habitar();;
 	}
 	//TODO Hasta aca
-	
 	public void agregarPersona(String documento, String nombre) {
 		Persona persona = new Persona(documento, nombre);
 		personaDAO.save(persona);
@@ -180,7 +182,7 @@ public class Controlador {
 	}
 	
 	public ReclamoView reclamosPorNumero(int numero) {
-		ReclamoView resultado = null;
+		ReclamoView resultado = reclamoDAO.getReclamoByNum(numero).toView();
 		return resultado;
 	}
 	
@@ -194,6 +196,14 @@ public class Controlador {
 		Unidad unidad = buscarUnidad(codigo, piso, numero);
 		Persona persona = buscarPersona(documento);
 		Reclamo reclamo = new Reclamo(persona, edificio, ubicacion, descripcion, unidad);
+		/*
+		 * System.out.println("Datos del reclamo: "); System.out.println("nro " +
+		 * reclamo.getNumero()); System.out.println("Persona "+persona.getNombre());
+		 * System.out.println("edificio "+edificio.getNombre());
+		 * System.out.println("ubicacion "+reclamo.getUbicacion());
+		 * System.out.println("descripcion " + reclamo.getDescripcion());
+		 * System.out.println("unidad  "+unidad.getId());
+		 */
 		reclamo.save();
 		return reclamo.getNumero();
 	}

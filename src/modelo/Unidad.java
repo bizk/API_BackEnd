@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import DAO.DuenioDAO;
-import entitys.DuenioEntity;
 import entitys.EdificioEntity;
 import entitys.PersonaEntity;
 import entitys.UnidadEntity;
@@ -133,7 +131,7 @@ public class Unidad {
 		unidadEntity.setEdificio(edificioEntity);
 		
 		System.out.println("aaa");
-		//unidadEntity.setDuenios(this.duenios.stream().map(x->DuenioDAO.toEntity(x,unidadEntity)).collect(Collectors.toCollection(ArrayList<DuenioEntity>::new)));
+		unidadEntity.setDuenios(this.duenios.stream().map(x->x.toEntity()).collect(Collectors.toCollection(ArrayList<PersonaEntity>::new)));
 		return unidadEntity;
 	}
 	

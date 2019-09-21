@@ -1,5 +1,7 @@
 package modelo;
 
+import views.ImagenView;
+
 public class Imagen {
 
 	private int numero;
@@ -37,6 +39,10 @@ public class Imagen {
 
 	public void save(int numeroReclamo) {
 		
+	}
+
+	public ImagenView toView() {
+		return new ImagenView(this.getNumero(), this.getDireccion(), this.getTipo());
 	}
 
 }

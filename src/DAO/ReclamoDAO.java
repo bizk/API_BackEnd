@@ -10,7 +10,10 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import entitys.PersonaEntity;
 import entitys.ReclamoEntity;
+import entitys.UnidadEntity;
+import exceptions.ReclamoException;
 
 public class ReclamoDAO {
     private List<Reclamo> reclamos;
