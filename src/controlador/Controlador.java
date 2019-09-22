@@ -31,13 +31,11 @@ public class Controlador {
 	private static EdificioDAO edificioDAO;
 	private static PersonaDAO personaDAO;
 	private static UnidadDAO unidadDAO;
-	private static ReclamoDAO reclamoDAO;
 	
 	private Controlador() {
 		Controlador.edificioDAO = new EdificioDAO();
 		Controlador.personaDAO = new  PersonaDAO();
 		Controlador.unidadDAO = new UnidadDAO();
-		Controlador.reclamoDAO = new ReclamoDAO();
 	}
 	
 	//FOR QUICK TEST ONLY 
@@ -173,21 +171,36 @@ public class Controlador {
 	
 	public List<ReclamoView> reclamosPorEdificio(int codigo){
 		List<ReclamoView> resultado = new ArrayList<ReclamoView>();
+		Edificio edificio = edificioDAO.getEdificio(codigo);
+		List<Reclamo> reclamos = ReclamoDAO.getReclamosByEdificio(edificio);
+		for (Reclamo r: reclamos){
+			resultado.add(r.toView());
+		}
 		return resultado;
 	}
 	
 	public List<ReclamoView> reclamosPorUnidad(int codigo, String piso, String numero) {
 		List<ReclamoView> resultado = new ArrayList<ReclamoView>();
+		Unidad unit = UnidadDAO.getUnidad(codigo,piso,numero);
+		List<Reclamo> reclamos = ReclamoDAO.getReclamosByUnidad(unit);
+		for (Reclamo r: reclamos){
+			resultado.add(r.toView());
+		}
 		return resultado;
 	}
 	
 	public ReclamoView reclamosPorNumero(int numero) {
-		ReclamoView resultado = reclamoDAO.getReclamoByNum(numero).toView();
+		ReclamoView resultado = ReclamoDAO.getReclamoByNum(numero).toView();
 		return resultado;
 	}
 	
 	public List<ReclamoView> reclamosPorPersona(String documento) {
 		List<ReclamoView> resultado = new ArrayList<ReclamoView>();
+		Persona per = PersonaDAO.getPersona(documento);
+		List<Reclamo> reclamos = ReclamoDAO.getReclamosByPersona(per);
+		for (Reclamo r: reclamos){
+			resultado.add(r.toView());
+		}
 		return resultado;
 	}
  
@@ -228,10 +241,10 @@ public class Controlador {
 	}	
 	
 	private Persona buscarPersona(String documento) throws PersonaException {
-		return personaDAO.getPersona(documento);
+		return PersonaDAO.getPersona(documento);
 	}
 	
 	private Reclamo buscarReclamo(int numero) throws ReclamoException {
-		return null;
+		return ReclamoDAO.getReclamoByNum(numero);
 	}
 }

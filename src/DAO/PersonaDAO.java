@@ -28,7 +28,7 @@ public class PersonaDAO {
 		return this.personas;
 	}
 	
-	public Persona getPersona(String documento) {
+	public static Persona getPersona(String documento) {
     	Transaction transaction = null; 
 		try {
 			Session session = ConnectionUtils.getSession();

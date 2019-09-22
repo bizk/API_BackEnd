@@ -45,7 +45,22 @@ public class UnidadDAO {
 				System.out.println("No existe una unidad para dicho codigo, piso y numero");
 				return null;
 			}
-	    }
+		}
+		
+		public static Unidad getUnidad(int codigoedif, String piso, String numero){ //TODO probar
+			try {
+	    		Session session = ConnectionUtils.getSession();
+	    		Transaction ts = session.beginTransaction();
+	    		UnidadEntity unidadEntity = (UnidadEntity)session.createSQLQuery("SELECT * FROM unidades WHERE codigoEdificio = :edificio_id AND piso = :piso_id AND numero = :numero_id")
+							.addEntity(UnidadEntity.class).setParameter("edificio_id", codigoedif).setParameter("piso_id", piso).setParameter("numero_id", numero).uniqueResult();
+				Unidad unidad = toNegocio(unidadEntity);
+				session.close();
+				return unidad;
+			} catch (Exception np) {
+				System.out.println("No existe una unidad para dicho codigo, piso y numero");
+				return null;
+			}
+		}
 	    
 	    public void save(Unidad unidad) {
 	    	session = ConnectionUtils.getSession();

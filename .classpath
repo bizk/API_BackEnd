@@ -6,18 +6,18 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/bizk/git/TPO_Api/lib/antlr-2.7.6.jar"/>
-	<classpathentry kind="lib" path="/home/bizk/git/TPO_Api/lib/commons-collections-3.1.jar"/>
-	<classpathentry kind="lib" path="/home/bizk/git/TPO_Api/lib/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="lib" path="/home/bizk/git/TPO_Api/lib/dom4j-1.6.1.jar"/>
-	<classpathentry kind="lib" path="/home/bizk/git/TPO_Api/lib/ejb3-persistence.jar"/>
-	<classpathentry kind="lib" path="/home/bizk/git/TPO_Api/lib/hibernate3.jar"/>
-	<classpathentry kind="lib" path="/home/bizk/git/TPO_Api/lib/hibernate-annotations.jar"/>
-	<classpathentry kind="lib" path="/home/bizk/git/TPO_Api/lib/hibernate-commons-annotations.jar"/>
-	<classpathentry kind="lib" path="/home/bizk/git/TPO_Api/lib/javassist-3.4.GA.jar"/>
-	<classpathentry kind="lib" path="/home/bizk/git/TPO_Api/lib/jta-1.1.jar"/>
-	<classpathentry kind="lib" path="/home/bizk/git/TPO_Api/lib/jtds-1.2.5.jar"/>
-	<classpathentry kind="lib" path="/home/bizk/git/TPO_Api/lib/slf4j-api-1.5.6.jar"/>
-	<classpathentry kind="lib" path="/home/bizk/git/TPO_Api/lib/slf4j-simple-1.5.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/fedej/OneDrive - Fundación UADE/UADE/6- 2do Cuatrimestre 2019/01- Aplicaciones Interactivas/Proyectos/TPO_Api/lib/antlr-2.7.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/fedej/OneDrive - Fundación UADE/UADE/6- 2do Cuatrimestre 2019/01- Aplicaciones Interactivas/Proyectos/TPO_Api/lib/commons-collections-3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/fedej/OneDrive - Fundación UADE/UADE/6- 2do Cuatrimestre 2019/01- Aplicaciones Interactivas/Proyectos/TPO_Api/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/fedej/OneDrive - Fundación UADE/UADE/6- 2do Cuatrimestre 2019/01- Aplicaciones Interactivas/Proyectos/TPO_Api/lib/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/fedej/OneDrive - Fundación UADE/UADE/6- 2do Cuatrimestre 2019/01- Aplicaciones Interactivas/Proyectos/TPO_Api/lib/ejb3-persistence.jar"/>
+	<classpathentry kind="lib" path="C:/Users/fedej/OneDrive - Fundación UADE/UADE/6- 2do Cuatrimestre 2019/01- Aplicaciones Interactivas/Proyectos/TPO_Api/lib/hibernate3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/fedej/OneDrive - Fundación UADE/UADE/6- 2do Cuatrimestre 2019/01- Aplicaciones Interactivas/Proyectos/TPO_Api/lib/hibernate-annotations.jar"/>
+	<classpathentry kind="lib" path="C:/Users/fedej/OneDrive - Fundación UADE/UADE/6- 2do Cuatrimestre 2019/01- Aplicaciones Interactivas/Proyectos/TPO_Api/lib/hibernate-commons-annotations.jar"/>
+	<classpathentry kind="lib" path="C:/Users/fedej/OneDrive - Fundación UADE/UADE/6- 2do Cuatrimestre 2019/01- Aplicaciones Interactivas/Proyectos/TPO_Api/lib/javassist-3.4.GA.jar"/>
+	<classpathentry kind="lib" path="C:/Users/fedej/OneDrive - Fundación UADE/UADE/6- 2do Cuatrimestre 2019/01- Aplicaciones Interactivas/Proyectos/TPO_Api/lib/jta-1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/fedej/OneDrive - Fundación UADE/UADE/6- 2do Cuatrimestre 2019/01- Aplicaciones Interactivas/Proyectos/TPO_Api/lib/jtds-1.2.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/fedej/OneDrive - Fundación UADE/UADE/6- 2do Cuatrimestre 2019/01- Aplicaciones Interactivas/Proyectos/TPO_Api/lib/slf4j-api-1.5.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/fedej/OneDrive - Fundación UADE/UADE/6- 2do Cuatrimestre 2019/01- Aplicaciones Interactivas/Proyectos/TPO_Api/lib/slf4j-simple-1.5.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

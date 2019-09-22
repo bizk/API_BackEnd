@@ -1,14 +1,19 @@
 package entitys;
 
-import javax.persistence.*;
-
-import modelo.Reclamo;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name="imagenes")
 public class ImagenEntity {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="numero")
 	private int numero;
 	@Column(name="path")
@@ -22,9 +27,7 @@ public class ImagenEntity {
 	public ImagenEntity() {
 	}
 
-	public ImagenEntity(int numero, String direccion, String tipo, int idReclamo) {
-		super();
-		this.numero = numero;
+	public ImagenEntity(String direccion, String tipo, ReclamoEntity reclamo) {
 		this.Direccion = direccion;
 		this.tipo = tipo;
 		this.reclamo = reclamo;

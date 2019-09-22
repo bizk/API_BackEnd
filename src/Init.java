@@ -1,11 +1,6 @@
-import java.util.List;
-
 import controlador.Controlador;
-import exceptions.EdificioException;
 import exceptions.PersonaException;
 import exceptions.UnidadException;
-import views.PersonaView;
-import views.UnidadView;
 
 public class Init {
 
