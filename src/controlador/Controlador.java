@@ -40,9 +40,15 @@ public class Controlador {
 	
 	//FOR QUICK TEST ONLY 
 	public void tryConnection() { 
-		Session session = ConnectionUtils.getSession();
+		//Session session = ConnectionUtils.getSession();
 		//session.beginTransaction();
-		System.out.println(unidadDAO.getUnidad(2));
+		//System.out.println(unidadDAO.getUnidad(2));
+		try {
+			ReclamoDAO.delete(this.buscarReclamo(1003));
+		} catch (ReclamoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static Controlador getInstancia() {
@@ -196,9 +202,9 @@ public class Controlador {
 		return resultado;
 	}
  
-	public int agregarReclamo(int codigoEdificio, int codigoUnidad, String piso, String numero, String documento, String ubicacion, String descripcion) throws EdificioException, UnidadException, PersonaException {
+	public int agregarReclamo(int codigoEdificio, String piso, String numero, String documento, String ubicacion, String descripcion) throws EdificioException, UnidadException, PersonaException {
 		Edificio edificio = buscarEdificio(codigoEdificio);
-		Unidad unidad = buscarUnidad(codigoUnidad, piso, numero);
+		Unidad unidad = buscarUnidad(codigoEdificio, piso, numero);
 		Persona persona = buscarPersona(documento);
 		Reclamo reclamo = new Reclamo(persona, edificio, ubicacion, descripcion, unidad);
 		/*
@@ -209,7 +215,7 @@ public class Controlador {
 		 * System.out.println("descripcion " + reclamo.getDescripcion());
 		 * System.out.println("unidad  "+unidad.getId());
 		 */
-		reclamo.save();
+		reclamo.setNumero(reclamo.save());
 		return reclamo.getNumero();
 	}
 	
