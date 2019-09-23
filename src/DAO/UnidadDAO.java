@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
+import entitys.ReclamoEntity;
 import entitys.UnidadEntity;
 import modelo.Edificio;
+import modelo.Reclamo;
 import modelo.Unidad;
 import utils.ConnectionUtils;
 
@@ -63,7 +67,8 @@ public class UnidadDAO {
 				return null;
 			}
 		}
-	    
+		
+
 	    public static void save(Unidad unidad) {
 	    	Session session = ConnectionUtils.getSession();
 			Transaction transaction = null; 

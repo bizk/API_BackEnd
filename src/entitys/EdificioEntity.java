@@ -64,7 +64,7 @@ public class EdificioEntity {
 	}
 
 	public List<UnidadEntity> getUnidades() {
-		return this.unidades;
+			return this.unidades;
 	}
 
 	public void setUnidades(List<UnidadEntity> unidades) {

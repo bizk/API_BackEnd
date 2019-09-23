@@ -88,8 +88,8 @@ public class Reclamo {
 		this.estado = estado;
 	}
 
-	public void save() {
-		ReclamoDAO.save(this);
+	public int save() {
+		return ReclamoDAO.save(this);
 	}
 	
 	public void update() {
