@@ -1,5 +1,6 @@
 package modelo;
 
+import DAO.ImagenDAO;
 import views.ImagenView;
 
 public class Imagen {
@@ -38,7 +39,7 @@ public class Imagen {
 	}
 
 	public void save(int numeroReclamo) {
-		
+		ImagenDAO.save(this, numeroReclamo);
 	}
 
 	public ImagenView toView() {

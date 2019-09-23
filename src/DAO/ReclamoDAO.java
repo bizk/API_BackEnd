@@ -1,26 +1,23 @@
 package DAO;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import entitys.ReclamoEntity;
+import modelo.Edificio;
 import modelo.Persona;
 import modelo.Reclamo;
 import modelo.Unidad;
 import utils.ConnectionUtils;
 
-import java.util.List;
-
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
-import entitys.PersonaEntity;
-import entitys.ReclamoEntity;
-import entitys.UnidadEntity;
-import exceptions.ReclamoException;
-
 public class ReclamoDAO {
     private List<Reclamo> reclamos;
-    private static Session session;
     
     public ReclamoDAO(){
-    	if (session == null) ReclamoDAO.session = ConnectionUtils.getSession();
     }
 
    static ReclamoEntity toEntity(Reclamo recl) {
@@ -46,13 +43,17 @@ public class ReclamoDAO {
    }
    
    public static void save(Reclamo recl) {
+	   System.out.println(recl);
 	   Transaction transaction = null; 
 		try {
+    		Session session = ConnectionUtils.getSession();
 			transaction = session.beginTransaction();
 			transaction.begin();
 			ReclamoEntity reclent = toEntity(recl);
+			System.out.println("aabb" + reclent.toString());
 			session.save(reclent);
 			transaction.commit();
+			session.close();
 		} catch (Exception e) {
 			if (transaction != null) {
 				transaction.rollback();
@@ -65,6 +66,7 @@ public class ReclamoDAO {
    public static void delete(Reclamo recl) {
 		Transaction transaction = null; 
 		try {
+    		Session session = ConnectionUtils.getSession();
 			transaction = session.beginTransaction();
 			transaction.begin();
 			ReclamoEntity reclent = toEntity(recl);
@@ -78,10 +80,10 @@ public class ReclamoDAO {
 		}
 	}
 
-   public Reclamo getReclamoByNum(int numero) {
-	   session = ConnectionUtils.getSession();
+   public static Reclamo getReclamoByNum(int numero) {
    	Transaction transaction = null; 
 		try {
+    		Session session = ConnectionUtils.getSession();
 			transaction = session.beginTransaction();
 			ReclamoEntity reclamoent = (ReclamoEntity) session.load(ReclamoEntity.class, numero);
 			Reclamo recl = toNegocio(reclamoent);
@@ -94,9 +96,7 @@ public class ReclamoDAO {
 			}
 			System.out.println("Error al buscar el reclamo");
 			e.printStackTrace();
-		} finally {
-			session.close();
-		}
+		} 
 		return null;
    }
    
@@ -105,11 +105,83 @@ public class ReclamoDAO {
 //
 //   }
 
-   public void eliminarReclamo(int numero){
-       Reclamo reclamo = reclamos.stream().filter(r -> r.getNumero() == numero).findAny().orElse(null);
-       if (reclamo != null) {
-           reclamos.remove(reclamo);
-       }
-   }
+public static List<Reclamo> getReclamosByEdificio(Edificio edificio) {
+	Transaction ts = null;
+	List<Reclamo> results = null;
+	try {
+		Session session = ConnectionUtils.getSession();
+		ts = session.beginTransaction();
+		ts.begin();
+		List<ReclamoEntity> recledif = (List<ReclamoEntity>)session.createSQLQuery("SELECT * FROM reclamos WHERE codigo = :edif")
+					.addEntity(ReclamoEntity.class).setParameter("edif", edificio.getCodigo()).list();
+		results = recledif.stream().map(x -> toNegocio(x))
+				.collect(Collectors.toCollection(ArrayList<Reclamo>::new));
+		ts.commit();
+		session.close();
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	return results;
+}
+
+public static List<Reclamo> getReclamosByUnidad(Unidad unit) {
+	Transaction transaction = null;
+	List<Reclamo> results = null;
+	try {
+		Session session = ConnectionUtils.getSession();
+		Transaction ts = session.beginTransaction();
+		ts.begin();
+		List<ReclamoEntity> recledif = (List<ReclamoEntity>)session.createSQLQuery("SELECT * FROM reclamos WHERE identificador = :unit")
+					.addEntity(ReclamoEntity.class).setParameter("edif", unit.getId()).list();
+		ts.commit();
+		session.close();
+		results = recledif.stream().map(x -> toNegocio(x))
+					.collect(Collectors.toCollection(ArrayList<Reclamo>::new));
+	} catch (Exception e) {
+		System.out.println("Problema para acceder a la db");
+		e.printStackTrace();
+	}
+	return results;
+}
+
+public static List<Reclamo> getReclamosByPersona(Persona per) {
+	Transaction transaction = null;
+	List<Reclamo> results = null;
+	try {
+		Session session = ConnectionUtils.getSession();
+		Transaction ts = session.beginTransaction();
+		ts.begin();
+		List<ReclamoEntity> recledif = (List<ReclamoEntity>)session.createSQLQuery("SELECT * FROM reclamos WHERE documento = :dni")
+					.addEntity(ReclamoEntity.class).setParameter("dni", per.getDocumento()).list();
+		results = recledif.stream().map(x -> toNegocio(x))
+				.collect(Collectors.toCollection(ArrayList<Reclamo>::new));
+		ts.commit();
+		session.close();
+	} catch (Exception e) {
+		System.out.println("Problema para acceder a la db");
+		e.printStackTrace();
+	}
+	return results;
+	
+}
+
+public static void update(Reclamo reclamo) {
+		Transaction transaction = null; 
+		 try {
+	    		Session session = ConnectionUtils.getSession();
+			 transaction = session.beginTransaction();
+			 transaction.begin();
+			 ReclamoEntity reclent = toEntity(reclamo);
+			 session.saveOrUpdate(reclent);
+			 transaction.commit();
+		 } catch (Exception e) {
+			 if (transaction != null) {
+				 transaction.rollback();
+			 }
+			 System.out.println("No se pudo actualizar al reclamo");
+			 e.printStackTrace();
+		 }
+	}
 
 }
+

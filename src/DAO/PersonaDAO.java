@@ -27,13 +27,14 @@ public class PersonaDAO {
 		return this.personas;
 	}
 	
-	public Persona getPersona(String documento) {
+	public static Persona getPersona(String documento) {
     	Transaction transaction = null; 
 		try {
 			Session session = ConnectionUtils.getSession();
 			transaction = session.beginTransaction();
 			PersonaEntity personaEntity = (PersonaEntity) session.get(PersonaEntity.class, documento);
 			transaction.commit();
+			session.close();
 			return toNegocio(personaEntity);
 		} catch (Exception exception) {
 			if (transaction != null) {

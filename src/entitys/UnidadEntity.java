@@ -21,7 +21,7 @@ import org.hibernate.annotations.CascadeType;
 @Table(name="unidades")
 public class UnidadEntity { 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENZ)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="identificador")
 	private int identificador;
 	@Column(name="piso")

@@ -16,40 +16,40 @@ public class TestEdificios {
 		boolean getUnidadesPorEdificio = false;
 		boolean habilitadosPorEdificio = false;
 		boolean DueniosPorEdifico = false;
+	
 		
-//		System.out.println("### Todos los edificios:");
+		System.out.println("### Todos los edificios:");
 //		System.out.println(ctrl.getEdificios() + "\n");
 //		getEdificios = true;
 //		
 //		System.out.println("### Obtener unidades por edificio");
 //		try {
-//			ctrl.getUnidadesPorEdificio(1);
-//			//System.out.println(ctrl.getUnidadesPorEdificio(1)+ "\n");
+//			System.out.println(ctrl.getUnidadesPorEdificio(1)+ "\n");
 //			getUnidadesPorEdificio = true;
 //		} catch (Exception e) {
 //			System.out.println("No anda getUnidades por edificio");
 //			e.printStackTrace();
 //		}
-//		
+		
 //		System.out.println("### Obtener habilitados por edificio");
 //		try {
 //			List<PersonaView> resultado = ctrl.habilitadosPorEdificio(1);
-//			//for(PersonaView ps:resultado) {
-//			//	System.out.println(ps);
-//			//}
+//			for(PersonaView ps:resultado) {
+//				System.out.println(ps);
+//			}
 //			habilitadosPorEdificio = true;
 //		} catch (Exception e) {
 //			// TODO Auto-generated catch block
 //			System.out.println("No anda habilitados por edificio");
 //			e.printStackTrace();
 //		}
-//		
+		
 //		System.out.println("### Obtener duenios por edificio");
 //		try {
 //			List<PersonaView> resultado = ctrl.dueniosPorEdificio(1);
-//			//for(PersonaView ps:resultado) {
-//			//	System.out.println(ps);
-//			//}
+//			for(PersonaView ps:resultado) {
+//				System.out.println(ps);
+//			}
 //			DueniosPorEdifico = true;
 //		} catch (Exception e) {
 //			// TODO Auto-generated catch block
@@ -63,11 +63,11 @@ public class TestEdificios {
 //		System.out.println("- habilitadosPorEdificio: " + habilitadosPorEdificio);
 //		System.out.println("- dueniosPorEdificio: " + DueniosPorEdifico);
 		
-		// -> System.out.println("- habitantesPorEdificioFunc: " + habitantesPorEdificioFunc(ctrl));
+		//System.out.println("- habitantesPorEdificioFunc: " + habitantesPorEdificioFunc(ctrl));
 		
 //		System.out.println("- dueniosPorUnidadFunc: " + dueniosPorUnidad(ctrl));
 //		try {
-//			ctrl.transferirUnidad(100, "N'10'", "N'5'", "DNI30161468");
+//			ctrl.transferirUnidad(100, "N'10'", "N'5'", "DNI30108780");
 //		} catch (UnidadException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace(); 
@@ -83,9 +83,7 @@ public class TestEdificios {
 		//ctrl.agregarPersona("DNI1", "Mirtha legrand");
 		//System.out.println(ctrl.dueniosPorUnidad(9, null, null));
 		//ctrl.agregarDuenioUnidad(9, null, null, "DNI1");
-		System.out.println(ctrl.dueniosPorUnidad(9, null, null));
-		ctrl.eliminarPersona("DNI1");
-		System.out.println(ctrl.dueniosPorUnidad(9, null, null));
+		//System.out.println(ctrl.dueniosPorUnidad(49, null, null));
 
 	}
 	

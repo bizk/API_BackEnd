@@ -60,6 +60,7 @@ public class EdificioDAO {
 			edificio.setUnidades(
 					unidadesEntity.stream().map(x->UnidadDAO.toNegocioEdificio(x, edificio)).collect(Collectors.toCollection(ArrayList<Unidad>::new))
 			);
+			ts.commit();
 			session.close();
 			return edificio;
 		} catch (Exception np) {
