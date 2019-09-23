@@ -7,8 +7,12 @@ import java.util.stream.Collectors;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import entitys.DuenioEntity;
+import entitys.InquilinoEntity;
 import entitys.PersonaEntity;
+import entitys.UnidadEntity;
 import modelo.Persona;
+import modelo.Unidad;
 import utils.ConnectionUtils;
 
 public class PersonaDAO {
@@ -71,6 +75,19 @@ public class PersonaDAO {
 			Session session = ConnectionUtils.getSession();
 			transaction = session.beginTransaction();
 			transaction.begin();
+			List<DuenioEntity> duenioEntities = (List<DuenioEntity>) session.createSQLQuery("SELECT * FROM duenios WHERE documento = :documento")
+					.addEntity(DuenioEntity.class).setParameter("documento", persona.getDocumento()).list();
+			for (DuenioEntity de : duenioEntities) 
+				session.delete(de);
+		
+			List<InquilinoEntity> inquilinoEntities= (List<InquilinoEntity>) session.createSQLQuery("SELECT * FROM inquilinos WHERE documento = :documento")
+					.addEntity(InquilinoEntity.class).setParameter("documento", persona.getDocumento()).list();
+			for (InquilinoEntity ie : inquilinoEntities) {
+				Unidad unidad = UnidadDAO.getUnidad(ie.getUnidad());
+				if (unidad.getInquilinos().size() <= 1) unidad.liberar();
+				session.delete(ie);
+			}
+				
 			PersonaEntity personaEntity = toEntity(persona);
 			session.delete(personaEntity);
 			transaction.commit();

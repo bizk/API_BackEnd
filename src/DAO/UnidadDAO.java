@@ -30,24 +30,24 @@ public class UnidadDAO {
 			return unidades;
 	    }
 	    
-//	    public Unidad getUnidad(int codigo) {
-//	    	Transaction ts = null;
-//	    	try {
-//	    		Session session = ConnectionUtils.getSession();
-//	    		ts = session.beginTransaction();
-//				UnidadEntity unidadEntity = (UnidadEntity) session.createSQLQuery("SELECT * FROM unidades WHERE identificador = :unidad_id")
-//								.addEntity(UnidadEntity.class).setParameter("unidad_id", codigo).uniqueResult();
-//	    		//UnidadEntity unidadEntity = (UnidadEntity)session.createSQLQuery("SELECT * FROM unidades WHERE identificador = :unidad_id AND piso = :piso_id AND numero = :numero_id")
-//				//			.addEntity(EdificioEntity.class).setParameter("edificio_id", codigo).setParameter("piso_id", piso).setParameter("numero_id", numero).uniqueResult();
-//				Unidad unidad = toNegocio(unidadEntity);
-//				ts.commit();
-//				session.close();
-//				return unidad;
-//			} catch (Exception np) {
-//				System.out.println("No existe una unidad para dicho codigo, piso y numero");
-//				return null;
-//			}
-//		}
+	    public static Unidad getUnidad(int codigo) {
+	    	Transaction ts = null;
+	    	try {
+	    		Session session = ConnectionUtils.getSession();
+	    		ts = session.beginTransaction();
+				UnidadEntity unidadEntity = (UnidadEntity) session.createSQLQuery("SELECT * FROM unidades WHERE identificador = :unidad_id")
+								.addEntity(UnidadEntity.class).setParameter("unidad_id", codigo).uniqueResult();
+	    		//UnidadEntity unidadEntity = (UnidadEntity)session.createSQLQuery("SELECT * FROM unidades WHERE identificador = :unidad_id AND piso = :piso_id AND numero = :numero_id")
+				//			.addEntity(EdificioEntity.class).setParameter("edificio_id", codigo).setParameter("piso_id", piso).setParameter("numero_id", numero).uniqueResult();
+				Unidad unidad = toNegocio(unidadEntity);
+				ts.commit();
+				session.close();
+				return unidad;
+			} catch (Exception np) {
+				System.out.println("No existe una unidad para dicho codigo, piso y numero");
+				return null;
+			}
+		}
 		
 		public static Unidad getUnidad(int codigoedif, String piso, String numero){
 			try {
@@ -95,7 +95,6 @@ public class UnidadDAO {
 		}
 		
 	static Unidad toNegocio(UnidadEntity unidadEntity) {
-			System.out.println("are" + unidadEntity.getDuenios().size());
 			return new Unidad(unidadEntity.getIdentificador(),
 								unidadEntity.getPiso(),
 								unidadEntity.getNumero(),

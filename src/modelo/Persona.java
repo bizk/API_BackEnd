@@ -43,18 +43,6 @@ public class Persona {
 		return pe;
 	}
 	
-	public DuenioEntity toDuenioEntity(Unidad unidad) {
-		UnidadEntity unidadEntity = new UnidadEntity();
-		unidadEntity.setIdentificador(unidad.getId());
-		unidadEntity.setNumero(unidad.getNumero());
-		unidadEntity.setPiso(unidad.getPiso());
-		DuenioEntity de = new DuenioEntity();
-		de.setUnidad(unidadEntity);
-		de.setDuenio(toEntity());
-		System.out.println(de.toString());
-		return de;
-	}
-	
 	public String toString() {
 		return new String(this.documento + ": " + this.nombre);
 	}
