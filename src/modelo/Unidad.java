@@ -21,7 +21,7 @@ public class Unidad {
 	private Edificio edificio;
 	private List<Persona> duenios;
 	private List<Persona> inquilinos;
-	
+
 	public Unidad(int id, String piso, String numero, Edificio edificio) {
 		this.id = id;
 		this.piso = piso;
@@ -31,7 +31,7 @@ public class Unidad {
 		this.duenios = new ArrayList<Persona>();
 		this.inquilinos = new ArrayList<Persona>();
 	}
- 
+
 	public Unidad(int id, String piso, String numero, boolean habitado, Edificio edificio, List<Persona> duenios,
 			List<Persona> inquilinos) {
 		super();
@@ -44,27 +44,24 @@ public class Unidad {
 		this.inquilinos = inquilinos;
 	}
 
-
-
 	public void transferir(Persona nuevoDuenio) {
 		duenios = new ArrayList<Persona>();
 		duenios.add(nuevoDuenio);
 		this.save();
 	}
-	
+
 	public void agregarDuenio(Persona duenio) {
 		duenios.add(duenio);
 		this.save();
 	}
-	
+
 	public void alquilar(Persona inquilino) throws UnidadException {
-		if(!this.habitado) {
+		if (!this.habitado) {
 			this.habitado = true;
 			inquilinos = new ArrayList<Persona>();
 			inquilinos.add(inquilino);
 			this.save();
-		}
-		else
+		} else
 			throw new UnidadException("La unidad esta ocupada");
 	}
 
@@ -72,26 +69,26 @@ public class Unidad {
 		inquilinos.add(inquilino);
 		this.save();
 	}
-	
+
 	public boolean estaHabitado() {
 		return habitado;
-	} 
-	
+	}
+
 	public void liberar() {
 		this.inquilinos = new ArrayList<Persona>();
 		this.habitado = false;
 		this.save();
 	}
-	
+
 	public void habitar() throws UnidadException {
-		if(this.habitado)
+		if (this.habitado)
 			throw new UnidadException("La unidad ya esta habitada");
 		else {
 			this.habitado = true;
 			this.save();
 		}
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -104,7 +101,6 @@ public class Unidad {
 		return numero;
 	}
 
-	
 	public Edificio getEdificio() {
 		return edificio;
 	}
@@ -116,38 +112,40 @@ public class Unidad {
 	public List<Persona> getInquilinos() {
 		return inquilinos;
 	}
-	
-	public void setDuenios(List<Persona> duenios){
+
+	public void setDuenios(List<Persona> duenios) {
 		this.duenios.addAll(duenios);
 	}
 
-	public void setInquilinos(List<Persona> inquilinos){
+	public void setInquilinos(List<Persona> inquilinos) {
 		this.inquilinos.addAll(inquilinos);
 	}
-	
+
 	public UnidadEntity toEntity() {
 		UnidadEntity unidadEntity = new UnidadEntity();
 		unidadEntity.setIdentificador(this.id);
 		unidadEntity.setNumero(this.numero);
 		unidadEntity.setPiso(this.piso);
 		unidadEntity.setHabitado(this.habitado);
-		
+
 		EdificioEntity edificioEntity = new EdificioEntity();
 		edificioEntity.setCodigo(this.edificio.getCodigo());
 		edificioEntity.setDireccion(this.edificio.getDireccion());
 		edificioEntity.setNombre(this.edificio.getNombre());
 		unidadEntity.setEdificio(edificioEntity);
-		
-		unidadEntity.setDuenios(this.duenios.stream().map(x->x.toEntity()).collect(Collectors.toCollection(ArrayList<PersonaEntity>::new)));
-		unidadEntity.setInquilinos(this.inquilinos.stream().map(x->x.toEntity()).collect(Collectors.toCollection(ArrayList<PersonaEntity>::new)));
+
+		unidadEntity.setDuenios(this.duenios.stream().map(x -> x.toEntity())
+				.collect(Collectors.toCollection(ArrayList<PersonaEntity>::new)));
+		unidadEntity.setInquilinos(this.inquilinos.stream().map(x -> x.toEntity())
+				.collect(Collectors.toCollection(ArrayList<PersonaEntity>::new)));
 		return unidadEntity;
 	}
-	
+
 	public UnidadView toView() {
 		EdificioView auxEdificio = edificio.toView();
 		return new UnidadView(id, piso, numero, habitado, auxEdificio);
 	}
-	
+
 	public void save() {
 		UnidadDAO.save(this);
 	}

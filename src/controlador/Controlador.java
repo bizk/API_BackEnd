@@ -160,9 +160,6 @@ public class Controlador {
 		persona.delete();
 	}
 	
-	//TODO DE ACA PARA ABAJO FEDE
-	//			F - E - D - E
-	//
 	
 	public List<ReclamoView> reclamosPorEdificio(int codigo){
 		List<ReclamoView> resultado = new ArrayList<ReclamoView>();
@@ -232,7 +229,7 @@ public class Controlador {
 	}
 
 	private Unidad buscarUnidad(int codigo, String piso, String numero) throws UnidadException{
-		return unidadDAO.getUnidad(codigo);
+		return UnidadDAO.getUnidad(codigo, piso, numero);
 	}	
 	
 	private Persona buscarPersona(String documento) throws PersonaException {

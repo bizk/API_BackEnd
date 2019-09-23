@@ -11,16 +11,15 @@ public class TestEdificios {
 
 	public static void main(String[] args) throws Exception {
 		Controlador ctrl = Controlador.getInstancia();
-		
+
 		boolean getEdificios = false;
 		boolean getUnidadesPorEdificio = false;
 		boolean habilitadosPorEdificio = false;
 		boolean DueniosPorEdifico = false;
-	
-		
+
 		System.out.println("### Todos los edificios:");
-//		System.out.println(ctrl.getEdificios() + "\n");
-//		getEdificios = true;
+		System.out.println(ctrl.getEdificios() + "\n");
+		getEdificios = true;
 //		
 //		System.out.println("### Obtener unidades por edificio");
 //		try {
@@ -30,7 +29,7 @@ public class TestEdificios {
 //			System.out.println("No anda getUnidades por edificio");
 //			e.printStackTrace();
 //		}
-		
+
 //		System.out.println("### Obtener habilitados por edificio");
 //		try {
 //			List<PersonaView> resultado = ctrl.habilitadosPorEdificio(1);
@@ -43,7 +42,7 @@ public class TestEdificios {
 //			System.out.println("No anda habilitados por edificio");
 //			e.printStackTrace();
 //		}
-		
+
 //		System.out.println("### Obtener duenios por edificio");
 //		try {
 //			List<PersonaView> resultado = ctrl.dueniosPorEdificio(1);
@@ -62,57 +61,60 @@ public class TestEdificios {
 //		System.out.println("- getUNidadesPorEdificios: " + getUnidadesPorEdificio);
 //		System.out.println("- habilitadosPorEdificio: " + habilitadosPorEdificio);
 //		System.out.println("- dueniosPorEdificio: " + DueniosPorEdifico);
-		
-		//System.out.println("- habitantesPorEdificioFunc: " + habitantesPorEdificioFunc(ctrl));
-		
+
+		// System.out.println("- habitantesPorEdificioFunc: " +
+		// habitantesPorEdificioFunc(ctrl));
+
 //		System.out.println("- dueniosPorUnidadFunc: " + dueniosPorUnidad(ctrl));
 //		try {
-//			ctrl.transferirUnidad(100, "N'10'", "N'5'", "DNI30108780");
+//			ctrl.transferirUnidad(2, "10", "5", "DNI30108780");
 //		} catch (UnidadException e) {
 //			// TODO Auto-generated catch block
-//			e.printStackTrace(); 
+//			e.printStackTrace();
 //		} catch (PersonaException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
 //		System.out.println("- dueniosPorUnidadFunc: " + dueniosPorUnidad(ctrl));
-	
-		//ctrl.liberarUnidad(28, null, null);
-		//ctrl.habitarUnidad(28, null, null);
-		//ctrl.habitarUnidad(28, null, null);		
-		//ctrl.agregarPersona("DNI1", "Mirtha legrand");
-		//System.out.println(ctrl.dueniosPorUnidad(9, null, null));
-		//ctrl.agregarDuenioUnidad(9, null, null, "DNI1");
-		//System.out.println(ctrl.dueniosPorUnidad(49, null, null));
 
+		// ctrl.liberarUnidad(28, null, null);
+		// ctrl.habitarUnidad(28, null, null);
+		// ctrl.habitarUnidad(28, null, null);
+		// ctrl.agregarPersona("DNI1", "Mirtha legrand");
+		// System.out.println(ctrl.dueniosPorUnidad(1, "1", "1"));
+		// ctrl.agregarDuenioUnidad(1, "1", "1", "DNI1");
+		 System.out.println(ctrl.dueniosPorUnidad(1, "1", "1"));
+		 ctrl.eliminarPersona("DNI1");
+		 System.out.println(ctrl.dueniosPorUnidad(1, "1", "1"));
 	}
-	
+
 	private static boolean habitantesPorEdificioFunc(Controlador ctrl) {
 		boolean bandera = false;
 		try {
 			ctrl.habitantesPorEdificio(1);
 			bandera = true;
 		} catch (Exception e) {
-			
+
 		}
 		return bandera;
 	}
-	
+
 	private static boolean dueniosPorUnidad(Controlador ctrl) {
 		boolean bandera = false;
 		try {
-			System.out.println(ctrl.dueniosPorUnidad(100,"1","13"));;
+			System.out.println(ctrl.dueniosPorUnidad(6, "5", "1"));
+			;
 			bandera = true;
 		} catch (Exception e) {
 
 		}
 		return bandera;
 	}
-	
+
 	private static boolean inquilinosPorUnidad(Controlador ctrl) {
 		boolean bandera = false;
 		try {
-			ctrl.inquilinosPorUnidad(15,"1","13");
+			ctrl.inquilinosPorUnidad(15, "1", "13");
 			bandera = true;
 		} catch (Exception e) {
 
