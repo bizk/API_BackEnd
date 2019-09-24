@@ -42,7 +42,7 @@ public class ReclamoDAO {
        return reclamos;
    }
    
-   public static void save(Reclamo recl) {
+   public static int save(Reclamo recl) {
 	   System.out.println(recl);
 	   Transaction transaction = null; 
 		try {
@@ -54,13 +54,16 @@ public class ReclamoDAO {
 			session.save(reclent);
 			transaction.commit();
 			session.close();
+			return reclent.getNumero();
 		} catch (Exception e) {
 			if (transaction != null) {
 				transaction.rollback();
 			}
 			System.out.println("No se pudo guardar al reclamo");
 			e.printStackTrace();
+			return -1;
 		}
+		
    }
    
    public static void delete(Reclamo recl) {
@@ -132,11 +135,12 @@ public static List<Reclamo> getReclamosByUnidad(Unidad unit) {
 		Transaction ts = session.beginTransaction();
 		ts.begin();
 		List<ReclamoEntity> recledif = (List<ReclamoEntity>)session.createSQLQuery("SELECT * FROM reclamos WHERE identificador = :unit")
-					.addEntity(ReclamoEntity.class).setParameter("edif", unit.getId()).list();
+					.addEntity(ReclamoEntity.class).setParameter("unit", unit.getId()).list();
 		ts.commit();
-		session.close();
+
 		results = recledif.stream().map(x -> toNegocio(x))
 					.collect(Collectors.toCollection(ArrayList<Reclamo>::new));
+		session.close();
 	} catch (Exception e) {
 		System.out.println("Problema para acceder a la db");
 		e.printStackTrace();

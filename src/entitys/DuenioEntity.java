@@ -16,26 +16,17 @@ public class DuenioEntity {
 	@Column(name="id")
 	private int id;
 	
-	@ManyToMany
-	private UnidadEntity unidad;
+	@Column (name="identificador")
+	private int unidad;
 
-	@ManyToMany
+	
 	@Column(name="documento")
-	private PersonaEntity duenio;
+	private String duenio;
 	
 	public DuenioEntity() {
 		
 	}
 	
-	public DuenioEntity(UnidadEntity unidad, PersonaEntity duenio) {
-		this.unidad = unidad;
-		this.duenio = duenio;
-	}
-
-	public PersonaEntity getDuenio() {
-		return this.duenio;
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -44,23 +35,12 @@ public class DuenioEntity {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-
-	public UnidadEntity getUnidad() {
-		return unidad;
-	}
-
-	public void setUnidad(UnidadEntity unidad) {
-		this.unidad = unidad;
-	}
-
-
-	public void setDuenio(PersonaEntity duenio) {
-		this.duenio = duenio;
+	
+	public int getUnidad() {
+		return this.unidad; 
 	}
 	
 	public String toString() {
-		return new String(id + " " + unidad.toString() + " " + duenio.toString());
-
+		return new String(id + " " + unidad + " " + duenio.toString());
 	}
 }

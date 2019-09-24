@@ -15,22 +15,19 @@ import javax.persistence.Table;
 @Table(name="inquilinos")
 public class InquilinoEntity {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@ManyToOne
+
 	@JoinColumn(name="identificador")
-	private UnidadEntity unidad;
+	private int unidad;
 
-	@ManyToMany
+	
 	@JoinColumn(name="documento")
-	private PersonaEntity inquilino;
+	private String inquilino;
 
-	public InquilinoEntity(UnidadEntity unidad, PersonaEntity inquilino) {
-		super();
-		this.unidad = unidad;
-		this.inquilino = inquilino;
+	public InquilinoEntity() {
+		
 	}
 
 	public int getId() {
@@ -41,21 +38,8 @@ public class InquilinoEntity {
 		this.id = id;
 	}
 
-	public UnidadEntity getUnidad() {
-		return unidad;
-	}
-
-	public void setUnidad(UnidadEntity unidad) {
-		this.unidad = unidad;
-	}
-
-	public PersonaEntity getInquilino() {
-		return inquilino;
-	}
-
-	public void setInquilino(PersonaEntity inquilino) {
-		this.inquilino = inquilino;
-	}
-	
+	public int getUnidad() {
+		return this.unidad;
+	}	
 	
 }
