@@ -72,8 +72,7 @@ public class TestEdificios {
 		System.out.println("elimino"); 
 		ctrl.eliminarPersona("DNI1");
 		 System.out.println(ctrl.dueniosPorUnidad(1, "1", "1"));
-		 
-	}
+		 }
 
 	private static boolean habitantesPorEdificioFunc(Controlador ctrl) {
 		boolean bandera = false;
