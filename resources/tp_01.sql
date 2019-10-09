@@ -3905,7 +3905,7 @@ create table inquilinos(
 	constraint pk_inquilinos primary key (id)
 )
 go
-SET IDENTITY_INSERT [dbo].[inquilinos] ON 
+SET IDENTITY_INSERT inquilinos ON 
 GO
 INSERT [dbo].[inquilinos] ([id], [identificador], [documento]) VALUES (1, 8, N'CI 13230978')
 INSERT [dbo].[inquilinos] ([id], [identificador], [documento]) VALUES (2, 15, N'CPA3449614')
@@ -4326,7 +4326,7 @@ INSERT [dbo].[inquilinos] ([id], [identificador], [documento]) VALUES (416, 1571
 INSERT [dbo].[inquilinos] ([id], [identificador], [documento]) VALUES (417, 1581, N'DNI31064763')
 INSERT [dbo].[inquilinos] ([id], [identificador], [documento]) VALUES (418, 1591, N'DNI31064776')
 go
-SET IDENTITY_INSERT [dbo].[inquilinos] OFF
+SET IDENTITY_INSERT inquilinos OFF
 go
 
 create table reclamos(
