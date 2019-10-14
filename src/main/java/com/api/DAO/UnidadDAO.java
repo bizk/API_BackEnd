@@ -59,7 +59,7 @@ public class UnidadDAO {
 	    		Transaction ts = session.beginTransaction();
 	    		UnidadEntity unidadEntity = (UnidadEntity)session.createSQLQuery("SELECT * FROM unidades WHERE codigoEdificio = ? and piso = ? and numero = ?")
 							.addEntity(UnidadEntity.class).setParameter(0, codigoedif).setString(1, piso).setString(2, numero).uniqueResult();
-	    		Unidad unidad = toNegocio(unidadEntity);
+				Unidad unidad = toNegocio(unidadEntity);
 				session.close();
 				return unidad;
 			} catch (Exception np) {
