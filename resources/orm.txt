@@ -1,0 +1,64 @@
+ORM
+Tabla                               Negocio
+EntityEdificio
+########        edificios           edificio          ########
+codigo          int                 int               codigo
+nombre          varchar     <-->    String            nombre
+direccion       varchar     <-->    String            direccion
+
+EntityImagen
+########        imagenes            imagen            ########
+numero          int                 int               numero
+path            varchar     <-->    String            direccion
+tipo            varchar     <-->    String            tipo
+idReclamo       int                 ??                ??
+
+EntityReclamo
+########        reclamos            Reclamo           ########
+idReclamo       int                 int               numero
+documento       varchar     <-->    Persona           usuario       <-- One to one
+codigo          int         <-->    Edificio          edificio      <-- One to one
+ubicacion       varchar     <-->    String            ubicacion
+descripcion     varchar     <-->    String            descripcion
+identificador   int         <-->    Unidad            Unidad        <-- One to one
+Estado          varchar     <-->    Estado            estado        //modificar en el query con default 'nuevo'
+
+EntityUnidad
+########        unidades            Unidad            ########
+identificador   int                 int               id
+piso            varchar      <-->   String            piso
+numero          varchar      <-->   String            numero
+habilitado      varchar      <-->   boolean           habilitado
+codigoEdificio  int          <-->   Edificio          edificio      <-- One to one
+??              ??                  list<Persona>     duenios       <-- One to many
+??              ??                  list<Persona>     Inquilinos    <-- One to many
+
+/*
+    UnidadEntity
+        list<PersonasEntity>        
+
+
+    UnidadDAO
+        getduenios
+            if duenios = null
+                getall duenios where identificador==identificador
+            
+*/
+
+
+EntityPersona
+########        personas            Persona           ########
+documento       varchar      <-->   String            documento     
+nombre          varchar      <-->   String            nombre        
+
+EntityDueño
+########        duenios             Persona           ########
+id              int                                             //iddueñazgo
+documento       varchar             String            documento     <-- One to one//Persona        
+identificador   int                 int               id            <-- One to one//Unidad
+
+EntityInquilino
+########        Inquilinos          Persona           ########
+id              int                                             //iddinquilinato
+identificador   int                 int               id            <-- One to one//Unidad
+documento       varchar             String            documento     <-- One to one//Persona

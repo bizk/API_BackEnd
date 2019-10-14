@@ -15,8 +15,8 @@ import javax.persistence.Table;
 @Table(name="inquilinos")
 public class InquilinoEntity {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	@JoinColumn(name="identificador")
