@@ -7,45 +7,52 @@ import java.util.stream.Collectors;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Restrictions;
 
+import entitys.EdificioEntity;
+import entitys.PersonaEntity;
 import entitys.ReclamoEntity;
 import entitys.UnidadEntity;
 import modelo.Edificio;
 import modelo.Reclamo;
 import modelo.Unidad;
 import utils.ConnectionUtils;
+import utils.HibernateUtils;
 
 
 public class UnidadDAO {
-	 private Session session;
 	 
 	 private List<Unidad> unidades;
 	    public UnidadDAO() {
-	    	if (session == null) this.session = ConnectionUtils.getSession();
 	    }
 	    public List<Unidad> getAll(){
-			session.beginTransaction();
+			Session session=HibernateUtils.getSessionFactory().getCurrentSession();
+	    	session.beginTransaction();
 
 	    	List<UnidadEntity> unidadesEntities = session.createCriteria(UnidadEntity.class).list();
 	    	this.unidades = unidadesEntities.stream().map(x -> toNegocio(x))
 					.collect(Collectors.toCollection(ArrayList<Unidad>::new));
-	    	session.close();
 			return unidades;
+	    }
+	    public static List<Unidad> getAllFromEdificio(Edificio edif){
+	    	Session session=HibernateUtils.getSessionFactory().getCurrentSession();
+	    	session.beginTransaction();
+	    	List<UnidadEntity> unidadesEntities = (List<UnidadEntity>) session.createQuery("from UnidadEntity where edificio=?").setEntity(0,EdificioDAO.toEntity(edif)).list();
+	    	return unidadesEntities.stream().map(x -> toNegocio(x))
+					.collect(Collectors.toCollection(ArrayList<Unidad>::new));
 	    }
 	    
 	    public static Unidad getUnidad(int codigo) {
 	    	Transaction ts = null;
 	    	try {
-	    		Session session = ConnectionUtils.getSession();
+	    		Session session=HibernateUtils.getSessionFactory().getCurrentSession();
 	    		ts = session.beginTransaction();
-				UnidadEntity unidadEntity = (UnidadEntity) session.createSQLQuery("SELECT * FROM unidades WHERE identificador = :unidad_id")
-								.addEntity(UnidadEntity.class).setParameter("unidad_id", codigo).uniqueResult();
-	    		//UnidadEntity unidadEntity = (UnidadEntity)session.createSQLQuery("SELECT * FROM unidades WHERE identificador = :unidad_id AND piso = :piso_id AND numero = :numero_id")
-				//			.addEntity(EdificioEntity.class).setParameter("edificio_id", codigo).setParameter("piso_id", piso).setParameter("numero_id", numero).uniqueResult();
+				//UnidadEntity unidadEntity = (UnidadEntity) session.createSQLQuery("SELECT * FROM unidades WHERE identificador = :unidad_id")
+				//				.addEntity(UnidadEntity.class).setParameter("unidad_id", codigo).uniqueResult();
+	    		UnidadEntity unidadEntity = (UnidadEntity) session.createQuery("from UnidadEntity where identificador=?").setParameter(0, codigo).uniqueResult();
 				Unidad unidad = toNegocio(unidadEntity);
 				ts.commit();
-				session.close();
 				return unidad;
 			} catch (Exception np) {
 				System.out.println("No existe una unidad para dicho codigo, piso y numero");
@@ -55,12 +62,17 @@ public class UnidadDAO {
 		
 		public static Unidad getUnidad(int codigoedif, String piso, String numero){
 			try {
-	    		Session session = ConnectionUtils.getSession();
-	    		Transaction ts = session.beginTransaction();
-	    		UnidadEntity unidadEntity = (UnidadEntity)session.createSQLQuery("SELECT * FROM unidades WHERE codigoEdificio = ? and piso = ? and numero = ?")
-							.addEntity(UnidadEntity.class).setParameter(0, codigoedif).setString(1, piso).setString(2, numero).uniqueResult();
-	    		Unidad unidad = toNegocio(unidadEntity);
-				session.close();
+				EdificioEntity edif = EdificioDAO.toEntity(EdificioDAO.getEdificio(codigoedif));
+				Session session=HibernateUtils.getSessionFactory().getCurrentSession();
+				Transaction ts = session.beginTransaction();
+	    		//UnidadEntity unidadEntity = (UnidadEntity) session.createUnidadEntity unidadEntity = (UnidadEntity)session.createSQLQuery("SELECT * FROM unidades WHERE codigoEdificio = ? and piso = ? and numero = ?")
+				//			.addEntity(UnidadEntity.class).setParameter(0, codigoedif).setString(1, piso).setString(2, numero).uniqueResult();
+				UnidadEntity unidadEntity = (UnidadEntity) session.createQuery("from UnidadEntity where edificio=? and piso=? and numero= ?")
+						.setEntity(0, edif)
+						.setString(1, piso)
+						.setString(2, numero)
+						.uniqueResult();
+				Unidad unidad = toNegocio(unidadEntity);
 				return unidad;
 			} catch (Exception np) {
 				System.out.println("No existe una unidad para dicho codigo, piso y numero");
@@ -70,12 +82,12 @@ public class UnidadDAO {
 		
 
 	    public static void save(Unidad unidad) {
-	    	Session session = ConnectionUtils.getSession();
+	    	Session session=HibernateUtils.getSessionFactory().getCurrentSession();
 			Transaction transaction = null; 
 			try {
 				transaction = session.beginTransaction();
 				transaction.begin();
-				UnidadEntity unidadEntity = unidad.toEntity();
+				UnidadEntity unidadEntity = toEntity(unidad);
 				session.saveOrUpdate(unidadEntity);
 				transaction.commit();
 			} catch (Exception e) {
@@ -84,9 +96,7 @@ public class UnidadDAO {
 				}
 				System.out.println("No se pudo guardar la unidad");
 				//e.printStackTrace();
-			} finally {
-				session.close();
-			}
+			} 
 		}
 	    //TODO
 		static UnidadEntity toEntity(Unidad unidad) {

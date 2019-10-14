@@ -14,6 +14,7 @@ import entitys.UnidadEntity;
 import modelo.Persona;
 import modelo.Unidad;
 import utils.ConnectionUtils;
+import utils.HibernateUtils;
 
 public class PersonaDAO {
 	private List<Persona> personas;
@@ -22,23 +23,19 @@ public class PersonaDAO {
     }
 	
 	public List<Persona> getAll(){
-		Session session = ConnectionUtils.getSession();
-
+		Session session = HibernateUtils.getSessionFactory().getCurrentSession();
 		List<PersonaEntity> results = session.createCriteria(PersonaEntity.class).list();
-		this.personas = results.stream().map(x -> toNegocio(x))
+		return results.stream().map(x -> toNegocio(x))
 				.collect(Collectors.toCollection(ArrayList<Persona>::new));
-
-		return this.personas;
 	}
 	
 	public static Persona getPersona(String documento) {
     	Transaction transaction = null; 
 		try {
-			Session session = ConnectionUtils.getSession();
+			Session session = HibernateUtils.getSessionFactory().getCurrentSession();
 			transaction = session.beginTransaction();
 			PersonaEntity personaEntity = (PersonaEntity) session.get(PersonaEntity.class, documento);
 			transaction.commit();
-			session.close();
 			return toNegocio(personaEntity);
 		} catch (Exception exception) {
 			if (transaction != null) {
@@ -52,10 +49,10 @@ public class PersonaDAO {
 	public static void save(Persona persona) {
 		Transaction transaction = null; 
 		try {
-			Session session = ConnectionUtils.getSession();
+			Session session = HibernateUtils.getSessionFactory().getCurrentSession();
 			transaction = session.beginTransaction();
 			transaction.begin();
-			PersonaEntity personaEntity = persona.toEntity();
+			PersonaEntity personaEntity = toEntity(persona);
 			personaEntity.setDocumento(persona.getDocumento());
 			personaEntity.setNombre(persona.getNombre());
 			session.saveOrUpdate(personaEntity);
@@ -69,22 +66,27 @@ public class PersonaDAO {
 		}
 	}
 	
-	public static void delete(Persona persona) {
+	public static void delete(Persona persona) {// TODO Cómo consultar a la tabla inquilinos o duenios? Pq mi mapeo directamente cada unidad guarda a sus duenios. En su defecto, como mapeo sino?
 		Transaction transaction = null; 
 		try {
-			Session session = ConnectionUtils.getSession();
+			Session session = HibernateUtils.getSessionFactory().getCurrentSession();
 			transaction = session.beginTransaction();
 			transaction.begin();
-			List<DuenioEntity> duenioEntities = (List<DuenioEntity>) session.createSQLQuery("SELECT * FROM duenios WHERE documento = :documento")
-					.addEntity(DuenioEntity.class).setParameter("documento", persona.getDocumento()).list();
+			//List<DuenioEntity> duenioEntities = (List<DuenioEntity>) session.createSQLQuery("SELECT * FROM duenios WHERE documento = :documento")
+				//	.addEntity(DuenioEntity.class).setParameter("documento", persona.getDocumento()).list();
+			List<DuenioEntity> duenioEntities = (List<DuenioEntity>) session.createQuery("from DuenioEntity where duenio = '"+ persona.getDocumento()+"' ").list();
 			for (DuenioEntity de : duenioEntities) 
 				session.delete(de);
 		
-			List<InquilinoEntity> inquilinoEntities= (List<InquilinoEntity>) session.createSQLQuery("SELECT * FROM inquilinos WHERE documento = :documento")
-					.addEntity(InquilinoEntity.class).setParameter("documento", persona.getDocumento()).list();
+			//List<InquilinoEntity> inquilinoEntities= (List<InquilinoEntity>) session.createSQLQuery("SELECT * FROM inquilinos WHERE documento = :documento")
+				//	.addEntity(InquilinoEntity.class).setParameter("documento", persona.getDocumento()).list();
+			List<InquilinoEntity> inquilinoEntities= (List<InquilinoEntity>) session.createQuery("from InquilinoEntity where inquilino = '"+persona.getDocumento()+"' ").list();
 			for (InquilinoEntity ie : inquilinoEntities) {
 				Unidad unidad = UnidadDAO.getUnidad(ie.getUnidad());
-				if (unidad.getInquilinos().size() <= 1) unidad.liberar();
+				List<Persona> inquilinos = unidad.getInquilinos();
+				inquilinos.remove(ie);
+				if (inquilinos.isEmpty()) unidad.liberar();
+				else unidad.setInquilinos(inquilinos);
 				session.delete(ie);
 			}
 				

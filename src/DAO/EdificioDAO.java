@@ -6,13 +6,12 @@ import java.util.stream.Collectors;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Expression;
 
 import entitys.EdificioEntity;
-import entitys.UnidadEntity;
 import modelo.Edificio;
 import modelo.Unidad;
-import utils.ConnectionUtils;
-import views.EdificioView;
+import utils.HibernateUtils;
 
 
 public class EdificioDAO {
@@ -25,15 +24,14 @@ public class EdificioDAO {
     public List<Edificio> getAll(){
 		Transaction transaction = null;
 		try {
-    		Session session = ConnectionUtils.getSession();
+    		Session session = HibernateUtils.getSessionFactory().getCurrentSession();
 			Transaction ts = session.beginTransaction();
 			ts.begin();
-			//List<EdificioEntity> results = (List<EdificioEntity>) session.createCriteria(EdificioEntity.class).list();
-			List<EdificioEntity> results = (List<EdificioEntity>)session.createSQLQuery("SELECT * FROM edificios").addEntity(EdificioEntity.class).list();
+			//List<EdificioEntity> results = (List<EdificioEntity>)session.createSQLQuery("SELECT * FROM edificios").addEntity(EdificioEntity.class).list();
+			List<EdificioEntity> results = (List<EdificioEntity>)session.createCriteria(EdificioEntity.class).list();
 			this.edificios = results.stream().map(x -> toNegocio(x))
 					.collect(Collectors.toCollection(ArrayList<Edificio>::new));
 	        ts.commit();
-	        session.close();
 		} catch (Exception e) {
 			System.out.println("Problema para acceder a la db");
 			e.printStackTrace();
@@ -41,29 +39,20 @@ public class EdificioDAO {
 		return this.edificios;
     }
 
-    public List<EdificioView> getAllViews(){
-		if (edificios.isEmpty()) getAll();
-		List<EdificioView> edificiosView = edificios.stream().map(x -> x.toView())
-				.collect(Collectors.toCollection(ArrayList<EdificioView>::new));
-        return edificiosView;
-    }
     
-    public Edificio getEdificio(int codigo) {
+    public static Edificio getEdificio(int codigo) {
     	Transaction ts = null;
 		try {
-    		Session session = ConnectionUtils.getSession();
+    		Session session = HibernateUtils.getSessionFactory().getCurrentSession();
 			ts = session.beginTransaction();
-			EdificioEntity edificioEntity = (EdificioEntity)session.createSQLQuery("SELECT * FROM edificios WHERE codigo = :edificio_id")
-						.addEntity(EdificioEntity.class).setParameter("edificio_id", codigo).uniqueResult();
-			List<UnidadEntity> unidadesEntity = edificioEntity.getUnidades();
+			//EdificioEntity edificioEntity = (EdificioEntity)session.createSQLQuery("SELECT * FROM edificios WHERE codigo = :edificio_id")
+						//.addEntity(EdificioEntity.class).setParameter("edificio_id", codigo).uniqueResult();
+			EdificioEntity edificioEntity = (EdificioEntity) session.createCriteria(EdificioEntity.class).add(Expression.like("codigo", codigo)).uniqueResult();
 			Edificio edificio = toNegocio(edificioEntity);
-			edificio.setUnidades(
-					unidadesEntity.stream().map(x->UnidadDAO.toNegocioEdificio(x, edificio)).collect(Collectors.toCollection(ArrayList<Unidad>::new))
-			);
 			ts.commit();
-			session.close();
 			return edificio;
 		} catch (Exception np) {
+			np.printStackTrace();
 			System.out.println("No existe un edificio para dicho codigo");
 		}
 		return null;

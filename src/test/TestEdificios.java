@@ -17,8 +17,8 @@ public class TestEdificios {
 		boolean habilitadosPorEdificio = false;
 		boolean DueniosPorEdifico = false;
 
-		System.out.println("### Todos los edificios:");
-		System.out.println(ctrl.getEdificios() + "\n");
+		/*System.out.println("### Todos los edificios:");
+		System.out.println(ctrl.getEdificiosView() + "\n");
 		
 		System.out.println("### Obtener unidades por edificio");
 		try {
@@ -62,13 +62,13 @@ public class TestEdificios {
 		System.out.println("- dueniosPorUnidadFunc: " + dueniosPorUnidad(ctrl));
 
 		System.out.println("### Inquilinos por unidad ###");
-		System.out.println(ctrl.inquilinosPorUnidad(1,"9", "5"));
+		System.out.println(ctrl.inquilinosPorUnidad(1,"9", "5"));*/
 		
-		System.out.println("agrego"); 
+		/*System.out.println("agrego"); 
 		ctrl.agregarPersona("DNI1", "Mirtha legrand");
 		 System.out.println(ctrl.dueniosPorUnidad(1, "1", "1"));
 		 ctrl.agregarDuenioUnidad(1, "1", "1", "DNI1");
-		 System.out.println(ctrl.dueniosPorUnidad(1, "1", "1"));
+		 System.out.println(ctrl.dueniosPorUnidad(1, "1", "1"));*/
 		System.out.println("elimino"); 
 		ctrl.eliminarPersona("DNI1");
 		 System.out.println(ctrl.dueniosPorUnidad(1, "1", "1"));

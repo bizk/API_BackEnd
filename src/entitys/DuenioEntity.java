@@ -15,8 +15,6 @@ public class DuenioEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="id")
 	private int id;
-	
-	@Column (name="identificador")
 	private int unidad;
 
 	
@@ -41,6 +39,6 @@ public class DuenioEntity {
 	}
 	
 	public String toString() {
-		return new String(id + " " + unidad + " " + duenio.toString());
+		return new String(id + " " + unidad + " " + duenio);
 	}
 }

@@ -13,9 +13,9 @@ import modelo.Persona;
 import modelo.Reclamo;
 import modelo.Unidad;
 import utils.ConnectionUtils;
+import utils.HibernateUtils;
 
 public class ReclamoDAO {
-    private List<Reclamo> reclamos;
     
     public ReclamoDAO(){
     }
@@ -39,21 +39,26 @@ public class ReclamoDAO {
 			   			recl.getEstado());
    }
    public List<Reclamo> getAll(){
-       return reclamos;
+	   Session session = HibernateUtils.getSessionFactory().getCurrentSession();
+	   Transaction t = session.beginTransaction();
+	   t.begin();
+	   List<ReclamoEntity> reclamos =  (List<ReclamoEntity>)session.createCriteria(ReclamoEntity.class).list();
+	   t.commit();
+       return reclamos.stream().map(x -> toNegocio(x))
+				.collect(Collectors.toCollection(ArrayList<Reclamo>::new));
    }
    
    public static int save(Reclamo recl) {
 	   System.out.println(recl);
 	   Transaction transaction = null; 
 		try {
-    		Session session = ConnectionUtils.getSession();
+			 Session session = HibernateUtils.getSessionFactory().getCurrentSession();
 			transaction = session.beginTransaction();
 			transaction.begin();
 			ReclamoEntity reclent = toEntity(recl);
-			System.out.println("aabb" + reclent.toString());
+			//System.out.println("aabb" + reclent.toString());
 			session.save(reclent);
 			transaction.commit();
-			session.close();
 			return reclent.getNumero();
 		} catch (Exception e) {
 			if (transaction != null) {
@@ -69,7 +74,7 @@ public class ReclamoDAO {
    public static void delete(Reclamo recl) {
 		Transaction transaction = null; 
 		try {
-    		Session session = ConnectionUtils.getSession();
+			 Session session = HibernateUtils.getSessionFactory().getCurrentSession();
 			transaction = session.beginTransaction();
 			transaction.begin();
 			ReclamoEntity reclent = toEntity(recl);
@@ -86,7 +91,7 @@ public class ReclamoDAO {
    public static Reclamo getReclamoByNum(int numero) {
    	Transaction transaction = null; 
 		try {
-    		Session session = ConnectionUtils.getSession();
+			 Session session = HibernateUtils.getSessionFactory().getCurrentSession();
 			transaction = session.beginTransaction();
 			ReclamoEntity reclamoent = (ReclamoEntity) session.load(ReclamoEntity.class, numero);
 			Reclamo recl = toNegocio(reclamoent);
@@ -112,15 +117,15 @@ public static List<Reclamo> getReclamosByEdificio(Edificio edificio) {
 	Transaction ts = null;
 	List<Reclamo> results = null;
 	try {
-		Session session = ConnectionUtils.getSession();
+		Session session = HibernateUtils.getSessionFactory().getCurrentSession();
 		ts = session.beginTransaction();
 		ts.begin();
-		List<ReclamoEntity> recledif = (List<ReclamoEntity>)session.createSQLQuery("SELECT * FROM reclamos WHERE codigo = :edif")
-					.addEntity(ReclamoEntity.class).setParameter("edif", edificio.getCodigo()).list();
+		//List<ReclamoEntity> recledif = (List<ReclamoEntity>)session.createSQLQuery("SELECT * FROM reclamos WHERE codigo = :edif")
+		//			.addEntity(ReclamoEntity.class).setParameter("edif", edificio.getCodigo()).list();
+		List<ReclamoEntity> recledif = (List<ReclamoEntity>)session.createQuery("from ReclamoEntity where edificio=?").setEntity(0, EdificioDAO.toEntity(edificio)).list();
 		results = recledif.stream().map(x -> toNegocio(x))
 				.collect(Collectors.toCollection(ArrayList<Reclamo>::new));
 		ts.commit();
-		session.close();
 	} catch (Exception e) {
 		e.printStackTrace();
 	}
@@ -131,16 +136,15 @@ public static List<Reclamo> getReclamosByUnidad(Unidad unit) {
 	Transaction transaction = null;
 	List<Reclamo> results = null;
 	try {
-		Session session = ConnectionUtils.getSession();
+		Session session = HibernateUtils.getSessionFactory().getCurrentSession();
 		Transaction ts = session.beginTransaction();
 		ts.begin();
-		List<ReclamoEntity> recledif = (List<ReclamoEntity>)session.createSQLQuery("SELECT * FROM reclamos WHERE identificador = :unit")
-					.addEntity(ReclamoEntity.class).setParameter("unit", unit.getId()).list();
+		//List<ReclamoEntity> recledif = (List<ReclamoEntity>)session.createSQLQuery("SELECT * FROM reclamos WHERE identificador = :unit")
+			//		.addEntity(ReclamoEntity.class).setParameter("unit", unit.getId()).list();
+		List<ReclamoEntity> recledif = (List<ReclamoEntity>)session.createQuery("from ReclamoEntity where unidad=?").setEntity(0, UnidadDAO.toEntity(unit)).list();
 		ts.commit();
-
 		results = recledif.stream().map(x -> toNegocio(x))
 					.collect(Collectors.toCollection(ArrayList<Reclamo>::new));
-		session.close();
 	} catch (Exception e) {
 		System.out.println("Problema para acceder a la db");
 		e.printStackTrace();
@@ -152,15 +156,15 @@ public static List<Reclamo> getReclamosByPersona(Persona per) {
 	Transaction transaction = null;
 	List<Reclamo> results = null;
 	try {
-		Session session = ConnectionUtils.getSession();
+		Session session = HibernateUtils.getSessionFactory().getCurrentSession();
 		Transaction ts = session.beginTransaction();
 		ts.begin();
-		List<ReclamoEntity> recledif = (List<ReclamoEntity>)session.createSQLQuery("SELECT * FROM reclamos WHERE documento = :dni")
-					.addEntity(ReclamoEntity.class).setParameter("dni", per.getDocumento()).list();
+		//List<ReclamoEntity> recledif = (List<ReclamoEntity>)session.createSQLQuery("SELECT * FROM reclamos WHERE documento = :dni")
+		//			.addEntity(ReclamoEntity.class).setParameter("dni", per.getDocumento()).list();
+		List<ReclamoEntity> recledif = (List<ReclamoEntity>)session.createQuery("from ReclamoEntity where usuario=?").setEntity(0, PersonaDAO.toEntity(per)).list();
 		results = recledif.stream().map(x -> toNegocio(x))
 				.collect(Collectors.toCollection(ArrayList<Reclamo>::new));
 		ts.commit();
-		session.close();
 	} catch (Exception e) {
 		System.out.println("Problema para acceder a la db");
 		e.printStackTrace();
