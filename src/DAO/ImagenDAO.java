@@ -9,13 +9,11 @@ import entitys.ImagenEntity;
 import modelo.Imagen;
 import modelo.Reclamo;
 import utils.ConnectionUtils;
+import utils.HibernateUtils;
 
 public class ImagenDAO {
-	List<Imagen> imagenes;
-	Session session;
-	
+
 	public ImagenDAO (){
-		if (session == null) this.session = ConnectionUtils.getSession();
 	}
 
 	static ImagenEntity toEntity(Imagen imagenes, Reclamo reclamo) {
@@ -34,7 +32,7 @@ public class ImagenDAO {
 		Transaction transaction = null; 
 		Reclamo recl = ReclamoDAO.getReclamoByNum(numeroReclamo);
 		try {
-			Session session = ConnectionUtils.getSession();
+			Session session = HibernateUtils.getSessionFactory().getCurrentSession();
 			transaction = session.beginTransaction();
 			transaction.begin();
 			ImagenEntity image = toEntity(imagen, recl);

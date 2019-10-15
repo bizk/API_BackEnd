@@ -36,12 +36,7 @@ public class Persona {
 		PersonaDAO.delete(this);
 	}
 	
-	public PersonaEntity toEntity() {
-		PersonaEntity pe = new PersonaEntity();
-		pe.setDocumento(this.documento);
-		pe.setNombre(this.nombre);
-		return pe;
-	}
+	
 	
 	public String toString() {
 		return new String(this.documento + ": " + this.nombre);

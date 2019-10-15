@@ -3,6 +3,7 @@ package controlador;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.hibernate.classic.Session;
 
@@ -57,8 +58,9 @@ public class Controlador {
 		return instancia;
 	}
 	
-	public List<EdificioView> getEdificios(){
-		return edificioDAO.getAllViews();
+	public List<EdificioView> getEdificiosView(){
+		return edificioDAO.getAll().stream().map(x -> x.toView())
+				.collect(Collectors.toCollection(ArrayList<EdificioView>::new));
 	}
 	
 	public List<UnidadView> getUnidadesPorEdificio(int codigo) throws EdificioException{
