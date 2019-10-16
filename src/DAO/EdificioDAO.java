@@ -18,7 +18,6 @@ public class EdificioDAO {
     private List<Edificio> edificios;
     
     public EdificioDAO() {
-    	this.edificios = new ArrayList<Edificio>(); 
     }
     
     public List<Edificio> getAll(){
