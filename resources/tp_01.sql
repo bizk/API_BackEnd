@@ -2120,7 +2120,7 @@ go
 
 create table duenios(
 	id int identity,
-	identificador int not null,
+	identificador int,
 	documento varchar(20) not null,
 	constraint pk_duenios primary key (id)
 )
@@ -3895,12 +3895,12 @@ INSERT duenios (id,identificador,documento) VALUES (1764, 1301, N'DNI30610075')
 INSERT duenios (id,identificador,documento) VALUES (1765, 1401, N'DNI30616697')
 INSERT duenios (id,identificador,documento) VALUES (1766, 1501, N'DNI30647320')
 go
-SET IDENTITY_INSERT duenios] OFF
+SET IDENTITY_INSERT [duenios] OFF
 go
 
 create table inquilinos(
 	id int identity,
-	identificador int not null,
+	identificador int,
 	documento varchar(20) not null,
 	constraint pk_inquilinos primary key (id)
 )
@@ -4336,6 +4336,7 @@ create table reclamos(
 	ubicacion varchar(300),
 	descripcion varchar(1000),
 	identificador int,
+	estado varchar(20) default 'nuevo',
 	constraint pk_reclamos primary key (idReclamo),
 	constraint fk_raclamo_persona foreign key (documento) references personas,
 	constraint fk_raclamo_edificio foreign key (codigo) references edificios

@@ -10,7 +10,9 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Restrictions;
 
+import entitys.DuenioEntity;
 import entitys.EdificioEntity;
+import entitys.InquilinoEntity;
 import entitys.PersonaEntity;
 import entitys.ReclamoEntity;
 import entitys.UnidadEntity;
@@ -35,13 +37,13 @@ public class UnidadDAO {
 					.collect(Collectors.toCollection(ArrayList<Unidad>::new));
 			return unidades;
 	    }
-	    public static List<Unidad> getAllFromEdificio(Edificio edif){
+	   /* public static List<Unidad> getAllFromEdificio(Edificio edif){
 	    	Session session=HibernateUtils.getSessionFactory().getCurrentSession();
 	    	session.beginTransaction();
 	    	List<UnidadEntity> unidadesEntities = (List<UnidadEntity>) session.createQuery("from UnidadEntity where edificio=?").setEntity(0,EdificioDAO.toEntity(edif)).list();
 	    	return unidadesEntities.stream().map(x -> toNegocio(x))
 					.collect(Collectors.toCollection(ArrayList<Unidad>::new));
-	    }
+	    }*/
 	    
 	    public static Unidad getUnidad(int codigo) {
 	    	Transaction ts = null;
@@ -72,10 +74,25 @@ public class UnidadDAO {
 						.setString(1, piso)
 						.setString(2, numero)
 						.uniqueResult();
-				Unidad unidad = toNegocio(unidadEntity);
+				Unidad unidad = toNegocioEdificio(unidadEntity, EdificioDAO.toNegocio(edif));
 				return unidad;
 			} catch (Exception np) {
 				System.out.println("No existe una unidad para dicho codigo, piso y numero");
+				return null;
+			}
+		}
+		public static List<Unidad> getUnidadByEdificio(int codigoedif){
+			try {
+				EdificioEntity edif = EdificioDAO.toEntity(EdificioDAO.getEdificio(codigoedif));
+				Session session=HibernateUtils.getSessionFactory().getCurrentSession();
+				Transaction ts = session.beginTransaction();
+	    		List<UnidadEntity> unidadEntities = (List<UnidadEntity>) session.createQuery("from UnidadEntity where edificio=?")
+						.setEntity(0, edif).list();
+				List <Unidad> unidades = unidadEntities.stream().map(x -> toNegocio(x))
+				.collect(Collectors.toCollection(ArrayList<Unidad>::new));
+				return unidades;
+			} catch (Exception np) {
+				System.out.println("No existen unidades para el edificio");
 				return null;
 			}
 		}
@@ -88,9 +105,25 @@ public class UnidadDAO {
 				transaction = session.beginTransaction();
 				transaction.begin();
 				UnidadEntity unidadEntity = toEntity(unidad);
-				session.saveOrUpdate(unidadEntity);
+				List<DuenioEntity> duenios = unidadEntity.getDuenios();
+				List<InquilinoEntity> inqs = unidadEntity.getInquilinos();
+				for(DuenioEntity d: duenios)
+				{
+//					d.setId(DuenioDAO.getDuenioEntity(d.getPersona(),d.getUnidad()).getId());
+//					session.merge(d);
+					session.saveOrUpdate(d);
+				}
+				for(InquilinoEntity i: inqs) {
+//					i.setId(InquilinoDAO.getInquilinoEntity(i.getPersona(),i.getUnidad()).getId());
+//					session.merge(i);
+					session.saveOrUpdate(i);//TODO carga en la base repetidos.
+				}
+				session.saveOrUpdate(unidadEntity);;
+				session.clear();
 				transaction.commit();
+
 			} catch (Exception e) {
+				e.printStackTrace();
 				if (transaction != null) {
 					transaction.rollback();
 				}
@@ -100,13 +133,16 @@ public class UnidadDAO {
 		}
 	    //TODO
 		static UnidadEntity toEntity(Unidad unidad) {
-			return new UnidadEntity(unidad.getId(),
-									unidad.getPiso(),
-									unidad.getNumero(),
-									unidad.estaHabitado(),
-									EdificioDAO.toEntity(unidad.getEdificio()), 
-									PersonaDAO.toEntity(unidad.getDuenios()),
-									PersonaDAO.toEntity(unidad.getInquilinos()));
+			UnidadEntity une = new UnidadEntity(unidad.getId(),
+					unidad.getPiso(),
+					unidad.getNumero(),
+					unidad.estaHabitado(),
+					EdificioDAO.toEntity(unidad.getEdificio()));
+			List<DuenioEntity> dueniose= DuenioDAO.toEntityList(unidad.getDuenios(), une);
+			List<InquilinoEntity> inqe= InquilinoDAO.toEntityList(unidad.getInquilinos(), une);
+			une.setDuenios(dueniose);
+			une.setInquilinos(inqe);
+			return une;
 		}
 		
 	static Unidad toNegocio(UnidadEntity unidadEntity) {
@@ -115,8 +151,8 @@ public class UnidadDAO {
 								unidadEntity.getNumero(),
 								unidadEntity.isHabitado(),
 								EdificioDAO.toNegocio(unidadEntity.getEdificio()), 
-								PersonaDAO.toNegocio(unidadEntity.getDuenios()),
-								PersonaDAO.toNegocio(unidadEntity.getInquilinos()));
+								DuenioDAO.toNegocioPersonaList(unidadEntity.getDuenios()),
+								InquilinoDAO.toNegocioPersonaList(unidadEntity.getInquilinos()));
 		}
 		
 		static Unidad toNegocioEdificio(UnidadEntity unidadEntity, Edificio edificio) {
@@ -125,7 +161,7 @@ public class UnidadDAO {
 					unidadEntity.getNumero(),
 					unidadEntity.isHabitado(),
 					edificio, 
-					PersonaDAO.toNegocio(unidadEntity.getDuenios()),
-					PersonaDAO.toNegocio(unidadEntity.getInquilinos()));
+					DuenioDAO.toNegocioPersonaList(unidadEntity.getDuenios()),
+					InquilinoDAO.toNegocioPersonaList(unidadEntity.getInquilinos()));
 		}
 }

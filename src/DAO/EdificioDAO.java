@@ -18,6 +18,7 @@ public class EdificioDAO {
     private List<Edificio> edificios;
     
     public EdificioDAO() {
+    	this.edificios = new ArrayList<Edificio>(); 
     }
     
     public List<Edificio> getAll(){
@@ -63,13 +64,14 @@ public class EdificioDAO {
 //                .findAny().orElse(null);
 //    }
 
-    public void eliminarEdificio(int codigo){
+    public void eliminarEdificio(int codigo){ //TODO hacer que pegue a la base.
         Edificio edificio = edificios.stream().filter(e -> e.getCodigo() == codigo)
                 .findAny().orElse(null);
         if (edificio != null) {
             edificios.remove(edificio);
         }
     }
+
 
     static EdificioEntity toEntity(Edificio edificio) {
 		return new EdificioEntity(edificio.getCodigo(),
@@ -82,7 +84,7 @@ public class EdificioDAO {
 									edificioEntity.getNombre(),
 									edificioEntity.getDireccion());
 		edificio.setUnidades(edificioEntity.getUnidades().stream().map(x -> UnidadDAO.toNegocioEdificio(x, edificio))
-									.collect(Collectors.toCollection(ArrayList<Unidad>::new)));
+				.collect(Collectors.toCollection(ArrayList<Unidad>::new)));
 		return edificio;
     }
 }

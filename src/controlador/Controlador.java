@@ -165,7 +165,8 @@ public class Controlador {
 		
 	public void eliminarPersona(String documento) throws PersonaException {
 		Persona persona = buscarPersona(documento);
-		persona.delete();
+		if(persona !=null)
+			persona.delete();
 	}
 	
 	
@@ -240,7 +241,7 @@ public class Controlador {
 		return UnidadDAO.getUnidad(codigo, piso, numero);
 	}	
 	
-	private Persona buscarPersona(String documento) throws PersonaException {
+	public Persona buscarPersona(String documento) throws PersonaException {
 		return PersonaDAO.getPersona(documento);
 	}
 	
