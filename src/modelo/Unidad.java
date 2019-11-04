@@ -114,11 +114,11 @@ public class Unidad {
 	}
 
 	public void setDuenios(List<Persona> duenios) {
-		this.duenios.addAll(duenios);
+		this.duenios = duenios;
 	}
 
 	public void setInquilinos(List<Persona> inquilinos) {
-		this.inquilinos.addAll(inquilinos);
+		this.inquilinos = inquilinos;
 	}
 
 

@@ -61,17 +61,21 @@ public class TestEdificios {
 		}
 		System.out.println("- dueniosPorUnidadFunc: " + dueniosPorUnidad(ctrl));
 
-		System.out.println("### Inquilinos por unidad ###");
-		System.out.println(ctrl.inquilinosPorUnidad(1,"9", "5"));*/
-		
-		/*System.out.println("agrego"); 
-		ctrl.agregarPersona("DNI1", "Mirtha legrand");
-		 System.out.println(ctrl.dueniosPorUnidad(1, "1", "1"));
-		 ctrl.agregarDuenioUnidad(1, "1", "1", "DNI1");
-		 System.out.println(ctrl.dueniosPorUnidad(1, "1", "1"));*/
-		System.out.println("elimino"); 
-		ctrl.eliminarPersona("DNI1");
-		 System.out.println(ctrl.dueniosPorUnidad(1, "1", "1"));
+		System.out.println("### Inquilinos por unidad ###");*/
+//		System.out.println(ctrl.inquilinosPorUnidad(1,"1", "1"));
+//		ctrl.agregarInquilinoUnidad(1, "1", "1", "DNI1");
+//		System.out.println(ctrl.inquilinosPorUnidad(1,"1", "1"));
+//		System.out.println("agrego"); 
+//		ctrl.agregarPersona("DNI1", "Mirtha legrand");
+//		System.out.println(ctrl.dueniosPorUnidad(1, "1", "1"));
+	 
+//		 System.out.println(ctrl.dueniosPorUnidad(1, "1", "1"));
+//		 ctrl.agregarDuenioUnidad(1, "1", "1", "DNI1");
+//		 System.out.println(ctrl.dueniosPorUnidad(1, "1", "1"));
+//		System.out.println("elimino"); 
+//		ctrl.eliminarPersona("DNI1");
+//		System.out.println(ctrl.inquilinosPorUnidad(1,"1", "1"));
+//		System.out.println(ctrl.dueniosPorUnidad(1, "1", "1"));
 		 }
 
 	private static boolean habitantesPorEdificioFunc(Controlador ctrl) {

@@ -2120,13 +2120,25 @@ go
 
 create table duenios(
 	id int identity,
-	identificador int not null,
+	identificador int,
 	documento varchar(20) not null,
 	constraint pk_duenios primary key (id)
 )
 go
 SET IDENTITY_INSERT duenios ON
 go
+
+ALTER TABLE dbo.duenios
+ADD CONSTRAINT unico_unidad_dni 
+UNIQUE NONCLUSTERED (identificador, documento)
+WITH (
+  PAD_INDEX = OFF,
+  IGNORE_DUP_KEY = OFF,
+  STATISTICS_NORECOMPUTE = OFF,
+  ALLOW_ROW_LOCKS = ON,
+  ALLOW_PAGE_LOCKS = ON)
+ON [PRIMARY]
+GO
 
 INSERT duenios (id,identificador,documento) VALUES (1, 1, N'CI 13230978')
 INSERT duenios (id,identificador,documento) VALUES (2, 2, N'CPA3449614')
@@ -3895,18 +3907,31 @@ INSERT duenios (id,identificador,documento) VALUES (1764, 1301, N'DNI30610075')
 INSERT duenios (id,identificador,documento) VALUES (1765, 1401, N'DNI30616697')
 INSERT duenios (id,identificador,documento) VALUES (1766, 1501, N'DNI30647320')
 go
-SET IDENTITY_INSERT duenios] OFF
+SET IDENTITY_INSERT [duenios] OFF
 go
 
 create table inquilinos(
 	id int identity,
-	identificador int not null,
+	identificador int,
 	documento varchar(20) not null,
 	constraint pk_inquilinos primary key (id)
 )
 go
 SET IDENTITY_INSERT [dbo].[inquilinos] ON 
 GO
+
+ALTER TABLE dbo.inquilinos
+ADD CONSTRAINT inquilinos_uq 
+UNIQUE NONCLUSTERED (identificador, documento)
+WITH (
+  PAD_INDEX = OFF,
+  IGNORE_DUP_KEY = OFF,
+  STATISTICS_NORECOMPUTE = OFF,
+  ALLOW_ROW_LOCKS = ON,
+  ALLOW_PAGE_LOCKS = ON)
+ON [PRIMARY]
+GO
+
 INSERT [dbo].[inquilinos] ([id], [identificador], [documento]) VALUES (1, 8, N'CI 13230978')
 INSERT [dbo].[inquilinos] ([id], [identificador], [documento]) VALUES (2, 15, N'CPA3449614')
 INSERT [dbo].[inquilinos] ([id], [identificador], [documento]) VALUES (3, 22, N'CPA3992034')
@@ -4336,6 +4361,7 @@ create table reclamos(
 	ubicacion varchar(300),
 	descripcion varchar(1000),
 	identificador int,
+	estado int default 0,
 	constraint pk_reclamos primary key (idReclamo),
 	constraint fk_raclamo_persona foreign key (documento) references personas,
 	constraint fk_raclamo_edificio foreign key (codigo) references edificios

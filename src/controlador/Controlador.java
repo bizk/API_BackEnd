@@ -58,12 +58,12 @@ public class Controlador {
 		return instancia;
 	}
 	
-	public List<EdificioView> getEdificiosView(){
+	public List<EdificioView> getEdificiosView(){ //Listo en Rest
 		return edificioDAO.getAll().stream().map(x -> x.toView())
 				.collect(Collectors.toCollection(ArrayList<EdificioView>::new));
 	}
 	
-	public List<UnidadView> getUnidadesPorEdificio(int codigo) throws EdificioException{
+	public List<UnidadView> getUnidadesPorEdificio(int codigo) throws EdificioException{ // Listo en Rest
 		List<UnidadView> resultado = new ArrayList<UnidadView>();
 		Edificio edificio = buscarEdificio(codigo);
 		List<Unidad> unidades = edificio.getUnidades();
@@ -72,7 +72,7 @@ public class Controlador {
 		return resultado;
 	}
 	
-	public List<PersonaView> habilitadosPorEdificio(int codigo) throws EdificioException{
+	public List<PersonaView> habilitadosPorEdificio(int codigo) throws EdificioException{ // Listo en Rest
 		List<PersonaView> resultado = new ArrayList<PersonaView>();
 		Edificio edificio = buscarEdificio(codigo);
 		Set<Persona> habilitados = edificio.habilitados();
@@ -82,7 +82,7 @@ public class Controlador {
 		return resultado;
 	}
 
-	public List<PersonaView> dueniosPorEdificio(int codigo) throws EdificioException{
+	public List<PersonaView> dueniosPorEdificio(int codigo) throws EdificioException{ // listo en Rest
 		List<PersonaView> resultado = new ArrayList<PersonaView>();
 		Edificio edificio = buscarEdificio(codigo);		
 		Set<Persona> duenios = edificio.duenios();
@@ -91,7 +91,7 @@ public class Controlador {
 		return resultado;
 	}
 
-	public List<PersonaView> habitantesPorEdificio(int codigo) throws EdificioException{
+	public List<PersonaView> habitantesPorEdificio(int codigo) throws EdificioException{ // Listo en Rest
 		List<PersonaView> resultado = new ArrayList<PersonaView>();
 		Edificio edificio = buscarEdificio(codigo);
 		Set<Persona> habitantes = edificio.habitantes();
@@ -106,7 +106,7 @@ public class Controlador {
 		return resultado;
 	}
 
-	public List<PersonaView> dueniosPorUnidad(int codigo, String piso, String numero) throws UnidadException{
+	public List<PersonaView> dueniosPorUnidad(int codigo, String piso, String numero) throws UnidadException{ // Listo en restc
 		List<PersonaView> resultado = new ArrayList<PersonaView>();
 		Unidad unidad = buscarUnidad(codigo, piso, numero);
 		List<Persona> duenios = unidad.getDuenios();
@@ -115,7 +115,7 @@ public class Controlador {
 		return resultado;
 	}
 
-	public List<PersonaView> inquilinosPorUnidad(int codigo, String piso, String numero) throws UnidadException{
+	public List<PersonaView> inquilinosPorUnidad(int codigo, String piso, String numero) throws UnidadException{ //Listo en Rest
 		List<PersonaView> resultado = new ArrayList<PersonaView>();
 		Unidad unidad = buscarUnidad(codigo, piso, numero);
 		List<Persona> inquilinos = unidad.getInquilinos();
@@ -165,7 +165,8 @@ public class Controlador {
 		
 	public void eliminarPersona(String documento) throws PersonaException {
 		Persona persona = buscarPersona(documento);
-		persona.delete();
+		if(persona !=null)
+			persona.delete();
 	}
 	
 	

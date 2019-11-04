@@ -18,7 +18,7 @@ import views.UnidadView;
 public class testhql {
 	public static void main(String[] args) throws Exception {
 		Controlador ctrl = Controlador.getInstancia();
-	/*	List<EdificioView> edifis= ctrl.getEdificiosView();
+		/*List<EdificioView> edifis= ctrl.getEdificiosView();
 		for(EdificioView e : edifis) {
 			System.out.println(e.getNombre());
 		}*/
@@ -36,11 +36,17 @@ public class testhql {
 		List<Unidad> unit = UnidadDAO.getAllFromEdificio(edif);
 		for(Unidad u : unit )
 			System.out.println(u.getId());*/
+		/*List<UnidadView> units = ctrl.getUnidadesPorEdificio(3);
+		for(UnidadView u: units ) {
+			System.out.println(u.getId());
+		}*/
 		
-		Unidad unit = UnidadDAO.getUnidad(1, "1", "1");
+	/*	Unidad unit = UnidadDAO.getUnidad(1, "1", "1");
 		System.out.println(unit.getId());
-		
+		*/
 		/*Unidad unit = UnidadDAO.getUnidad(4);
 		System.out.println(unit.getId());*/
+		
+//		System.out.println(ctrl.buscarPersona("DNI1").getNombre());
 	}
 }

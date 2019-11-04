@@ -28,7 +28,7 @@ public class ReclamoEntity {
 	@OneToOne
 	@JoinColumn(name="identificador")
 	private UnidadEntity unidad;
-	@Transient
+	@Column (name="estado")
 	private Estado estado;
 	@OneToMany
 	@JoinColumn(name="numero")

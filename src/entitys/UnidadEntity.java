@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
@@ -34,36 +35,37 @@ public class UnidadEntity {
 	@JoinColumn(name="codigoEdificio")
 	private EdificioEntity edificio;
 	
-	@ManyToMany
-	@JoinTable(name="duenios", joinColumns=@JoinColumn(name="identificador"), inverseJoinColumns=@JoinColumn(name="documento"))  
-	private List<PersonaEntity> duenios = new ArrayList<PersonaEntity>();
+	@OneToMany
+	//@JoinTable(name="duenios", joinColumns=@JoinColumn(name="identificador"), inverseJoinColumns=@JoinColumn(name="documento"))  
+	@JoinColumn(name="identificador")
+	private List<DuenioEntity> duenios = new ArrayList<DuenioEntity>();
 	
-	@ManyToMany
-    @JoinTable(name="inquilinos", joinColumns=@JoinColumn(name="identificador"), inverseJoinColumns=@JoinColumn(name="documento"))  
-	private List<PersonaEntity> inquilinos= new ArrayList<PersonaEntity>();
+	@OneToMany
+   //@JoinTable(name="inquilinos", joinColumns=@JoinColumn(name="identificador"), inverseJoinColumns=@JoinColumn(name="documento"))  
+	@JoinColumn(name="identificador")
+	private List<InquilinoEntity> inquilinos= new ArrayList<InquilinoEntity>();
 
 
 	public UnidadEntity() {
 	}
 	
-	public UnidadEntity(int identificador, String piso, String numero, boolean habitado, EdificioEntity edificio,
-			List<PersonaEntity> duenios, List<PersonaEntity> inquilinos) {
+	public UnidadEntity(int identificador, String piso, String numero, boolean habitado, EdificioEntity edificio) {
 		super();
 		this.identificador = identificador;
 		this.piso = piso;
 		this.numero = numero;
 		this.habitado = habitado;
 		this.edificio = edificio;
-		this.duenios = duenios;
-		this.inquilinos = inquilinos;
+		this.duenios = null;
+		this.inquilinos = null;
 	}
 
 	
-	public List<PersonaEntity> getDuenios(){
+	public List<DuenioEntity> getDuenios(){
 		return this.duenios;
 	}
 	
-	public List<PersonaEntity> getInquilinos() {
+	public List<InquilinoEntity> getInquilinos() {
 		return this.inquilinos;
 	}
 	
@@ -107,11 +109,11 @@ public class UnidadEntity {
 		this.edificio = edificio;
 	}
 
-	public void setDuenios(List<PersonaEntity> duenios) {
+	public void setDuenios(List<DuenioEntity> duenios) {
 		this.duenios = duenios;
 	}
 
-	public void setInquilinos(List<PersonaEntity> inquilinos) {
+	public void setInquilinos(List<InquilinoEntity> inquilinos) {
 		this.inquilinos = inquilinos;
 	}
 }
