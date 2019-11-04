@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -23,10 +24,20 @@ public class PersonaDAO {
     }
 	
 	public List<Persona> getAll(){
-		Session session = HibernateUtils.getSessionFactory().getCurrentSession();
-		List<PersonaEntity> results = session.createCriteria(PersonaEntity.class).list();
-		return results.stream().map(x -> toNegocio(x))
-				.collect(Collectors.toCollection(ArrayList<Persona>::new));
+		Transaction transaction = null; 
+		try {
+			Session session = HibernateUtils.getSessionFactory().getCurrentSession();
+			transaction = session.beginTransaction();
+			List<PersonaEntity> results = session.createCriteria(PersonaEntity.class).list();
+			return results.stream().map(x -> toNegocio(x))
+					.collect(Collectors.toCollection(ArrayList<Persona>::new));
+		} catch (Exception exception) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			exception.printStackTrace();
+		}
+		return null;
 	}
 	
 	public static Persona getPersona(String documento) {
@@ -38,9 +49,9 @@ public class PersonaDAO {
 			transaction.commit();
 			return toNegocio(personaEntity);
 		} catch (Exception exception) {
-			if (transaction != null) {
+			/*if (transaction != null) {
 				transaction.rollback();
-			}
+			}*/
 			System.out.println("No existe ninguna persona con el dni: " + documento);
 		}
 		return null;
@@ -66,31 +77,35 @@ public class PersonaDAO {
 		}
 	}
 	
-	public static void delete(Persona persona) {// TODO Cómo consultar a la tabla inquilinos o duenios? Pq mi mapeo directamente cada unidad guarda a sus duenios. En su defecto, como mapeo sino?
+	public static void delete(Persona persona) {
 		Transaction transaction = null; 
 		try {
 			Session session = HibernateUtils.getSessionFactory().getCurrentSession();
 			transaction = session.beginTransaction();
 			transaction.begin();
+			PersonaEntity personaEntity = toEntity(persona);
 			//List<DuenioEntity> duenioEntities = (List<DuenioEntity>) session.createSQLQuery("SELECT * FROM duenios WHERE documento = :documento")
 				//	.addEntity(DuenioEntity.class).setParameter("documento", persona.getDocumento()).list();
-			List<DuenioEntity> duenioEntities = (List<DuenioEntity>) session.createQuery("from DuenioEntity where duenio = '"+ persona.getDocumento()+"' ").list();
-			for (DuenioEntity de : duenioEntities) 
-				session.delete(de);
+			Query qd= session.createQuery("delete from DuenioEntity where duenio = ?").setEntity(0, personaEntity);
+			qd.executeUpdate();
+			session.clear();
 		
 			//List<InquilinoEntity> inquilinoEntities= (List<InquilinoEntity>) session.createSQLQuery("SELECT * FROM inquilinos WHERE documento = :documento")
 				//	.addEntity(InquilinoEntity.class).setParameter("documento", persona.getDocumento()).list();
-			List<InquilinoEntity> inquilinoEntities= (List<InquilinoEntity>) session.createQuery("from InquilinoEntity where inquilino = '"+persona.getDocumento()+"' ").list();
-			for (InquilinoEntity ie : inquilinoEntities) {
-				Unidad unidad = UnidadDAO.getUnidad(ie.getUnidad());
+			Query qi1 = session.createQuery("from InquilinoEntity where inquilino =?").setEntity(0, personaEntity);
+			List<InquilinoEntity> inquilinoEnitities = (List<InquilinoEntity>) qi1.list();
+			session.clear();
+			/*for (InquilinoEntity ie : inquilinoEnitities) { TODO arreglar la verificación para liberar unidades
+				Unidad unidad = InquilinoDAO.toNegocioUnidad(ie);
 				List<Persona> inquilinos = unidad.getInquilinos();
-				inquilinos.remove(ie);
+				inquilinos.remove(toNegocio(ie.getPersona()));
 				if (inquilinos.isEmpty()) unidad.liberar();
-				else unidad.setInquilinos(inquilinos);
-				session.delete(ie);
-			}
+			}*/
+			Query qi2 = session.createQuery("delete from InquilinoEntity where inquilino =?").setEntity(0, personaEntity);
+			qi2.executeUpdate();
 				
-			PersonaEntity personaEntity = toEntity(persona);
+			
+			session.clear();
 			session.delete(personaEntity);
 			transaction.commit();
 		} catch (Exception e) {
