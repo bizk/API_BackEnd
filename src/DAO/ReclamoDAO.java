@@ -142,7 +142,7 @@ public static List<Reclamo> getReclamosByUnidad(Unidad unit) {
 		//List<ReclamoEntity> recledif = (List<ReclamoEntity>)session.createSQLQuery("SELECT * FROM reclamos WHERE identificador = :unit")
 			//		.addEntity(ReclamoEntity.class).setParameter("unit", unit.getId()).list();
 		List<ReclamoEntity> recledif = (List<ReclamoEntity>)session.createQuery("from ReclamoEntity where unidad=?").setEntity(0, UnidadDAO.toEntity(unit)).list();
-		ts.commit();
+		//ts.commit();
 		results = recledif.stream().map(x -> toNegocio(x))
 					.collect(Collectors.toCollection(ArrayList<Reclamo>::new));
 	} catch (Exception e) {

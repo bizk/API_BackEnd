@@ -172,7 +172,7 @@ public class Controlador {
 	
 	public List<ReclamoView> reclamosPorEdificio(int codigo){
 		List<ReclamoView> resultado = new ArrayList<ReclamoView>();
-		Edificio edificio = edificioDAO.getEdificio(codigo);
+		Edificio edificio = EdificioDAO.getEdificio(codigo);
 		List<Reclamo> reclamos = ReclamoDAO.getReclamosByEdificio(edificio);
 		for (Reclamo r: reclamos){
 			resultado.add(r.toView());
