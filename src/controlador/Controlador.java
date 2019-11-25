@@ -229,8 +229,10 @@ public class Controlador {
 	
 	public void cambiarEstado(int numero, Estado estado) throws ReclamoException {
 		Reclamo reclamo = buscarReclamo(numero);
+		System.out.println("Estado antes: "+ reclamo.getEstado());
 		reclamo.cambiarEstado(estado);
 		reclamo.update();
+		System.out.println("Estado despues: "+ reclamo.getEstado());
 	}
 	
 	private Edificio buscarEdificio(int codigo) throws EdificioException {
