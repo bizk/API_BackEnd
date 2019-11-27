@@ -25,6 +25,7 @@ import views.Estado;
 import views.PersonaView;
 import views.ReclamoView;
 import views.UnidadView;
+import views.UserInfoObj;
 
 public class Controlador {
 
@@ -210,14 +211,6 @@ public class Controlador {
 		Unidad unidad = buscarUnidad(codigoEdificio, piso, numero);
 		Persona persona = buscarPersona(documento);
 		Reclamo reclamo = new Reclamo(persona, edificio, ubicacion, descripcion, unidad);
-		/*
-		 * System.out.println("Datos del reclamo: "); System.out.println("nro " +
-		 * reclamo.getNumero()); System.out.println("Persona "+persona.getNombre());
-		 * System.out.println("edificio "+edificio.getNombre());
-		 * System.out.println("ubicacion "+reclamo.getUbicacion());
-		 * System.out.println("descripcion " + reclamo.getDescripcion());
-		 * System.out.println("unidad  "+unidad.getId());
-		 */
 		reclamo.setNumero(reclamo.save());
 		return reclamo.getNumero();
 	}
@@ -247,5 +240,32 @@ public class Controlador {
 	
 	private Reclamo buscarReclamo(int numero) throws ReclamoException {
 		return ReclamoDAO.getReclamoByNum(numero);
+	}
+	
+	public boolean login(String usr, String pwd) throws PersonaException {
+		Persona persona = buscarPersona(pwd);
+		if (persona.getNombre() == usr) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public List<UserInfoObj> userInfo(String pwd) throws PersonaException {
+		List<Edificio> edificios = edificioDAO.getAll();
+		List<UserInfoObj> info = new ArrayList<UserInfoObj>();
+		Persona usr = buscarPersona(pwd);
+		for (Edificio edificio: edificios) {
+			List<UnidadView> duenioUnidades = new ArrayList<UnidadView>();
+			List<UnidadView> habitantUnidades = new ArrayList<UnidadView>();
+			edificio.getUnidades().stream().forEach(x -> {
+				if (x.getDuenios().contains(usr))
+					duenioUnidades.add(x.toView());
+				if (x.getInquilinos().contains(usr))
+					habitantUnidades.add(x.toView());
+			});
+			info.add(new UserInfoObj(edificio.getCodigo(), edificio.getNombre(), edificio.getNombre(), duenioUnidades, habitantUnidades));
+		}
+		return info;
 	}
 }
