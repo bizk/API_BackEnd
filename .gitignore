@@ -1,0 +1,7 @@
+*_
+.classpath
+.project
+.settings/
+bin/
+src/META-INF/
+
