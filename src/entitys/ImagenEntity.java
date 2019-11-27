@@ -17,7 +17,7 @@ public class ImagenEntity {
 	@Column(name="numero")
 	private int numero;
 	@Column(name="path")
-	private String Direccion;
+	private String Direccion; //ID DE IMGUR
 	@Column(name="tipo")
 	private String tipo;
 	@ManyToOne

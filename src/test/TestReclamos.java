@@ -8,6 +8,7 @@ import exceptions.PersonaException;
 import exceptions.ReclamoException;
 import exceptions.UnidadException;
 import views.Estado;
+import views.ImagenView;
 import views.ReclamoView;
 
 /**
@@ -57,14 +58,19 @@ public class TestReclamos {
         
         System.out.println("Cambiar Estado del Reclamo 1002");
         recls= ctrl.reclamosPorNumero(1002);
-        System.out.println("Estado antes: "+ recls.getEstado());
-        try {
+       System.out.println("Estado antes: "+ recls.getEstado());
+       	List<ImagenView> imgv = ctrl.getImagenes(1002);
+       	for(ImagenView i :imgv) {
+       		System.out.println(i.getDireccion()); //Dirección es la ID que corresponde
+       	}
+       
+       /*     try {
 			ctrl.cambiarEstado(1002, Estado.desestimado);
 		} catch (ReclamoException e) {
 			e.printStackTrace();
 		}
         recls= ctrl.reclamosPorNumero(1002);
-        System.out.println("Estado Despues: "+ recls.getEstado());
+        System.out.println("Estado Despues: "+ recls.getEstado());*/
         
 
     }

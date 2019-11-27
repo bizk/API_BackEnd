@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.hibernate.classic.Session;
 
 import DAO.EdificioDAO;
+import DAO.ImagenDAO;
 import DAO.PersonaDAO;
 import DAO.ReclamoDAO;
 import DAO.UnidadDAO;
@@ -16,12 +17,14 @@ import exceptions.PersonaException;
 import exceptions.ReclamoException;
 import exceptions.UnidadException;
 import modelo.Edificio;
+import modelo.Imagen;
 import modelo.Persona;
 import modelo.Reclamo;
 import modelo.Unidad;
 import utils.ConnectionUtils;
 import views.EdificioView;
 import views.Estado;
+import views.ImagenView;
 import views.PersonaView;
 import views.ReclamoView;
 import views.UnidadView;
@@ -225,6 +228,16 @@ public class Controlador {
 	public void agregarImagenAReclamo(int numero, String direccion, String tipo) throws ReclamoException {
 		Reclamo reclamo = buscarReclamo(numero);
 		reclamo.agregarImagen(direccion, tipo);
+	}
+	
+	public List<ImagenView> getImagenes(int nroreclamo){
+		Reclamo recl = ReclamoDAO.getReclamoByNum(nroreclamo);
+		List<Imagen> img = ImagenDAO.getImagenesReclamo(recl);
+		List<ImagenView> imgv = new ArrayList<ImagenView>();
+		for(Imagen i : img ) {
+			imgv.add(i.toView());
+		}
+		return imgv;
 	}
 	
 	public void cambiarEstado(int numero, Estado estado) throws ReclamoException {

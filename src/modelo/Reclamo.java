@@ -38,7 +38,7 @@ public class Reclamo {
 		this.descripcion=descripcion2;
 		this.unidad=unidad;
 		this.estado=Estado.valueOf(estado2);
-		this.imagenes=new ArrayList<Imagen>();
+		this.imagenes = new ArrayList<Imagen>();
 	}
 
 

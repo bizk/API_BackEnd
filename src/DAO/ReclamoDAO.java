@@ -8,9 +8,11 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import entitys.ImagenEntity;
 import entitys.ReclamoEntity;
 import entitys.UnidadEntity;
 import modelo.Edificio;
+import modelo.Imagen;
 import modelo.Persona;
 import modelo.Reclamo;
 import modelo.Unidad;
@@ -29,7 +31,6 @@ public class ReclamoDAO {
 		   unitplaceholder = null;
 	   } else
 		   unitplaceholder = UnidadDAO.toEntity(recl.getUnidad());
-		   
 	   return new ReclamoEntity(recl.getNumero(), 
 			   					PersonaDAO.toEntity(recl.getUsuario()),
 			   					EdificioDAO.toEntity(recl.getEdificio()),

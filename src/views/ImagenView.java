@@ -22,7 +22,7 @@ public class ImagenView {
 		this.numero = numero;
 	}
 
-	public String getDireccion() {
+	public String getDireccion() { //ID de IMGURs
 		return direccion;
 	}
 
