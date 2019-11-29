@@ -97,13 +97,10 @@ public class Controlador {
 		Edificio edificio = buscarEdificio(codigo);
 		Set<Persona> habitantes = edificio.habitantes();
 		
-		System.out.println(habitantes.size());
 		
-		for(Persona persona : habitantes) {
+		for(Persona persona : habitantes) 
 			resultado.add(persona.toView());
-			System.out.println(persona.toView());
 		
-		}
 		return resultado;
 	}
 
@@ -244,7 +241,7 @@ public class Controlador {
 	
 	public boolean login(String usr, String pwd) throws PersonaException {
 		Persona persona = buscarPersona(pwd);
-		if (persona.getNombre() == usr) {
+		if (persona.getNombre().contentEquals(usr)) {
 			return true;
 		} else {
 			return false;
@@ -258,13 +255,21 @@ public class Controlador {
 		for (Edificio edificio: edificios) {
 			List<UnidadView> duenioUnidades = new ArrayList<UnidadView>();
 			List<UnidadView> habitantUnidades = new ArrayList<UnidadView>();
-			edificio.getUnidades().stream().forEach(x -> {
-				if (x.getDuenios().contains(usr))
-					duenioUnidades.add(x.toView());
-				if (x.getInquilinos().contains(usr))
-					habitantUnidades.add(x.toView());
-			});
-			info.add(new UserInfoObj(edificio.getCodigo(), edificio.getNombre(), edificio.getNombre(), duenioUnidades, habitantUnidades));
+			List<Unidad> unidades = edificio.getUnidades();
+			//System.out.println(edificio.duenios());
+			Set<Persona> duenios = edificio.duenios();
+			for(Unidad u: unidades) {
+				for(Persona p: u.getDuenios()) {
+					if (p.getDocumento().equals(pwd) && p.getNombre().equals(usr.getNombre()))
+						duenioUnidades.add(u.toView());
+				}
+				for(Persona p: u.getInquilinos()) {
+					if (p.getDocumento().equals(pwd) && p.getNombre().equals(usr.getNombre()))
+						habitantUnidades.add(u.toView());
+				}
+			}
+			if (!duenioUnidades.isEmpty() || !habitantUnidades.isEmpty())
+				info.add(new UserInfoObj(edificio.getCodigo(), edificio.getNombre(), edificio.getNombre(), duenioUnidades, habitantUnidades));
 		}
 		return info;
 	}

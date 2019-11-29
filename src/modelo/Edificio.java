@@ -28,7 +28,7 @@ public class Edificio {
 		unidades.add(unidad);
 	}
 	
-	public Set<Persona> habilitados(){
+	public Set<Persona> habitantes(){
 		Set<Persona> habilitados = new HashSet<Persona>();
 		for(Unidad unidad : unidades) {
 			List<Persona> duenios = unidad.getDuenios();
@@ -67,7 +67,7 @@ public class Edificio {
 		return resultado;
 	}
 
-	public Set<Persona> habitantes() {
+	public Set<Persona> habilitados() {
 		Set<Persona> resultado = new HashSet<Persona>();
 		for(Unidad unidad : unidades) {
 			if(unidad.estaHabitado()) {
