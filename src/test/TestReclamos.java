@@ -57,9 +57,9 @@ public class TestReclamos {
      */
         
         System.out.println("Cambiar Estado del Reclamo 1002");
-        recls= ctrl.reclamosPorNumero(1002);
+        recls= ctrl.reclamosPorNumero(4005);
        System.out.println("Estado antes: "+ recls.getEstado());
-       	List<ImagenView> imgv = ctrl.getImagenes(1002);
+       	List<ImagenView> imgv = ctrl.getImagenes(4051);
        	for(ImagenView i :imgv) {
        		System.out.println(i.getDireccion()); //Dirección es la ID que corresponde
        	}

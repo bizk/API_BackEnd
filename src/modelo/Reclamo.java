@@ -97,12 +97,12 @@ public class Reclamo {
 	}
 	
 	public ReclamoView toView() {
-		List<ImagenView> imview = new ArrayList<ImagenView>();
-		for (Imagen i: this.getImagenes()){
-			imview.add(i.toView());
-		}
+		if(this.getUnidad() != null)
 		return new ReclamoView(this.getNumero(), this.getUsuario().toView(),this.getEdificio().toView(),
-								this.getUbicacion(),this.getDescripcion(),this.getUnidad().toView(),this.getEstado(),
-								imview);
+								this.getUbicacion(),this.getDescripcion(),this.getUnidad().toView(),this.getEstado()
+								);
+		else return new ReclamoView(this.getNumero(), this.getUsuario().toView(),this.getEdificio().toView(),
+				this.getUbicacion(),this.getDescripcion(),null,this.getEstado()
+				);
 	}
 }
