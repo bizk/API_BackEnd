@@ -30,15 +30,15 @@ public class Reclamo {
 	}
 
 	public Reclamo(Integer numero2, Persona usr, Edificio edificio, String ubicacion2, String descripcion2,
-			Unidad unidad, Estado estado2) { //Es para reclamos recuperados del DAO
+			Unidad unidad, String estado2) { //Es para reclamos recuperados del DAO
 		this.numero=numero2;
 		this.usuario=usr;
 		this.edificio=edificio;
 		this.ubicacion=ubicacion2;
 		this.descripcion=descripcion2;
 		this.unidad=unidad;
-		this.estado=estado2;
-		this.imagenes=new ArrayList<Imagen>();
+		this.estado=Estado.valueOf(estado2);
+		this.imagenes = new ArrayList<Imagen>();
 	}
 
 

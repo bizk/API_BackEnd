@@ -1,6 +1,9 @@
 package modelo;
 
+import java.util.List;
+
 import DAO.ImagenDAO;
+import DAO.ReclamoDAO;
 import views.ImagenView;
 
 public class Imagen {
@@ -13,7 +16,8 @@ public class Imagen {
 		this.direccion = direccion;
 		this.tipo = tipo;
 	}
-
+	
+	
 	public int getNumero() {
 		return numero;
 	}
@@ -22,7 +26,7 @@ public class Imagen {
 		this.numero = numero;
 	}
 
-	public String getDireccion() {
+	public String getDireccion() { //ID De IMGUR
 		return direccion;
 	}
 

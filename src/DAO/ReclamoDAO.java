@@ -4,16 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import entitys.ImagenEntity;
 import entitys.ReclamoEntity;
+import entitys.UnidadEntity;
 import modelo.Edificio;
+import modelo.Imagen;
 import modelo.Persona;
 import modelo.Reclamo;
 import modelo.Unidad;
 import utils.ConnectionUtils;
 import utils.HibernateUtils;
+import views.Estado;
 
 public class ReclamoDAO {
     
@@ -21,21 +26,31 @@ public class ReclamoDAO {
     }
 
    static ReclamoEntity toEntity(Reclamo recl) {
+	   UnidadEntity unitplaceholder;
+	   if(recl.getUnidad()==null) {
+		   unitplaceholder = null;
+	   } else
+		   unitplaceholder = UnidadDAO.toEntity(recl.getUnidad());
 	   return new ReclamoEntity(recl.getNumero(), 
 			   					PersonaDAO.toEntity(recl.getUsuario()),
 			   					EdificioDAO.toEntity(recl.getEdificio()),
 			   					recl.getUbicacion(),
 			   					recl.getDescripcion(),
-			   					UnidadDAO.toEntity(recl.getUnidad()),
-			   					recl.getEstado());
+			   					unitplaceholder,
+			   					recl.getEstado().name());
    }
    static Reclamo toNegocio(ReclamoEntity recl) {
+	   Unidad unitplaceholder;
+	   if(recl.getUnidad()==null) {
+		   unitplaceholder = null;
+	   } else
+		   unitplaceholder = UnidadDAO.toNegocio(recl.getUnidad());
 	   return new Reclamo(recl.getNumero(),
 			   			PersonaDAO.toNegocio(recl.getUsuario()),
 			   			EdificioDAO.toNegocio(recl.getEdificio()),
 			   			recl.getUbicacion(),
 			   			recl.getDescripcion(),
-			   			UnidadDAO.toNegocio(recl.getUnidad()),
+			   			unitplaceholder,
 			   			recl.getEstado());
    }
    public List<Reclamo> getAll(){
@@ -179,8 +194,31 @@ public static void update(Reclamo reclamo) {
 	    		Session session = ConnectionUtils.getSession();
 			 transaction = session.beginTransaction();
 			 transaction.begin();
-			 ReclamoEntity reclent = toEntity(reclamo);
-			 session.saveOrUpdate(reclent);
+//			 ReclamoEntity reclent = toEntity(reclamo);
+//			 System.out.println(reclent.toString());
+			 ReclamoEntity reclent2 = (ReclamoEntity) session.load(ReclamoEntity.class, reclamo.getNumero());
+			 System.out.println(reclent2.toString());
+//			 Query q = session.createQuery("UPDATE ReclamoEntity SET"
+//			 		+ " usuario=:usuario,"
+//			 		+ " codigo=:codigo,"
+//			 		+ " ubicacion=:ubic,"
+//			 		+ " descripcion=:desc,"
+//			 		+ " identificador=:unit,"
+//			 		+ " estado=:estado,"
+//			 		+ " imagenes=:img"
+//			 		+ " WHERE numero=:numero");
+//			 q.setEntity("usuario", reclent.getUsuario());
+//			 q.setEntity("codigo",reclent.getEdificio());
+//			 q.setString("ubic", reclent.getDescripcion());
+//			 q.setString("desc", reclent.getDescripcion());
+//			 q.setEntity("unit", reclent.getUnidad());
+//			 q.setParameter("estado", "Estado."+reclent.getEstado());
+//			 q.setParameter("img", reclent.getImagenes());
+//			 q.setInteger("numero", reclent.getNumero());
+//			 q.executeUpdate();
+			 reclent2.setEstado(reclamo.getEstado().name());
+			 session.update(reclent2);
+			 
 			 transaction.commit();
 		 } catch (Exception e) {
 			 if (transaction != null) {

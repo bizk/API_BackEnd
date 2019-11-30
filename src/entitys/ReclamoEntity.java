@@ -28,8 +28,10 @@ public class ReclamoEntity {
 	@OneToOne
 	@JoinColumn(name="identificador")
 	private UnidadEntity unidad;
+	
+	
 	@Column (name="estado")
-	private Estado estado;
+	private String estado;
 	@OneToMany
 	@JoinColumn(name="numero")
 	private List<ImagenEntity> imagenes; 
@@ -38,7 +40,7 @@ public class ReclamoEntity {
 	public ReclamoEntity() {	
 	}
 	public ReclamoEntity(Integer numero, PersonaEntity usuario, EdificioEntity edificio, String ubicacion,
-			String descripcion, UnidadEntity unidad, Estado estado) {
+			String descripcion, UnidadEntity unidad, String estado) {
 		super();
 		this.numero = numero;
 		this.usuario = usuario;
@@ -56,7 +58,7 @@ public class ReclamoEntity {
 	public EdificioEntity getEdificio() {
 		return edificio;
 	}
-	public Estado getEstado() {
+	public String getEstado() {
 		return estado;
 	}
 	public Integer getNumero() {
@@ -89,8 +91,8 @@ public class ReclamoEntity {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	public void setEstado(Estado estado) {
-		this.estado = estado;
+	public void setEstado(String string) {
+		this.estado = string;
 	}
 	public List<ImagenEntity> getImagenes() {
 		return this.imagenes;
