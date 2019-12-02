@@ -2118,25 +2118,19 @@ go
 SET IDENTITY_INSERT [dbo].[unidades] OFF
 go
 
-create table duenios(
-	id int identity,
-	identificador int,
-	documento varchar(20) not null,
-	constraint pk_duenios primary key (id)
+CREATE TABLE duenios (
+  id int IDENTITY(1, 1) NOT NULL,
+  identificador int NULL,
+  documento varchar(20) COLLATE Modern_Spanish_CI_AS NOT NULL,
+  CONSTRAINT pk_duenios PRIMARY KEY CLUSTERED (id)
+    WITH (
+      PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF,
+      ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON),
+  CONSTRAINT unico_unidad_dni UNIQUE (identificador, documento)
+    WITH (
+      PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF,
+      ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 )
-go
-SET IDENTITY_INSERT duenios ON
-go
-
-ALTER TABLE dbo.duenios
-ADD CONSTRAINT unico_unidad_dni 
-UNIQUE NONCLUSTERED (identificador, documento)
-WITH (
-  PAD_INDEX = OFF,
-  IGNORE_DUP_KEY = OFF,
-  STATISTICS_NORECOMPUTE = OFF,
-  ALLOW_ROW_LOCKS = ON,
-  ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 
@@ -3910,25 +3904,19 @@ go
 SET IDENTITY_INSERT [duenios] OFF
 go
 
-create table inquilinos(
-	id int identity,
-	identificador int,
-	documento varchar(20) not null,
-	constraint pk_inquilinos primary key (id)
+CREATE TABLE inquilinos (
+  id int IDENTITY(1, 1) NOT NULL,
+  identificador int NULL,
+  documento varchar(20) COLLATE Modern_Spanish_CI_AS NOT NULL,
+  CONSTRAINT pk_inquilinos PRIMARY KEY CLUSTERED (id)
+    WITH (
+      PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF,
+      ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON),
+  CONSTRAINT inquilinos_uq UNIQUE (identificador, documento)
+    WITH (
+      PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF,
+      ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 )
-go
-SET IDENTITY_INSERT [dbo].[inquilinos] ON 
-GO
-
-ALTER TABLE dbo.inquilinos
-ADD CONSTRAINT inquilinos_uq 
-UNIQUE NONCLUSTERED (identificador, documento)
-WITH (
-  PAD_INDEX = OFF,
-  IGNORE_DUP_KEY = OFF,
-  STATISTICS_NORECOMPUTE = OFF,
-  ALLOW_ROW_LOCKS = ON,
-  ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 

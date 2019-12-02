@@ -17,7 +17,7 @@ public class ReclamoView {
 	}
 	
 	public ReclamoView(int numero, PersonaView usuario, EdificioView edificio, String ubicacion, String descripcion,
-			UnidadView unidad, Estado estado, List<ImagenView> imagenes) {
+			UnidadView unidad, Estado estado) {
 		super();
 		this.numero = numero;
 		this.usuario = usuario;
@@ -26,7 +26,6 @@ public class ReclamoView {
 		this.descripcion = descripcion;
 		this.unidad = unidad;
 		this.estado = estado;
-		this.imagenes = imagenes;
 	}
 	public int getNumero() {
 		return numero;
