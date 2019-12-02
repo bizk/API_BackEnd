@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
@@ -91,7 +92,50 @@ public class UnidadDAO {
 			return null;
 		}
 	}
+	public static void eliminarDuenios(Unidad unidad) {
+		Session session=HibernateUtils.getSessionFactory().getCurrentSession();
+		Transaction transaction = null; 
+		try {
+			transaction = session.beginTransaction();
+			transaction.begin();
+			UnidadEntity unidadEntity = toEntity(unidad);
+			Query qd= session.createQuery("delete from DuenioEntity where unidad = ?").setEntity(0, unidadEntity);
+			qd.executeUpdate();
+			session.clear();
+			transaction.commit();
 
+		} 		catch (Exception e) {
+			e.printStackTrace();
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			System.out.println("Error de eliminar dueños");
+			//e.printStackTrace();
+		} 
+			
+	}
+	public static void eliminarInquilinos(Unidad unidad) {
+		Session session=HibernateUtils.getSessionFactory().getCurrentSession();
+		Transaction transaction = null; 
+		try {
+			transaction = session.beginTransaction();
+			transaction.begin();
+			UnidadEntity unidadEntity = toEntity(unidad);
+			Query qi= session.createQuery("delete from InquilinoEntity where unidad = ?").setEntity(0, unidadEntity);
+			qi.executeUpdate();
+			session.clear();
+			transaction.commit();
+
+		} 		catch (Exception e) {
+			e.printStackTrace();
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			System.out.println("Error de eliminar inquilinos");
+			//e.printStackTrace();
+		} 
+		
+	}
 
 	public static void save(Unidad unidad) {
 		Session session=HibernateUtils.getSessionFactory().getCurrentSession();
@@ -171,4 +215,5 @@ public class UnidadDAO {
 				DuenioDAO.toNegocioPersonaList(unidadEntity.getDuenios()),
 				InquilinoDAO.toNegocioPersonaList(unidadEntity.getInquilinos()));
 	}
+
 }
