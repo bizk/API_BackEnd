@@ -45,8 +45,9 @@ public class Unidad {
 	}
 
 	public void transferir(Persona nuevoDuenio) {
-		duenios = new ArrayList<Persona>();
-		duenios.add(nuevoDuenio);
+		UnidadDAO.eliminarDuenios(this);
+		this.duenios = new ArrayList<Persona>();
+		this.duenios.add(nuevoDuenio);
 		this.save();
 	}
 
@@ -57,6 +58,7 @@ public class Unidad {
 
 	public void alquilar(Persona inquilino) throws UnidadException {
 		if (!this.habitado) {
+			UnidadDAO.eliminarInquilinos(this);
 			this.habitado = true;
 			inquilinos = new ArrayList<Persona>();
 			inquilinos.add(inquilino);
@@ -75,6 +77,7 @@ public class Unidad {
 	}
 
 	public void liberar() {
+		UnidadDAO.eliminarInquilinos(this);
 		this.inquilinos = new ArrayList<Persona>();
 		this.habitado = false;
 		this.save();

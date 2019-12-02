@@ -51,7 +51,7 @@ public class TestEdificios {
 
 		System.out.println("- dueniosPorUnidadFunc: " + dueniosPorUnidad(ctrl));
 		try {
-			ctrl.transferirUnidad(2, "10", "5", "DNI30012288");
+			ctrl.transferirUnidad(2, "10", "5", "DNI1");
 		} catch (UnidadException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -62,7 +62,7 @@ public class TestEdificios {
 		System.out.println("- dueniosPorUnidadFunc: " + dueniosPorUnidad(ctrl));
 
 		System.out.println("### Inquilinos por unidad ###");*/
-//		System.out.println(ctrl.inquilinosPorUnidad(1,"1", "1"));
+//		;
 //		ctrl.agregarInquilinoUnidad(1, "1", "1", "DNI1");
 //		System.out.println(ctrl.inquilinosPorUnidad(1,"1", "1"));
 //		System.out.println("agrego"); 
@@ -76,6 +76,19 @@ public class TestEdificios {
 //		ctrl.eliminarPersona("DNI1");
 //		System.out.println(ctrl.inquilinosPorUnidad(1,"1", "1"));
 //		System.out.println(ctrl.dueniosPorUnidad(1, "1", "1"));
+		
+		/*System.out.println(ctrl.dueniosPorUnidad(1, "1", "1"));
+		ctrl.transferirUnidad(1, "1", "1", "12345");
+		System.out.println(ctrl.dueniosPorUnidad(1, "1", "1"));*/
+	/*	System.out.println(ctrl.inquilinosPorUnidad(1,"1", "1"));
+		ctrl.alquilarUnidad(1,"1", "1", "DNI2");
+		System.out.println(ctrl.inquilinosPorUnidad(1,"1", "1"));*/
+/*		System.out.println(ctrl.inquilinosPorUnidad(1,"1", "1"));
+		ctrl.liberarUnidad(1,"1", "1");
+		System.out.println(ctrl.inquilinosPorUnidad(1,"1", "1"));*/
+		
+		ctrl.habitarUnidad(1,"1", "1");
+		
 		 }
 
 	private static boolean habitantesPorEdificioFunc(Controlador ctrl) {
